@@ -23,41 +23,47 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-import java.util.HashMap;
-import java.util.Map;
+import hera.com.orders.infrastructure.classes.User;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText id; // This will be a reference to our GitHub username input.
+    EditText id;
     EditText pass;
-    Button submit;  // This is a reference to the "Get Repos" button.
-
+    Button submit;
+    User user;
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
     String url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/login"; // This will hold the full URL which will include the username entered in the id.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        this.id = (EditText) findViewById(R.id.ID);  // Link our github user text box.
-        this.pass = (EditText) findViewById(R.id.pass);  // Link our github user text box.
-        this.submit = (Button) findViewById(R.id.send);  // Link our clicky button.
+        user=new User();
+        this.id = (EditText) findViewById(R.id.ID);
+        this.pass = (EditText) findViewById(R.id.pass);
+        this.submit = (Button) findViewById(R.id.send);
         requestQueue = Volley.newRequestQueue(this); // This setups up a new request queue which we will need to make HTTP requests
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login(id.getText().toString(),pass.getText().toString());
+                user.Username=id.getText().toString();
+                user.Password=pass.getText().toString();
+                user.Url=url;
+                login(user.Username,user.Password);
             }
         });
+
     }
     public void login(String username, String password)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
-        Map<String, String> params = new HashMap();
-        params.put("username", username);
-        params.put("password", password);
-
-        JSONObject parameters = new JSONObject(params);
+        JSONObject parameters = new JSONObject();
+        try {
+            parameters.put("username",username);
+            parameters.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         JsonObjectRequest strRequest = new JsonObjectRequest(Request.Method.POST, url,parameters,
                 new Response.Listener<JSONObject>()
                 {
@@ -66,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
                     {
                         try {
                             String jwt = response.getString("jwt");
-                            Toast.makeText(getApplicationContext(), jwt, Toast.LENGTH_SHORT).show();
+                            String id = response.getJSONObject("korisnik").getString("id");
+                            user.Id=Integer.parseInt(id);                            user.Token=jwt;
+                            Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
