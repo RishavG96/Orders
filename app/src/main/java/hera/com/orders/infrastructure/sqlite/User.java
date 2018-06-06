@@ -12,11 +12,15 @@ public class User {
     SQLiteDatabase db;
     public void addUser(Context context,String Id, String Username, String Password, String Url, String Token)
     {
-        db=context.openOrCreateDatabase("orders",MODE_PRIVATE,null);
-        db.execSQL("create table if not exists users(id integer, username varchar(50), password varchar(50), " +
-                "url varchar(500), token varchar(500))");
-        db.execSQL("insert into users values("+Id+",'"+Username+"','"+Password+"','"+Url+"','"+Token+"')");
+        db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
+        db.execSQL("create table if not exists user(id integer, username varchar(1000), password varchar(1000)," +
+                " url varchar(1000),token varchar(1000))");
+        db.execSQL("insert into user values("+Id+",'"+Username+"','"+Password+"','"+Url+"','"+Token+"')");
+        Toast.makeText(context, "here", Toast.LENGTH_SHORT).show();
         Toast.makeText(context, "User Added", Toast.LENGTH_SHORT).show();
+    }
+    public void showUser(Context context)
+    {
         Cursor c=db.rawQuery("select * from users",null);
         StringBuffer stringBuffer=new StringBuffer();
         while(c.moveToNext())
