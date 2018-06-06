@@ -1,6 +1,7 @@
 package hera.com.orders;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class Login extends AppCompatActivity {
     EditText id;
     EditText pass;
     Button submit;
+    EditText newurl;
     hera.com.orders.infrastructure.classes.User classes_user;
     hera.com.orders.infrastructure.sqlite.User sqlite_user;
     SQLiteDatabase db;
@@ -41,7 +43,17 @@ public class Login extends AppCompatActivity {
         this.id = (EditText) findViewById(R.id.ID);
         this.pass = (EditText) findViewById(R.id.pass);
         this.submit = (Button) findViewById(R.id.send);
-        //db=openOrCreateDatabase("orders",MODE_PRIVATE, null);
+        newurl=findViewById(R.id.editText2);
+        newurl.setText(url);
+        db=openOrCreateDatabase("order",MODE_PRIVATE, null);
+        db.execSQL("create table if not exists url(url varchar(1000))");
+        Cursor c=db.rawQuery("select * from url",null);
+        int flag=0;
+        while(c.moveToNext()) {
+            flag=1;
+        }
+        if(flag==0)
+            db.execSQL("insert into url values('"+url+"')");
         //db.execSQL("DROP TABLE IF EXISTS users");
         requestQueue = Volley.newRequestQueue(this); // This setups up a new request queue which we will need to make HTTP requests
         submit.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +61,13 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 classes_user.Username=id.getText().toString();
                 classes_user.Password=pass.getText().toString();
-                classes_user.Url=url;
                 login(classes_user.Username,classes_user.Password);
+                if(!url.equals(newurl.getText().toString()))
+                {
+                    url=newurl.getText().toString();
+                    Toast.makeText(getApplicationContext(),"URL Changed",Toast.LENGTH_SHORT).show();
+                }
+                classes_user.Url=url;
             }
         });
 
@@ -76,10 +93,10 @@ public class Login extends AppCompatActivity {
                             String id = response.getJSONObject("korisnik").getString("id");
                             classes_user.Id=Integer.parseInt(id);
                             classes_user.Token=jwt;
-                            sqlite_user.addUser(getApplicationContext(), id, username, password, url, jwt);
-                            Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
+                            sqlite_user.addUser(getApplicationContext(), Integer.parseInt(id), username, password, url, jwt);
                             Intent intent=new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
+                            finish();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
