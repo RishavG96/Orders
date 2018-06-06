@@ -23,7 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-import hera.com.orders.infrastructure.classes.User;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,14 +31,16 @@ public class MainActivity extends AppCompatActivity {
     EditText id;
     EditText pass;
     Button submit;
-    User user;
+    hera.com.orders.infrastructure.classes.User classes_user;
+    hera.com.orders.infrastructure.sqlite.User sqlite_user;
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
     String url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/login"; // This will hold the full URL which will include the username entered in the id.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        user=new User();
+        classes_user=new hera.com.orders.infrastructure.classes.User();
+        sqlite_user=new hera.com.orders.infrastructure.sqlite.User();
         this.id = (EditText) findViewById(R.id.ID);
         this.pass = (EditText) findViewById(R.id.pass);
         this.submit = (Button) findViewById(R.id.send);
@@ -46,15 +48,15 @@ public class MainActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.Username=id.getText().toString();
-                user.Password=pass.getText().toString();
-                user.Url=url;
-                login(user.Username,user.Password);
+                classes_user.Username=id.getText().toString();
+                classes_user.Password=pass.getText().toString();
+                classes_user.Url=url;
+                login(classes_user.Username,classes_user.Password);
             }
         });
 
     }
-    public void login(String username, String password)
+    public void login(final String username, final String password)
     {
         RequestQueue queue = Volley.newRequestQueue(this);
         JSONObject parameters = new JSONObject();
@@ -73,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             String jwt = response.getString("jwt");
                             String id = response.getJSONObject("korisnik").getString("id");
-                            user.Id=Integer.parseInt(id);                            user.Token=jwt;
+                            classes_user.Id=Integer.parseInt(id);
+                            classes_user.Token=jwt;
+                            sqlite_user.addUser(getApplicationContext(), id, username, password, url, jwt);
                             Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             e.printStackTrace();
