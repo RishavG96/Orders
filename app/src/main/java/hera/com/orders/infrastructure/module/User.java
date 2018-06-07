@@ -1,4 +1,4 @@
-package hera.com.orders.infrastructure.classes;
+package hera.com.orders.infrastructure.module;
 
 
 public class User {

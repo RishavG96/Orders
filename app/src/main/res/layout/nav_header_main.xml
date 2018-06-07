@@ -14,8 +14,8 @@
 
     <ImageView
         android:id="@+id/nav_header_imageView"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="100dp"
+        android:layout_height="90dp"
         android:src="@mipmap/ic_launcher" />
 
     <TextView

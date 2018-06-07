@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UpdateURL extends AppCompatActivity {
+public class UpdateURLActivity extends AppCompatActivity {
 
     EditText editText;
     Button update;
