@@ -85,7 +85,7 @@ public class Partner {
                                         businessHours, timeOfReceipt, responsiblePerson, forMobile);
 
                             }
-                            partner.showPartner(context);
+//                            partner.showPartner(context);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

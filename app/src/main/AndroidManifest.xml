@@ -20,7 +20,10 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".UpdateURLActivity" />
-        <activity android:name=".PartnersActivity"></activity>
+        <activity
+            android:name=".PartnersActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".PartnerDetailsActivity"></activity>
     </application>
 
 </manifest>
