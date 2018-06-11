@@ -1,6 +1,7 @@
 package hera.com.orders.infrastructure.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import hera.com.orders.PartnerDetailsActivity;
 import hera.com.orders.R;
 import hera.com.orders.infrastructure.sqlite.Partner;
 
@@ -25,6 +27,7 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
     Context context;
     ArrayList name, code, amount, address, city;
     private ItemFilter mFilter = new ItemFilter();
+    public static int pos;
     public PartnerListAdapter(Context context, ArrayList name, ArrayList code, ArrayList amount, ArrayList address, ArrayList city)
     {
         this.context=context;
@@ -52,7 +55,7 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         convertView=inflater.inflate(R.layout.partner_layout,null);
         TextView n=(TextView)convertView.findViewById(R.id.textView2);
         TextView co=(TextView)convertView.findViewById(R.id.textView5);
@@ -75,7 +78,9 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.show:
-
+                                        pos=position;
+                                        Intent intent=new Intent(context, PartnerDetailsActivity.class);
+                                        context.startActivity(intent);
                                         break;
                                     case R.id.delete:
                                         break;
@@ -92,9 +97,6 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
         ad.setText("Address: "+address.get(position).toString());
         ci.setText("    City: "+city.get(position).toString());
         return convertView;
-    }
-    static class ViewHolder {
-        TextView text;
     }
 
     @Override
