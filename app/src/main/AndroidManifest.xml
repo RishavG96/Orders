@@ -23,7 +23,8 @@
         <activity
             android:name=".PartnersActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".PartnerDetailsActivity"></activity>
+        <activity android:name=".PartnerDetailsActivity" />
+        <activity android:name=".ArticleActivity"></activity>
     </application>
 
 </manifest>

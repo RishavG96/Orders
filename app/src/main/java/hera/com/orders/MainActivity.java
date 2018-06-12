@@ -52,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), PartnersActivity.class);
                                 startActivity(intent);
                                 break;
+                            case R.id.article:
+                                Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
+                                startActivity(intent1);
+                                break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER
                         return true;
