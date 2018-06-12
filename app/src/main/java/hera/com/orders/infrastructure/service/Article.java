@@ -76,7 +76,7 @@ public class Article {
                                         netto, weigh, price);
 
                             }
-                            sqlite_article.showArticle(context);
+                            //sqlite_article.showArticle(context);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

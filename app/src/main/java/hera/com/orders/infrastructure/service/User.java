@@ -3,6 +3,8 @@ package hera.com.orders.infrastructure.service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -18,14 +20,18 @@ import org.json.JSONObject;
 import hera.com.orders.LoginActivity;
 import hera.com.orders.MainActivity;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class User {
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
+    SQLiteDatabase db;
     public void login(final Context context, final String username, final String password)
     {
         requestQueue = Volley.newRequestQueue(context); // This setups up a new request queue which we will need to make HTTP requests
         RequestQueue queue = Volley.newRequestQueue(context);
         JSONObject parameters = new JSONObject();
+        db=context.openOrCreateDatabase("order",MODE_PRIVATE, null);
         try {
             parameters.put("username",username);
             parameters.put("password", password);
@@ -39,6 +45,7 @@ public class User {
                     public void onResponse(JSONObject response)
                     {
                         try {
+                            db.execSQL("insert into login values(1)");
                             String jwt = response.getString("jwt");
                             String id = response.getJSONObject("korisnik").getString("id");
                             MainActivity.Id=Integer.parseInt(id);

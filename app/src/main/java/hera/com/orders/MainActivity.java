@@ -2,6 +2,8 @@ package hera.com.orders;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,12 +31,18 @@ public class MainActivity extends AppCompatActivity {
     public static int Id;
     NavigationView navigationView;
     ListView listView;
+    SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        db=openOrCreateDatabase("order",MODE_PRIVATE, null);
+        Cursor c=db.rawQuery("select * from user1",null);
+        while(c.moveToNext())
+        {
+            Id=c.getInt(0);
+        }
         navigationView=findViewById(R.id.nav_view);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -51,10 +59,12 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.partner:
                                 Intent intent = new Intent(getApplicationContext(), PartnersActivity.class);
                                 startActivity(intent);
+                                finish();
                                 break;
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
+                                finish();
                                 break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER
@@ -84,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.logout:
                     Intent intent1 = new Intent(this, LoginActivity.class);
                     startActivity(intent1);
+                    finish();
+                    db.execSQL("delete from login");
                     break;
             }
         }
@@ -101,5 +113,11 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 }

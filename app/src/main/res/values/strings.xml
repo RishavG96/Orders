@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Orders</string>
+    <string name="app_name">ORDERS</string>
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Closed</string>
 </resources>
