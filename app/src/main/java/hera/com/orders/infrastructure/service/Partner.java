@@ -61,6 +61,7 @@ public class Partner {
                     {
                         try {
                             partner.deletePartner(context);
+                            //db.beginTransaction();
                             for(int i=0;i<response.length();i++)
                             {
 
@@ -85,6 +86,8 @@ public class Partner {
                                         businessHours, timeOfReceipt, responsiblePerson, forMobile);
 
                             }
+                            //db.setTransactionSuccessful();
+                            //db.endTransaction();
 //                            partner.showPartner(context);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -112,3 +115,4 @@ public class Partner {
         queue.add(strRequest);
     }
 }
+

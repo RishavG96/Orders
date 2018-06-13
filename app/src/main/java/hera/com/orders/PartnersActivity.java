@@ -2,6 +2,8 @@ package hera.com.orders;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -12,6 +14,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewStub;
 import android.widget.EditText;
@@ -32,10 +36,12 @@ public class PartnersActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partners);
+        db=openOrCreateDatabase("order",MODE_PRIVATE, null);
 
         lv=findViewById(R.id.listview);
         searchEditText=findViewById(R.id.editText5);
@@ -86,6 +92,11 @@ public class PartnersActivity extends AppCompatActivity {
                                 startActivity(intent1);
                                 finish();
                                 break;
+                            case R.id.orders:
+                                Intent intent2=new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent2);
+                                finish();
+                                break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER
                         return true;
@@ -93,9 +104,30 @@ public class PartnersActivity extends AppCompatActivity {
                 });
     }
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.mainmenu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
+        }
+        else {
+            switch (item.getItemId()) {
+                case R.id.setup:
+                    Intent intent = new Intent(this, UpdateURLActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.logout:
+                    Intent intent1 = new Intent(this, LoginActivity.class);
+                    startActivity(intent1);
+                    finish();
+                    db.execSQL("delete from login");
+                    break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
