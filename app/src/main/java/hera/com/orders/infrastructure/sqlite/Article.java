@@ -26,11 +26,32 @@ public class Article {
                 "'"+netto+"','"+weight+"','"+price+"')");
     }
     public void showArticle(Context context) {
+        id=new ArrayList();
+        code=new ArrayList();
+        name=new ArrayList();
+        shortName=new ArrayList();
+        units=new ArrayList();
+        packing=new ArrayList();
+        brutto=new ArrayList();
+        netto=new ArrayList();
+        weight=new ArrayList();
+        price=new ArrayList();
+        db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
         Cursor c = db.rawQuery("select * from articles", null);
         StringBuffer stringBuffer = new StringBuffer();
         while (c.moveToNext()) {
-            stringBuffer.append(c.getString(0) + "    ");
+            //stringBuffer.append(c.getString(0) + "    ");
+            id.add(c.getString(0));
+            name.add(c.getString(2));
+            code.add(c.getString(1));
+            packing.add(c.getString(5));
+            shortName.add(c.getString(3));
+            units.add(c.getString(4));
+            brutto.add(c.getString(6));
+            netto.add(c.getString(7));
+            weight.add(c.getString(8));
+            price.add(c.getString(9));
         }
-        Toast.makeText(context, stringBuffer, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, stringBuffer, Toast.LENGTH_SHORT).show();
     }
 }

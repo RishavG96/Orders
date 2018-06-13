@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText pass;
     Button submit;
     EditText newurl;
+    public static int part, art;
     public static hera.com.orders.infrastructure.module.User classes_user;
     public static hera.com.orders.infrastructure.sqlite.User sqlite_user;
     public static hera.com.orders.infrastructure.service.User service_user;
@@ -58,9 +59,13 @@ public class LoginActivity extends AppCompatActivity {
         }
         if(flag1==0) {
 //            db.execSQL("insert into login values(1)");
+            part=0;
+            art=0;
         }
         else
         {
+            part=1;
+            art=1;
             Intent intent=new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -94,9 +99,16 @@ public class LoginActivity extends AppCompatActivity {
         }
         if(flag1==1)
         {
+            part=1;
+            art=1;
             Intent intent=new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
+        }
+        else
+        {
+            part=0;
+            art=0;
         }
     }
 }

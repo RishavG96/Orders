@@ -9,6 +9,27 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="55dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Search here"
+            android:background="#33d4ff"/>
+
+        <ListView
+            android:id="@+id/listview1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/editText3" />
+    </LinearLayout>
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"

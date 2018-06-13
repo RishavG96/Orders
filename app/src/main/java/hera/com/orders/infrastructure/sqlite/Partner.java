@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import hera.com.orders.PartnersActivity;
 import hera.com.orders.infrastructure.service.Sorting_Partner;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -18,18 +19,18 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class Partner {
-    SQLiteDatabase db;
+
     public static ArrayList<String> id, code, name, address, city, amount, type, discount, status, businessHours, timeOfReceipt, responsiblePerson, forMobile;
     public void addPartner(Context context, int Id, String code, String name, String address, String city, String amount,
                            String type, String discount, String status, String businessHours, String timeOfReceipt,
                            String responsiblePerson, String forMobile)
     {
-        db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
-        db.execSQL("create table if not exists partners(id integer, code varchar(1000), name varchar(1000)," +
+        PartnersActivity.db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
+        PartnersActivity.db.execSQL("create table if not exists partners(id integer, code varchar(1000), name varchar(1000)," +
                 " address varchar(1000), city varchar(1000), amount varchar(1000), type varchar(1000), discount varchar(1000)" +
                 ", status varchar(1000), businessHours varchar(1000), timeOfReceipt varchar(1000), responsiblePerson varchar(10000)," +
                 " forMobile varchar(1000))");
-        db.execSQL("insert into partners values ("+Id+",'"+code+"','"+name+"','"+address+"','"+city+"','"+amount+"'," +
+        PartnersActivity.db.execSQL("insert into partners values ("+Id+",'"+code+"','"+name+"','"+address+"','"+city+"','"+amount+"'," +
                 "'"+type+"','"+discount+"','"+status+"','"+businessHours+"','"+timeOfReceipt+"','"+responsiblePerson+"'" +
                 ",'"+forMobile+"')");
 
@@ -49,8 +50,8 @@ public class Partner {
         timeOfReceipt=new ArrayList();
         responsiblePerson=new ArrayList();
         forMobile=new ArrayList();
-        db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
-        Cursor c=db.rawQuery("select * from partners",null);
+        //db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
+        Cursor c=PartnersActivity.db.rawQuery("select * from partners",null);
         StringBuffer stringBuffer=new StringBuffer();
         while(c.moveToNext())
         {
@@ -118,7 +119,7 @@ public class Partner {
     }
     public void deletePartner(Context context)
     {
-        db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
-        db.execSQL("delete from partners");
+        PartnersActivity.db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
+        PartnersActivity.db.execSQL("delete from partners");
     }
 }

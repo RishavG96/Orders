@@ -3,7 +3,6 @@ package hera.com.orders;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -17,13 +16,11 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewStub;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import hera.com.orders.infrastructure.adapters.PartnerListAdapter;
-import hera.com.orders.infrastructure.sqlite.Partner;
 
 public class PartnersActivity extends AppCompatActivity {
 
@@ -36,17 +33,18 @@ public class PartnersActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    SQLiteDatabase db;
+    public static SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partners);
-        db=openOrCreateDatabase("order",MODE_PRIVATE, null);
 
+        db=openOrCreateDatabase("order",MODE_PRIVATE, null);
         lv=findViewById(R.id.listview);
         searchEditText=findViewById(R.id.editText5);
         service_partner=new hera.com.orders.infrastructure.service.Partner();
         sqlite_partner=new hera.com.orders.infrastructure.sqlite.Partner();
+
         service_partner.connect(this);
         sqlite_partner.showPartner(this);
         adapter=new PartnerListAdapter(this, sqlite_partner.name, sqlite_partner.code,
@@ -60,7 +58,6 @@ public class PartnersActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String text=searchEditText.getText().toString();
                 adapter.getFilter().filter(s);
             }
 
@@ -69,6 +66,7 @@ public class PartnersActivity extends AppCompatActivity {
 
             }
         });
+
         navigationView=findViewById(R.id.nav_view1);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);

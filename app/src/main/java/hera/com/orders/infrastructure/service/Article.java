@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hera.com.orders.ArticleActivity;
+import hera.com.orders.LoginActivity;
 import hera.com.orders.MainActivity;
 import hera.com.orders.PartnersActivity;
 
@@ -54,27 +55,27 @@ public class Article {
                     public void onResponse(JSONArray response)
                     {
                         try {
-                            Toast.makeText(context, "here"+response.length(), Toast.LENGTH_SHORT).show();
-                            db.execSQL("delete from articles");
-                            for(int i=0;i<response.length();i++)
-                            {
+                            if(LoginActivity.art==0) {
+                                db.execSQL("delete from articles");
+                                for (int i = 0; i < response.length(); i++) {
 
-                                JSONObject ob= (JSONObject) response.opt(i);
+                                    JSONObject ob = (JSONObject) response.opt(i);
 
-                                int Id=Integer.parseInt(ob.optString("id"));
-                                String code=ob.optString("code");
-                                String name=ob.optString("name");
-                                String brutto=ob.optString("brutto");
-                                String netto=ob.optString("netto");
-                                String packing=ob.optString("packing");
-                                String price=ob.optString("price");
-                                String shortname=ob.optString("shortname");
-                                String units=ob.optString("units");
-                                String weigh=ob.optString("weigh");
+                                    int Id = Integer.parseInt(ob.optString("id"));
+                                    String code = ob.optString("code");
+                                    String name = ob.optString("name");
+                                    String brutto = ob.optString("brutto");
+                                    String netto = ob.optString("netto");
+                                    String packing = ob.optString("packing");
+                                    String price = ob.optString("price");
+                                    String shortname = ob.optString("shortname");
+                                    String units = ob.optString("units");
+                                    String weigh = ob.optString("weigh");
 
-                                sqlite_article.addArticle(context, Id, code, name, shortname, units, packing, brutto,
-                                        netto, weigh, price);
-
+                                    sqlite_article.addArticle(context, Id, code, name, shortname, units, packing, brutto,
+                                            netto, weigh, price);
+                                    LoginActivity.art=1;
+                                }
                             }
                             //sqlite_article.showArticle(context);
                         } catch (Exception e) {
