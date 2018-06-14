@@ -30,6 +30,8 @@ public class Partner {
                 " address varchar(1000), city varchar(1000), amount varchar(1000), type varchar(1000), discount varchar(1000)" +
                 ", status varchar(1000), businessHours varchar(1000), timeOfReceipt varchar(1000), responsiblePerson varchar(10000)," +
                 " forMobile varchar(1000))");
+        if(name.contains("\""))
+            name.replace("\"","'");
         PartnersActivity.db.execSQL("insert into partners values ("+Id+",'"+code+"','"+name+"','"+address+"','"+city+"','"+amount+"'," +
                 "'"+type+"','"+discount+"','"+status+"','"+businessHours+"','"+timeOfReceipt+"','"+responsiblePerson+"'" +
                 ",'"+forMobile+"')");
@@ -116,6 +118,42 @@ public class Partner {
 //            }
         }
 //        Toast.makeText(context, stringBuffer, Toast.LENGTH_SHORT).show();
+    }
+    public static void showPartner(Context context, ArrayList n)
+    {
+        id=new ArrayList();
+        code=new ArrayList();
+        name=new ArrayList();
+        type=new ArrayList();
+        amount=new ArrayList();
+        address=new ArrayList();
+        city=new ArrayList();
+        discount=new ArrayList();
+        status=new ArrayList();
+        businessHours=new ArrayList();
+        timeOfReceipt=new ArrayList();
+        responsiblePerson=new ArrayList();
+        forMobile=new ArrayList();
+        //db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
+        for(int i =0; i< n.size(); i++) {
+            Cursor c = PartnersActivity.db.rawQuery("select * from partners where name =\""+ n.get(i) + "\"", null);
+            StringBuffer stringBuffer = new StringBuffer();
+            while (c.moveToNext()) {
+                id.add(c.getString(0));
+                name.add(c.getString(2));
+                code.add(c.getString(1));
+                amount.add(c.getString(5));
+                address.add(c.getString(3));
+                city.add(c.getString(4));
+                type.add(c.getString(6));
+                discount.add(c.getString(7));
+                status.add(c.getString(8));
+                businessHours.add(c.getString(9));
+                timeOfReceipt.add(c.getString(10));
+                responsiblePerson.add(c.getString(11));
+                forMobile.add(c.getString(12));
+            }
+        }
     }
     public void deletePartner(Context context)
     {

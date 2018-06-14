@@ -13,21 +13,12 @@ tools:openDrawer="start">
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical">
-        <EditText
-            android:id="@+id/editText5"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="55dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Search here"
-            android:background="#33d4ff"/>
 
         <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/editText5" />
+            android:layout_marginTop="55dp" />
     </LinearLayout>
 
 <include

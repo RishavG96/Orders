@@ -23,16 +23,23 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
 
     LayoutInflater inflater;
     Context context;
-    ArrayList name=new ArrayList(), code, amount, units;
-    private ItemFilter mFilter = new ItemFilter();
+    ArrayList name, code, amount, units, original_name, original_code, original_amount, original_units;
+    //private ItemFilter mFilter = new ItemFilter();
     public static int pos;
+    ArrayList FilteredArrList1;
+    ArrayList FilteredArrList2;
+    ArrayList FilteredArrList3;
     public ArticleListAdapter(Context context, ArrayList name, ArrayList code, ArrayList amount, ArrayList units)
     {
         this.context=context;
         this.name=name;
+        this.original_name=name;
         this.code=code;
+        this.original_code=code;
         this.amount=amount;
+        this.original_amount=amount;
         this.units=units;
+        this.original_units=units;
         inflater=LayoutInflater.from(context);
 
     }
@@ -97,42 +104,129 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public Filter getFilter() {
-        return mFilter;
-    }
-    private class ItemFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
+        Filter filter = new Filter() {
 
-            String filterString = constraint.toString().toLowerCase();
-
-            FilterResults results = new FilterResults();
-
-            final List<String> list = Article.name;
-
-            int count = list.size();
-            final ArrayList<String> nlist = new ArrayList<String>(count);
-
-            String filterableString ;
-
-            for (int i = 0; i < count; i++) {
-                filterableString = list.get(i);
-                if (filterableString.toLowerCase().contains(filterString)) {
-                    nlist.add(filterableString);
-                }
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,FilterResults results) {
+                name = (ArrayList)results.values; // has the filtered values
+                code=FilteredArrList1;
+                amount=FilteredArrList2;
+                units=FilteredArrList3;
+                Article.name=name;
+                Article.code=code;
+                Article.price=amount;
+                Article.units=units;
+                notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
-            results.values = nlist;
-            results.count = nlist.size();
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
+                ArrayList FilteredArrList = new ArrayList();
+                FilteredArrList1 = new ArrayList();
+                FilteredArrList2 = new ArrayList();
+                FilteredArrList3 = new ArrayList();
 
-            return results;
-        }
+                if (original_name == null) {
+                    original_name = new ArrayList(name);
+                }
+                if (original_code == null) {
+                    original_code = new ArrayList(code);
+                }
+                if (original_amount == null) {
+                    original_amount = new ArrayList(amount);
+                }
+                if (original_units == null) {
+                    original_units = new ArrayList(units);
+                }
 
-        @SuppressWarnings("unchecked")
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            name = (ArrayList<String>) results.values;
-            notifyDataSetChanged();
-        }
+                if (constraint == null || constraint.length() == 0) {
 
+                    // set the Original result to return
+                    results.count =original_name.size();
+                    results.values = original_name;
+                    FilteredArrList1=original_code;
+                    FilteredArrList2=original_amount;
+                    FilteredArrList3=original_units;
+                } else {
+                    constraint = constraint.toString().toLowerCase();
+                    String[] temp=new String[1000];
+                    int flag;
+                    String filterString=constraint.toString();
+                    if(filterString.contains(" ")) {
+                        temp = filterString.split(" ");
+                        flag=1;
+                    }
+                    else
+                    {
+                        flag=0;
+                    }
+                    for (int i = 0; i < original_name.size(); i++) {
+                        String name_data = (String)original_name.get(i);
+                        String code_data = (String)original_code.get(i);
+                        if(flag==0) {
+                            if (name_data.toLowerCase().contains(constraint.toString())) {
+                                FilteredArrList.add(original_name.get(i));
+                                FilteredArrList1.add(original_code.get(i));
+                                FilteredArrList2.add(original_amount.get(i));
+                                FilteredArrList3.add(original_units.get(i));
+                            }
+                        }
+                        else if(temp.length >1)
+                        {
+                            if (name_data.toLowerCase().contains(temp[0]) && code_data.toLowerCase().contains(temp[1])) {
+                                FilteredArrList.add(original_name.get(i));
+                                FilteredArrList1.add(original_code.get(i));
+                                FilteredArrList2.add(original_amount.get(i));
+                                FilteredArrList3.add(original_units.get(i));
+                            }
+                        }
+                    }
+                    // set the Filtered result to return
+                    results.count = FilteredArrList.size();
+                    results.values = FilteredArrList;
+                }
+                return results;
+            }
+        };
+        return filter;
+//        return mFilter;
     }
+//    private class ItemFilter extends Filter {
+//        @Override
+//        protected FilterResults performFiltering(CharSequence constraint) {
+//
+//            String filterString = constraint.toString().toLowerCase();
+//
+//            FilterResults results = new FilterResults();
+//
+//            final List<String> list = Article.name;
+//
+//            int count = list.size();
+//            final ArrayList<String> nlist = new ArrayList<String>(count);
+//
+//            String filterableString ;
+//
+//            for (int i = 0; i < count; i++) {
+//                filterableString = list.get(i);
+//                if (filterableString.toLowerCase().contains(filterString)) {
+//                    nlist.add(filterableString);
+//                }
+//            }
+//
+//            results.values = nlist;
+//            results.count = nlist.size();
+//
+//            return results;
+//        }
+//
+//        @SuppressWarnings("unchecked")
+//        @Override
+//        protected void publishResults(CharSequence constraint, FilterResults results) {
+//            name = (ArrayList<String>) results.values;
+//            notifyDataSetChanged();
+//        }
+//
+//    }
 }

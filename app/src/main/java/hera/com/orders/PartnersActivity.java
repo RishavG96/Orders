@@ -1,5 +1,7 @@
 package hera.com.orders;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,13 +30,13 @@ public class PartnersActivity extends AppCompatActivity {
     public static hera.com.orders.infrastructure.service.Partner service_partner;
     hera.com.orders.infrastructure.sqlite.Partner sqlite_partner;
     public static String partner_url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/partneri";
-    ListView lv;
-    EditText searchEditText;
+    public static ListView lv;
     PartnerListAdapter adapter;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     public static SQLiteDatabase db;
+    SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,6 @@ public class PartnersActivity extends AppCompatActivity {
 
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
         lv=findViewById(R.id.listview);
-        searchEditText=findViewById(R.id.editText5);
         service_partner=new hera.com.orders.infrastructure.service.Partner();
         sqlite_partner=new hera.com.orders.infrastructure.sqlite.Partner();
 
@@ -50,22 +52,6 @@ public class PartnersActivity extends AppCompatActivity {
         adapter=new PartnerListAdapter(this, sqlite_partner.name, sqlite_partner.code,
                 sqlite_partner.amount, sqlite_partner.address, sqlite_partner.city);
         lv.setAdapter(adapter);
-        searchEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter(s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         navigationView=findViewById(R.id.nav_view1);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
@@ -105,6 +91,27 @@ public class PartnersActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.mainmenu,menu);
+
+        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.performClick();
+        searchView.requestFocus();
+        searchView.setIconifiedByDefault(false);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
 

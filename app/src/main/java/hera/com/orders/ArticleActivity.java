@@ -1,5 +1,7 @@
 package hera.com.orders;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,14 +35,15 @@ public class ArticleActivity extends AppCompatActivity {
     ArticleListAdapter adapter;
     SQLiteDatabase db;
     ListView listView;
-    EditText editText;
+    SearchView searchView;
+//    EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
 
         listView=findViewById(R.id.listview1);
-        editText=findViewById(R.id.editText3);
+//        editText=findViewById(R.id.editText3);
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
         service_article = new hera.com.orders.infrastructure.service.Article();
         sqlite_article = new hera.com.orders.infrastructure.sqlite.Article();
@@ -49,22 +53,22 @@ public class ArticleActivity extends AppCompatActivity {
         adapter=new ArticleListAdapter(this, sqlite_article.name, sqlite_article.code,
                 sqlite_article.price, sqlite_article.units);
         listView.setAdapter(adapter);
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter(s);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+//        editText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                adapter.getFilter().filter(s);
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
         navigationView=findViewById(R.id.nav_view2);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
@@ -104,6 +108,26 @@ public class ArticleActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.mainmenu,menu);
+        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.performClick();
+        searchView.requestFocus();
+        searchView.setIconifiedByDefault(false);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
 

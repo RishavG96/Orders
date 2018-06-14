@@ -12,12 +12,14 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import hera.com.orders.PartnerDetailsActivity;
+import hera.com.orders.PartnersActivity;
 import hera.com.orders.R;
 import hera.com.orders.infrastructure.sqlite.Partner;
 
@@ -25,17 +27,28 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
 
     LayoutInflater inflater;
     Context context;
-    ArrayList name, code, amount, address, city;
-    private ItemFilter mFilter = new ItemFilter();
+    ArrayList name, code, amount, address, city, original_name, original_code, original_amount, original_address, original_city;
+    //private ItemFilter mFilter = new ItemFilter();
     public static int pos;
+    PartnerListAdapter adapter;
+    ArrayList FilteredArrList1;
+    ArrayList FilteredArrList2;
+    ArrayList FilteredArrList3;
+    ArrayList FilteredArrList4;
+
     public PartnerListAdapter(Context context, ArrayList name, ArrayList code, ArrayList amount, ArrayList address, ArrayList city)
     {
         this.context=context;
         this.name=name;
+        this.original_name=name;
         this.code=code;
+        this.original_code=code;
         this.amount=amount;
+        this.original_amount=amount;
         this.address=address;
+        this.original_address=address;
         this.city=city;
+        this.original_city=city;
         inflater=LayoutInflater.from(context);
 
     }
@@ -101,43 +114,100 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
 
     @Override
     public Filter getFilter() {
-        return mFilter;
-    }
+        Filter filter = new Filter() {
 
-    private class ItemFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-
-            String filterString = constraint.toString().toLowerCase();
-
-            FilterResults results = new FilterResults();
-
-            final List<String> list = Partner.name;
-
-            int count = list.size();
-            final ArrayList<String> nlist = new ArrayList<String>(count);
-
-            String filterableString ;
-
-            for (int i = 0; i < count; i++) {
-                filterableString = list.get(i);
-                if (filterableString.toLowerCase().contains(filterString)) {
-                    nlist.add(filterableString);
-                }
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,FilterResults results) {
+                name = (ArrayList)results.values; // has the filtered values
+                code=FilteredArrList1;
+                amount=FilteredArrList2;
+                address=FilteredArrList3;
+                city=FilteredArrList4;
+                Partner.name=name;
+                Partner.code=code;
+                Partner.amount=amount;
+                Partner.address=address;
+                Partner.city=city;
+                notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
-            results.values = nlist;
-            results.count = nlist.size();
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
+                ArrayList FilteredArrList = new ArrayList();
+                FilteredArrList1 = new ArrayList();
+                FilteredArrList2 = new ArrayList();
+                FilteredArrList3 = new ArrayList();
 
-            return results;
-        }
+                if (original_name == null) {
+                    original_name = new ArrayList(name);
+                }
+                if (original_code == null) {
+                    original_code = new ArrayList(code);
+                }
+                if (original_amount == null) {
+                    original_amount = new ArrayList(amount);
+                }
+                if (original_address == null) {
+                    original_address = new ArrayList(address);
+                }
+                if (original_city == null) {
+                    original_city = new ArrayList(city);
+                }
 
-        @SuppressWarnings("unchecked")
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            name = (ArrayList<String>) results.values;
-            notifyDataSetChanged();
-        }
+                if (constraint == null || constraint.length() == 0) {
 
+                    // set the Original result to return
+                    results.count =original_name.size();
+                    results.values = original_name;
+                    FilteredArrList1=original_code;
+                    FilteredArrList2=original_amount;
+                    FilteredArrList3=original_address;
+                    FilteredArrList4=original_city;
+                } else {
+                    constraint = constraint.toString().toLowerCase();
+                    String[] temp=new String[1000];
+                    int flag;
+                    String filterString=constraint.toString();
+                    if(filterString.contains(" ")) {
+                        temp = filterString.split(" ");
+                        flag=1;
+                    }
+                    else
+                    {
+                        flag=0;
+                    }
+                    for (int i = 0; i < original_name.size(); i++) {
+                        String name_data = (String)original_name.get(i);
+                        String address_data = (String)original_address.get(i);
+                        if(flag==0) {
+                            if (name_data.toLowerCase().contains(constraint.toString())) {
+                                FilteredArrList.add(original_name.get(i));
+                                FilteredArrList1.add(original_code.get(i));
+                                FilteredArrList2.add(original_amount.get(i));
+                                FilteredArrList3.add(original_address.get(i));
+                                FilteredArrList4.add(original_city.get(i));
+                            }
+                        }
+                        else if(temp.length >1)
+                        {
+                            if (name_data.toLowerCase().contains(temp[0]) && address_data.toLowerCase().contains(temp[1])) {
+                                FilteredArrList.add(original_name.get(i));
+                                FilteredArrList1.add(original_code.get(i));
+                                FilteredArrList2.add(original_amount.get(i));
+                                FilteredArrList3.add(original_address.get(i));
+                                FilteredArrList4.add(original_city.get(i));
+                            }
+                        }
+                    }
+                    // set the Filtered result to return
+                    results.count = FilteredArrList.size();
+                    results.values = FilteredArrList;
+                }
+                return results;
+            }
+        };
+        return filter;
     }
 }
