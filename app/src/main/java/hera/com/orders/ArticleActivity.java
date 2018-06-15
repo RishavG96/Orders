@@ -36,14 +36,12 @@ public class ArticleActivity extends AppCompatActivity {
     SQLiteDatabase db;
     ListView listView;
     SearchView searchView;
-//    EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
 
         listView=findViewById(R.id.listview1);
-//        editText=findViewById(R.id.editText3);
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
         service_article = new hera.com.orders.infrastructure.service.Article();
         sqlite_article = new hera.com.orders.infrastructure.sqlite.Article();
@@ -53,22 +51,6 @@ public class ArticleActivity extends AppCompatActivity {
         adapter=new ArticleListAdapter(this, sqlite_article.name, sqlite_article.code,
                 sqlite_article.price, sqlite_article.units);
         listView.setAdapter(adapter);
-//        editText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                adapter.getFilter().filter(s);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
 
         navigationView=findViewById(R.id.nav_view2);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
@@ -96,6 +78,11 @@ public class ArticleActivity extends AppCompatActivity {
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
+                                finish();
+                                break;
+                            case R.id.assortment:
+                                Intent intent3=new Intent(getApplicationContext(), AssortmentActivity.class);
+                                startActivity(intent3);
                                 finish();
                                 break;
                         }

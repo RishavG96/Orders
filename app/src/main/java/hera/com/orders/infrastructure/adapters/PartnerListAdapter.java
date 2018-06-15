@@ -28,9 +28,7 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
     LayoutInflater inflater;
     Context context;
     ArrayList name, code, amount, address, city, original_name, original_code, original_amount, original_address, original_city;
-    //private ItemFilter mFilter = new ItemFilter();
     public static int pos;
-    PartnerListAdapter adapter;
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;

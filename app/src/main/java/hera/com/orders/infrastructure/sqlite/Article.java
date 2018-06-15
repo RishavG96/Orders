@@ -37,7 +37,7 @@ public class Article {
         weight=new ArrayList();
         price=new ArrayList();
         db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
-        Cursor c = db.rawQuery("select * from articles", null);
+        Cursor c = db.rawQuery("select * from articles order by name asc", null);
         StringBuffer stringBuffer = new StringBuffer();
         while (c.moveToNext()) {
             //stringBuffer.append(c.getString(0) + "    ");

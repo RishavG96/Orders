@@ -7,8 +7,8 @@
             android:title="Partner" />
         <item android:id="@+id/article"
             android:title="Article" />
-        <item android:id="@+id/nav_item_three"
-            android:title="Item 3" />
+        <item android:id="@+id/assortment"
+            android:title="Assortment" />
     </group>
 
 

@@ -19,15 +19,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".UpdateURLActivity"
-            android:label="UPDATE URL"/>
+        <activity
+            android:name=".UpdateURLActivity"
+            android:label="UPDATE URL" />
         <activity
             android:name=".PartnersActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="PARTNER"/>
+            android:label="PARTNER"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".PartnerDetailsActivity" />
-        <activity android:name=".ArticleActivity"
-            android:label="ARTICLE"></activity>
+        <activity
+            android:name=".ArticleActivity"
+            android:label="ARTICLE" />
+        <activity android:name=".AssortmentActivity"
+            android:label="ASSORTMENT" ></activity>
     </application>
 
 </manifest>

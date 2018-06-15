@@ -20,27 +20,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hera.com.orders.ArticleActivity;
+import hera.com.orders.AssortmentActivity;
 import hera.com.orders.LoginActivity;
 import hera.com.orders.MainActivity;
-import hera.com.orders.PartnersActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class Article {
+public class Assortment {
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
-    SQLiteDatabase db;
     String jwtToken;
-    hera.com.orders.infrastructure.sqlite.Article sqlite_article;
+    hera.com.orders.infrastructure.sqlite.Assortment sqlite_assortment;
     Context context;
     public void connect(Context con)
     {
         context=con;
-        db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
-        sqlite_article=new hera.com.orders.infrastructure.sqlite.Article();
+        sqlite_assortment=new hera.com.orders.infrastructure.sqlite.Assortment();
         requestQueue = Volley.newRequestQueue(context); // This setups up a new request queue which we will need to make HTTP requests
         RequestQueue queue = Volley.newRequestQueue(context);
         JSONObject parameters = new JSONObject();
-        Cursor c=db.rawQuery("select * from user1",null);
+        Cursor c=AssortmentActivity.db.rawQuery("select * from user1",null);
         while(c.moveToNext())
         {
             if(c.getInt(0)== MainActivity.Id)
@@ -48,34 +46,29 @@ public class Article {
                 jwtToken=c.getString(3);
             }
         }
-        JsonArrayRequest strRequest = new JsonArrayRequest(Request.Method.GET, ArticleActivity.article_url, (String) null,
+        JsonArrayRequest strRequest = new JsonArrayRequest(Request.Method.GET, AssortmentActivity.assortment_url, (String) null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override
                     public void onResponse(JSONArray response)
                     {
                         try {
-                            if(LoginActivity.art==0) {
-                                db.execSQL("delete from articles");
+                            if(LoginActivity.assort==0) {
+                                Toast.makeText(context,"here",Toast.LENGTH_SHORT).show();
+                                //db.execSQL("delete from assortment");
                                 for (int i = 0; i < response.length(); i++) {
-
                                     JSONObject ob = (JSONObject) response.opt(i);
 
-                                    int Id = Integer.parseInt(ob.optString("id"));
-                                    String code = ob.optString("code");
-                                    String name = ob.optString("name");
-                                    String brutto = ob.optString("brutto");
-                                    String netto = ob.optString("netto");
-                                    String packing = ob.optString("packing");
-                                    String price = ob.optString("price");
-                                    String shortname = ob.optString("shortname");
-                                    String units = ob.optString("units");
-                                    String weigh = ob.optString("weigh");
-
-                                    sqlite_article.addArticle(context, Id, code, name, shortname, units, packing, brutto,
-                                            netto, weigh, price);
+                                    String assortmentId = ob.optString("assortmentId");
+                                    String assortmentItemId = ob.optString("assortmentItemId");
+                                    String partnerId = ob.optString("partnerId");
+//                                    String validFrom = ob.optString("netto");
+//                                    String validTo = ob.optString("packing");
+                                    String articleId = ob.optString("articleId");
+                                    sqlite_assortment.addAssortment(context, assortmentId, assortmentItemId, partnerId, articleId);
                                 }
-                                LoginActivity.art=1;
+                                LoginActivity.assort=1;
+                                Toast.makeText(context,"Table populated",Toast.LENGTH_SHORT).show();
                             }
                             //sqlite_article.showArticle(context);
                         } catch (Exception e) {

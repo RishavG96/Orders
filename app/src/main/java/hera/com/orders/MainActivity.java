@@ -71,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent2);
                                 finish();
                                 break;
+                            case R.id.assortment:
+                                Intent intent3=new Intent(getApplicationContext(), AssortmentActivity.class);
+                                startActivity(intent3);
+                                finish();
+                                break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER
                         return true;

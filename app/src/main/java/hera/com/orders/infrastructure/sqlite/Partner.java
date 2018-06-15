@@ -53,7 +53,7 @@ public class Partner {
         responsiblePerson=new ArrayList();
         forMobile=new ArrayList();
         //db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
-        Cursor c=PartnersActivity.db.rawQuery("select * from partners",null);
+        Cursor c=PartnersActivity.db.rawQuery("select * from partners order by name asc",null);
         StringBuffer stringBuffer=new StringBuffer();
         while(c.moveToNext())
         {
