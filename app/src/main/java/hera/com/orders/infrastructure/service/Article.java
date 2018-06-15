@@ -28,7 +28,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Article {
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
-    SQLiteDatabase db;
+    public static SQLiteDatabase db;
     String jwtToken;
     hera.com.orders.infrastructure.sqlite.Article sqlite_article;
     Context context;
@@ -57,6 +57,7 @@ public class Article {
                         try {
                             if(LoginActivity.art==0) {
                                 db.execSQL("delete from articles");
+                                db.beginTransaction();
                                 for (int i = 0; i < response.length(); i++) {
 
                                     JSONObject ob = (JSONObject) response.opt(i);
@@ -75,6 +76,9 @@ public class Article {
                                     sqlite_article.addArticle(context, Id, code, name, shortname, units, packing, brutto,
                                             netto, weigh, price);
                                 }
+                                db.setTransactionSuccessful();
+                                db.endTransaction();
+                                db.close();
                                 LoginActivity.art=1;
                             }
                             //sqlite_article.showArticle(context);

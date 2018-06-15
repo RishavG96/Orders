@@ -18,11 +18,10 @@ public class Article {
     public static ArrayList<String> id, code, name, shortName, units, packing, brutto, netto, weight, price;
     public void addArticle(Context context, int id, String code, String name, String shortName, String units, String packing
                             , String brutto, String netto, String weight, String price){
-        db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
-        db.execSQL("create table if not exists articles(id integer, code varchar(1000), name vharchar(1000), shortName varchar(1000)," +
+        hera.com.orders.infrastructure.service.Article.db.execSQL("create table if not exists articles(id integer, code varchar(1000), name vharchar(1000), shortName varchar(1000)," +
                 "units vharchar(1000), packing varchar(1000), brutto varchar(1000), netto varchar(1000), weight varchar(1000)," +
                 "price varchar(1000))");
-        db.execSQL("insert into articles values("+id+",'"+code+"','"+name+"','"+shortName+"','"+units+"','"+packing+"','"+brutto+"'," +
+        hera.com.orders.infrastructure.service.Article.db.execSQL("insert into articles values("+id+",'"+code+"','"+name+"','"+shortName+"','"+units+"','"+packing+"','"+brutto+"'," +
                 "'"+netto+"','"+weight+"','"+price+"')");
     }
     public void showArticle(Context context) {

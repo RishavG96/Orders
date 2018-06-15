@@ -25,14 +25,13 @@ public class Partner {
                            String type, String discount, String status, String businessHours, String timeOfReceipt,
                            String responsiblePerson, String forMobile)
     {
-        PartnersActivity.db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
-        PartnersActivity.db.execSQL("create table if not exists partners(id integer, code varchar(1000), name varchar(1000)," +
+        hera.com.orders.infrastructure.service.Partner.db.execSQL("create table if not exists partners(id integer, code varchar(1000), name varchar(1000)," +
                 " address varchar(1000), city varchar(1000), amount varchar(1000), type varchar(1000), discount varchar(1000)" +
                 ", status varchar(1000), businessHours varchar(1000), timeOfReceipt varchar(1000), responsiblePerson varchar(10000)," +
                 " forMobile varchar(1000))");
         if(name.contains("\""))
             name.replace("\"","'");
-        PartnersActivity.db.execSQL("insert into partners values ("+Id+",'"+code+"','"+name+"','"+address+"','"+city+"','"+amount+"'," +
+        hera.com.orders.infrastructure.service.Partner.db.execSQL("insert into partners values ("+Id+",'"+code+"','"+name+"','"+address+"','"+city+"','"+amount+"'," +
                 "'"+type+"','"+discount+"','"+status+"','"+businessHours+"','"+timeOfReceipt+"','"+responsiblePerson+"'" +
                 ",'"+forMobile+"')");
 

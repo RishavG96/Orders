@@ -2,6 +2,7 @@ package hera.com.orders.infrastructure.service;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -22,6 +23,8 @@ import hera.com.orders.LoginActivity;
 import hera.com.orders.MainActivity;
 import hera.com.orders.PartnersActivity;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class Partner {
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
@@ -29,15 +32,16 @@ public class Partner {
     String jwtToken;
     hera.com.orders.infrastructure.sqlite.Partner partner;
     Context context;
-    public void connect( Context con)
+    public static SQLiteDatabase db;
+    public void connect(Context con)
     {
         context=con;
         partner=new hera.com.orders.infrastructure.sqlite.Partner();
         requestQueue = Volley.newRequestQueue(context); // This setups up a new request queue which we will need to make HTTP requests
         RequestQueue queue = Volley.newRequestQueue(context);
         JSONObject parameters = new JSONObject();
-        //db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
-        Cursor c=PartnersActivity.db.rawQuery("select * from user1",null);
+        db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
+        Cursor c=db.rawQuery("select * from user1",null);
         while(c.moveToNext())
         {
             if(c.getInt(0)==MainActivity.Id)
@@ -52,8 +56,11 @@ public class Partner {
                     public void onResponse(JSONArray response)
                     {
                         try {
+
                             if(LoginActivity.part==0) {
+                                db=context.openOrCreateDatabase("order", MODE_PRIVATE,null);
                                 partner.deletePartner(context);
+                                db.beginTransaction();
                                 for (int i = 0; i < response.length(); i++) {
 
                                     JSONObject ob = (JSONObject) response.opt(i);
@@ -75,8 +82,11 @@ public class Partner {
 
                                     partner.addPartner(context, Id, code, name, address, city, amount, type, discount, status,
                                             businessHours, timeOfReceipt, responsiblePerson, forMobile);
-                                    LoginActivity.part=1;
                                 }
+                                db.setTransactionSuccessful();
+                                db.endTransaction();
+                                db.close();
+                                LoginActivity.part=1;
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

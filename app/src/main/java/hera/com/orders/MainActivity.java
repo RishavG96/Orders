@@ -1,9 +1,12 @@
 package hera.com.orders;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,13 +33,20 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     public static int Id;
     NavigationView navigationView;
-    ListView listView;
+    ProgressDialog progressDialog;
     SQLiteDatabase db;
+    hera.com.orders.infrastructure.service.Partner service_partner;
+    hera.com.orders.infrastructure.service.Article service_article;
+    hera.com.orders.infrastructure.service.Assortment service_assortment;
+    Handler handle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        service_partner = new hera.com.orders.infrastructure.service.Partner();
+        service_article = new hera.com.orders.infrastructure.service.Article();
+        service_assortment = new hera.com.orders.infrastructure.service.Assortment();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
         Cursor c=db.rawQuery("select * from user1",null);
         while(c.moveToNext())
@@ -51,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        handle = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                progressDialog.incrementProgressBy(1);
+            }
+        };
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -75,6 +92,35 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent3=new Intent(getApplicationContext(), AssortmentActivity.class);
                                 startActivity(intent3);
                                 finish();
+                                break;
+                            case R.id.refresh:
+                                service_partner.connect(getApplicationContext());
+                                service_article.connect(getApplicationContext());
+                                service_assortment.connect(getApplicationContext());
+                                progressDialog = new ProgressDialog(MainActivity.this);
+                                progressDialog.setMax(100);
+                                progressDialog.setMessage("Loading....");
+                                progressDialog.setTitle("Refreshing database");
+                                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                                progressDialog.show();
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            while (progressDialog.getProgress() <= progressDialog
+                                                    .getMax()) {
+                                                Thread.sleep(60);
+                                                handle.sendMessage(handle.obtainMessage());
+                                                if (progressDialog.getProgress() == progressDialog
+                                                        .getMax()) {
+                                                    progressDialog.dismiss();
+                                                }
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }).start();
                                 break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER

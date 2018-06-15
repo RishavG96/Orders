@@ -31,6 +31,7 @@ public class Assortment {
     String jwtToken;
     hera.com.orders.infrastructure.sqlite.Assortment sqlite_assortment;
     Context context;
+    public static SQLiteDatabase db;
     public void connect(Context con)
     {
         context=con;
@@ -38,7 +39,8 @@ public class Assortment {
         requestQueue = Volley.newRequestQueue(context); // This setups up a new request queue which we will need to make HTTP requests
         RequestQueue queue = Volley.newRequestQueue(context);
         JSONObject parameters = new JSONObject();
-        Cursor c=AssortmentActivity.db.rawQuery("select * from user1",null);
+        db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
+        Cursor c=db.rawQuery("select * from user1",null);
         while(c.moveToNext())
         {
             if(c.getInt(0)== MainActivity.Id)
@@ -54,8 +56,9 @@ public class Assortment {
                     {
                         try {
                             if(LoginActivity.assort==0) {
-                                Toast.makeText(context,"here",Toast.LENGTH_SHORT).show();
-                                //db.execSQL("delete from assortment");
+                                db=context.openOrCreateDatabase("order",context.MODE_PRIVATE,null);
+                                db.execSQL("delete from assortment");
+                                db.beginTransaction();
                                 for (int i = 0; i < response.length(); i++) {
                                     JSONObject ob = (JSONObject) response.opt(i);
 
@@ -67,6 +70,9 @@ public class Assortment {
                                     String articleId = ob.optString("articleId");
                                     sqlite_assortment.addAssortment(context, assortmentId, assortmentItemId, partnerId, articleId);
                                 }
+                                db.setTransactionSuccessful();
+                                db.endTransaction();
+                                db.close();
                                 LoginActivity.assort=1;
                                 Toast.makeText(context,"Table populated",Toast.LENGTH_SHORT).show();
                             }
