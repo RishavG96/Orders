@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         {
             Id=c.getInt(0);
         }
+
         navigationView=findViewById(R.id.nav_view);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
         handle = new Handler() {
             @Override
             public void handleMessage(Message msg) {
