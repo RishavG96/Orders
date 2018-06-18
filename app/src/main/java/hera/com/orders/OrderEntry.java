@@ -1,8 +1,6 @@
 package hera.com.orders;
 
 import android.app.DatePickerDialog;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.PersistableBundle;
@@ -12,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,7 +44,7 @@ public class OrderEntry extends AppCompatActivity {
         submit=findViewById(R.id.button2);
         myCalendar= Calendar.getInstance();
 
-        name.setText(MainActivity.partnerName);
+        name.setText(OrderPartners.partnerName);
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 

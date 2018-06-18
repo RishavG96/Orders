@@ -6,12 +6,13 @@
     tools:context=".infrastructure.Fragments.OneFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+    <ListView
+        android:id="@+id/listview3"
+        android:layout_marginTop="105dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="ONE"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
-
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 </RelativeLayout>

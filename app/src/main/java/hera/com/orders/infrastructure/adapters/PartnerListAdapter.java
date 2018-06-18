@@ -27,16 +27,19 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
 
     LayoutInflater inflater;
     Context context;
-    ArrayList name, code, amount, address, city, original_name, original_code, original_amount, original_address, original_city;
+    ArrayList id, original_id, name, code, amount, address, city, original_name, original_code, original_amount, original_address, original_city;
     public static int pos;
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
     ArrayList FilteredArrList4;
+    ArrayList FilteredArrList5;
 
-    public PartnerListAdapter(Context context, ArrayList name, ArrayList code, ArrayList amount, ArrayList address, ArrayList city)
+    public PartnerListAdapter(Context context, ArrayList id, ArrayList name, ArrayList code, ArrayList amount, ArrayList address, ArrayList city)
     {
         this.context=context;
+        this.id=id;
+        this.original_id=id;
         this.name=name;
         this.original_name=name;
         this.code=code;
@@ -122,11 +125,13 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
                 amount=FilteredArrList2;
                 address=FilteredArrList3;
                 city=FilteredArrList4;
+                id=FilteredArrList5;
                 Partner.name=name;
                 Partner.code=code;
                 Partner.amount=amount;
                 Partner.address=address;
                 Partner.city=city;
+                Partner.id=id;
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
@@ -137,7 +142,12 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
                 FilteredArrList1 = new ArrayList();
                 FilteredArrList2 = new ArrayList();
                 FilteredArrList3 = new ArrayList();
+                FilteredArrList4 = new ArrayList();
+                FilteredArrList5 = new ArrayList();
 
+                if (original_id == null) {
+                    original_id = new ArrayList(id);
+                }
                 if (original_name == null) {
                     original_name = new ArrayList(name);
                 }
@@ -163,6 +173,7 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
                     FilteredArrList2=original_amount;
                     FilteredArrList3=original_address;
                     FilteredArrList4=original_city;
+                    FilteredArrList5=original_id;
                 } else {
                     constraint = constraint.toString().toLowerCase();
                     String[] temp=new String[1000];
@@ -186,6 +197,7 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
                                 FilteredArrList2.add(original_amount.get(i));
                                 FilteredArrList3.add(original_address.get(i));
                                 FilteredArrList4.add(original_city.get(i));
+                                FilteredArrList5.add(original_id.get(i));
                             }
                         }
                         else if(temp.length >1)
@@ -196,6 +208,7 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
                                 FilteredArrList2.add(original_amount.get(i));
                                 FilteredArrList3.add(original_address.get(i));
                                 FilteredArrList4.add(original_city.get(i));
+                                FilteredArrList5.add(original_id.get(i));
                             }
                         }
                     }

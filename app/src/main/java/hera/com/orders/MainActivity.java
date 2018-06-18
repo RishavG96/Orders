@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -24,11 +23,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import hera.com.orders.infrastructure.adapters.PartnerListAdapter;
-import hera.com.orders.infrastructure.module.Partner;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,23 +45,19 @@ public class MainActivity extends AppCompatActivity {
     PartnerListAdapter adapter;
     SearchView searchView;
     ListView lv;
-    public static int partnerID;
-    public static String partnerName;
+    Button newOrder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         lv=findViewById(R.id.listview2);
+        newOrder=findViewById(R.id.button3);
         service_partner = new hera.com.orders.infrastructure.service.Partner();
         sqlite_partner = new hera.com.orders.infrastructure.sqlite.Partner();
         service_article = new hera.com.orders.infrastructure.service.Article();
         service_assortment = new hera.com.orders.infrastructure.service.Assortment();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
-        sqlite_partner.showPartner(this);
-        adapter=new PartnerListAdapter(this, sqlite_partner.name, sqlite_partner.code,
-                sqlite_partner.amount, sqlite_partner.address, sqlite_partner.city);
-        lv.setAdapter(adapter);
 
         Cursor c=db.rawQuery("select * from user1",null);
         while(c.moveToNext())
@@ -79,16 +73,6 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                partnerID=Integer.parseInt(sqlite_partner.id.get(position));
-                partnerName=sqlite_partner.name.get(position);
-                Intent intent=new Intent(getApplicationContext(), OrderEntry.class);
-                startActivity(intent);
-            }
-        });
 
         handle = new Handler() {
             @Override
@@ -156,6 +140,13 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+        newOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(), OrderPartners.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
