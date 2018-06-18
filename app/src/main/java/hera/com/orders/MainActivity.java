@@ -1,6 +1,8 @@
 package hera.com.orders;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -15,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import hera.com.orders.infrastructure.adapters.PartnerListAdapter;
 import hera.com.orders.infrastructure.module.Partner;
 
 
@@ -34,20 +38,33 @@ public class MainActivity extends AppCompatActivity {
     public static int Id;
     NavigationView navigationView;
     ProgressDialog progressDialog;
-    SQLiteDatabase db;
+    public static SQLiteDatabase db;
     hera.com.orders.infrastructure.service.Partner service_partner;
+    hera.com.orders.infrastructure.sqlite.Partner sqlite_partner;
     hera.com.orders.infrastructure.service.Article service_article;
     hera.com.orders.infrastructure.service.Assortment service_assortment;
     Handler handle;
+    PartnerListAdapter adapter;
+    SearchView searchView;
+    ListView lv;
+    public static int partnerID;
+    public static String partnerName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        lv=findViewById(R.id.listview2);
         service_partner = new hera.com.orders.infrastructure.service.Partner();
+        sqlite_partner = new hera.com.orders.infrastructure.sqlite.Partner();
         service_article = new hera.com.orders.infrastructure.service.Article();
         service_assortment = new hera.com.orders.infrastructure.service.Assortment();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
+        sqlite_partner.showPartner(this);
+        adapter=new PartnerListAdapter(this, sqlite_partner.name, sqlite_partner.code,
+                sqlite_partner.amount, sqlite_partner.address, sqlite_partner.city);
+        lv.setAdapter(adapter);
+
         Cursor c=db.rawQuery("select * from user1",null);
         while(c.moveToNext())
         {
@@ -62,6 +79,16 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                partnerID=Integer.parseInt(sqlite_partner.id.get(position));
+                partnerName=sqlite_partner.name.get(position);
+                Intent intent=new Intent(getApplicationContext(), OrderEntry.class);
+                startActivity(intent);
+            }
+        });
 
         handle = new Handler() {
             @Override
@@ -135,6 +162,28 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.mainmenu,menu);
+
+        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.performClick();
+        searchView.requestFocus();
+        searchView.setIconifiedByDefault(false);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 

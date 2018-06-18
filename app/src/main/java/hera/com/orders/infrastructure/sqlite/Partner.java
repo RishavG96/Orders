@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import hera.com.orders.MainActivity;
 import hera.com.orders.PartnersActivity;
 import hera.com.orders.infrastructure.service.Sorting_Partner;
 
@@ -52,7 +53,7 @@ public class Partner {
         responsiblePerson=new ArrayList();
         forMobile=new ArrayList();
         //db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
-        Cursor c=PartnersActivity.db.rawQuery("select * from partners order by name asc",null);
+        Cursor c= MainActivity.db.rawQuery("select * from partners order by name asc",null);
         StringBuffer stringBuffer=new StringBuffer();
         while(c.moveToNext())
         {
