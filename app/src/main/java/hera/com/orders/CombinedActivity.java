@@ -38,6 +38,8 @@ public class CombinedActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    public static int articleId;
+    public static String articleName, articleUnits,articlePacking,articleWeight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

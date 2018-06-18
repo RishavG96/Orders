@@ -23,14 +23,17 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
 
     LayoutInflater inflater;
     Context context;
-    ArrayList name, code, amount, units, original_name, original_code, original_amount, original_units;
+    ArrayList id, original_id, name, code, amount, units, original_name, original_code, original_amount, original_units;
     public static int pos;
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
-    public ArticleListAdapter(Context context, ArrayList name, ArrayList code, ArrayList amount, ArrayList units)
+    ArrayList FilteredArrList4;
+    public ArticleListAdapter(Context context,ArrayList id, ArrayList name, ArrayList code, ArrayList amount, ArrayList units)
     {
         this.context=context;
+        this.id=id;
+        this.original_id=id;
         this.name=name;
         this.original_name=name;
         this.code=code;
@@ -112,10 +115,12 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                 code=FilteredArrList1;
                 amount=FilteredArrList2;
                 units=FilteredArrList3;
+                id=FilteredArrList4;
                 Article.name=name;
                 Article.code=code;
                 Article.price=amount;
                 Article.units=units;
+                Article.id=id;
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
@@ -126,7 +131,11 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                 FilteredArrList1 = new ArrayList();
                 FilteredArrList2 = new ArrayList();
                 FilteredArrList3 = new ArrayList();
+                FilteredArrList4 = new ArrayList();
 
+                if (original_id == null) {
+                    original_id = new ArrayList(id);
+                }
                 if (original_name == null) {
                     original_name = new ArrayList(name);
                 }
@@ -148,6 +157,7 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                     FilteredArrList1=original_code;
                     FilteredArrList2=original_amount;
                     FilteredArrList3=original_units;
+                    FilteredArrList4=original_id;
                 } else {
                     constraint = constraint.toString().toLowerCase();
                     String[] temp=new String[1000];
@@ -170,6 +180,7 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                                 FilteredArrList1.add(original_code.get(i));
                                 FilteredArrList2.add(original_amount.get(i));
                                 FilteredArrList3.add(original_units.get(i));
+                                FilteredArrList4.add(original_id.get(i));
                             }
                         }
                         else if(temp.length >1)
@@ -179,6 +190,7 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                                 FilteredArrList1.add(original_code.get(i));
                                 FilteredArrList2.add(original_amount.get(i));
                                 FilteredArrList3.add(original_units.get(i));
+                                FilteredArrList4.add(original_id.get(i));
                             }
                         }
                     }

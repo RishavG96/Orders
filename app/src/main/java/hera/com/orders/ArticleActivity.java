@@ -48,7 +48,7 @@ public class ArticleActivity extends AppCompatActivity {
 
         service_article.connect(this);
         sqlite_article.showArticle(this);
-        adapter=new ArticleListAdapter(this, sqlite_article.name, sqlite_article.code,
+        adapter=new ArticleListAdapter(this,sqlite_article.id, sqlite_article.name, sqlite_article.code,
                 sqlite_article.price, sqlite_article.units);
         listView.setAdapter(adapter);
 
