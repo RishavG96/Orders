@@ -18,6 +18,8 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ public class ArticleAmount extends AppCompatActivity {
     NavigationView navigationView;
     TextView tv1, tv2;
     EditText et1,et2;
+    Button submit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,7 @@ public class ArticleAmount extends AppCompatActivity {
         tv2=findViewById(R.id.textView19);
         et1=findViewById(R.id.editText5);
         et2=findViewById(R.id.editText6);
+        submit=findViewById(R.id.button4);
         tv1.setText(CombinedActivity.articleName);
         tv2.setText(CombinedActivity.articleUnits);
         et1.addTextChangedListener(new TextWatcher() {
@@ -54,9 +58,21 @@ public class ArticleAmount extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(!et2.isFocused()) {
-                    double temp = Integer.parseInt(s.toString());
-                    double pack = Double.parseDouble(CombinedActivity.articlePacking);
-                    double wei = Integer.parseInt(CombinedActivity.articleWeight);
+                    double temp;
+                    if(s.toString().isEmpty())
+                        temp=0;
+                    else
+                        temp = Double.parseDouble(s.toString());
+                    double pack;
+                    if(CombinedActivity.articlePacking.length()!=0)
+                        pack = Double.parseDouble(CombinedActivity.articlePacking);
+                    else
+                        pack=1;
+                    double wei;
+                    if(CombinedActivity.articleWeight.length()!=0)
+                        wei = Integer.parseInt(CombinedActivity.articleWeight);
+                    else
+                        wei=1;
                     double res = temp / (pack * wei);
                     et2.setText(res + "");
                 }
@@ -76,11 +92,40 @@ public class ArticleAmount extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if(!et1.isFocused()) {
-                    double temp = Integer.parseInt(s.toString());
-                    double pack = Double.parseDouble(CombinedActivity.articlePacking);
-                    double wei = Double.parseDouble(CombinedActivity.articleWeight);
+                    double temp;
+                    if(s.toString().isEmpty())
+                        temp=0;
+                    else
+                        temp = Double.parseDouble(s.toString());
+                    double pack;
+                    if(CombinedActivity.articlePacking.length()!=0)
+                        pack = Double.parseDouble(CombinedActivity.articlePacking);
+                    else
+                        pack=1;
+                    double wei;
+                    if(CombinedActivity.articleWeight.length()!=0)
+                        wei = Integer.parseInt(CombinedActivity.articleWeight);
+                    else
+                        wei=1;
                     double res = temp * (pack * wei);
-                    et2.setText(res + "");
+                    et1.setText(res + "");
+                }
+            }
+        });
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String amount1=et1.getText().toString();
+                String amount2=et2.getText().toString();
+                if(amount1.equals("") || amount1.equals("0.0") || amount1.equals("0") ||
+                        amount2.equals("") || amount2.equals("0.0") || amount2.equals("0"))
+                {
+                    Toast.makeText(getApplicationContext(), "Enter some value please", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
+                    startActivity(intent);
                 }
             }
         });

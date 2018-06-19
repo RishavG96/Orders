@@ -51,6 +51,6 @@ public class Article {
             weight.add(c.getString(8));
             price.add(c.getString(9));
         }
-        //Toast.makeText(context, stringBuffer, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "weight = "+weight, Toast.LENGTH_SHORT).show();
     }
 }

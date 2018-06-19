@@ -71,10 +71,9 @@ public class Article {
                                     String price = ob.optString("price");
                                     String shortname = ob.optString("shortname");
                                     String units = ob.optString("units");
-                                    String weigh = ob.optString("weigh");
-
+                                    String weight = ob.optString("weight");
                                     sqlite_article.addArticle(context, Id, code, name, shortname, units, packing, brutto,
-                                            netto, weigh, price);
+                                            netto, weight, price);
                                 }
                                 db.setTransactionSuccessful();
                                 db.endTransaction();

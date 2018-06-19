@@ -48,8 +48,6 @@ public class OneFragment extends Fragment {
                 CombinedActivity.articleId=Integer.parseInt(sqlite_article.id.get(position));
                 CombinedActivity.articleName=sqlite_article.name.get(position);
                 CombinedActivity.articleUnits=sqlite_article.units.get(position);
-                Toast.makeText(getContext(),"here="+sqlite_article.weight.get(position),Toast.LENGTH_SHORT).show();
-                Toast.makeText(getContext(),"here="+sqlite_article.name.get(position),Toast.LENGTH_SHORT).show();
                 CombinedActivity.articlePacking=sqlite_article.packing.get(position);
                 CombinedActivity.articleWeight=sqlite_article.weight.get(position);
                 Intent intent=new Intent(getContext(), ArticleAmount.class);
