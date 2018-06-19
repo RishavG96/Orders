@@ -4,30 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".infrastructure.Fragments.ThreeFragment">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/listview6"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="362dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="105dp" />
-    <TextView
-        android:id="@+id/totalprice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="The Total Price is: "/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/placeorder"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginBottom="0dp"
-        android:text="Place order" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/partnername"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="105dp"
+            android:textColor="#1d810b"
+            android:textSize="16dp"/>
+
+        <ListView
+            android:id="@+id/listview6"
+            android:layout_width="match_parent"
+            android:layout_height="318dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/totalprice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Total Price is: " />
+
+        <Button
+            android:id="@+id/placeorder"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="0dp"
+            android:text="Place order" />
+    </LinearLayout>
 
 </FrameLayout>

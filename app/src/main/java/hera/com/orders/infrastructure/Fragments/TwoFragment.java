@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import hera.com.orders.ArticleAmountActivity;
 import hera.com.orders.CombinedActivity;
@@ -19,6 +21,7 @@ import hera.com.orders.infrastructure.adapters.AssortmentListAdapter;
 public class TwoFragment extends Fragment {
     ListView lv;
     AssortmentListAdapter adapter;
+    TextView empty;
     hera.com.orders.infrastructure.sqlite.Assortment sqlite_assort;
     public TwoFragment() {
         // Required empty public constructor
@@ -35,10 +38,13 @@ public class TwoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_two, container, false);
         lv=view.findViewById(R.id.listview4);
+        empty=view.findViewById(R.id.empty);
         sqlite_assort=new hera.com.orders.infrastructure.sqlite.Assortment();
         sqlite_assort.showAssortment(getContext(), OrderPartnersActivity.partnerID);
         adapter=new AssortmentListAdapter(getContext(), sqlite_assort.name, sqlite_assort.code,
                 sqlite_assort.price, sqlite_assort.units);
+        if(sqlite_assort.name.isEmpty())
+            empty.setText("No Assortments for the Partner");
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

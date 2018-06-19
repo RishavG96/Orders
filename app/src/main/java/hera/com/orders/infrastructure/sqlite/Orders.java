@@ -56,8 +56,4 @@ public class Orders {
         }
         return ++count;
     }
-    public double calculateTotalPrice()
-    {
-        return 0.0;
-    }
 }

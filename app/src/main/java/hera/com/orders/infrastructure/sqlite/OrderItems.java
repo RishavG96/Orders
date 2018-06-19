@@ -45,4 +45,14 @@ public class OrderItems {
             item_count++;
         }
     }
+    public double calculateTotalPrice()
+    {
+        Cursor c = MainActivity.db.rawQuery("select * from orderitems", null);
+        double total=0.0;
+        while(c.moveToNext())
+        {
+            total+=Double.parseDouble(c.getString(6));
+        }
+        return total;
+    }
 }

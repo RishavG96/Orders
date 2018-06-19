@@ -41,6 +41,9 @@ public class OrderPartnersActivity extends AppCompatActivity {
         lv=findViewById(R.id.listview5);
         sqlite_partner = new hera.com.orders.infrastructure.sqlite.Partner();
         sqlite_partner.showPartner(this);
+
+        MainActivity.db.execSQL("delete from orderitems");
+
         adapter=new PartnerListAdapter(this,sqlite_partner.id, sqlite_partner.name, sqlite_partner.code,
                 sqlite_partner.amount, sqlite_partner.address, sqlite_partner.city);
         lv.setAdapter(adapter);
@@ -81,11 +84,6 @@ public class OrderPartnersActivity extends AppCompatActivity {
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
-                                finish();
-                                break;
-                            case R.id.assortment:
-                                Intent intent3=new Intent(getApplicationContext(), AssortmentActivity.class);
-                                startActivity(intent3);
                                 finish();
                                 break;
                         }
@@ -153,5 +151,16 @@ public class OrderPartnersActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MainActivity.db.execSQL("delete from orderitems");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        MainActivity.db.execSQL("delete from orderitems");
     }
 }

@@ -61,6 +61,37 @@ public class MainActivity extends AppCompatActivity {
         service_assortment = new hera.com.orders.infrastructure.service.Assortment();
         orders = new hera.com.orders.infrastructure.sqlite.Orders();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
+        db.execSQL("delete from orderitems");
+        if(LoginActivity.part==0 || LoginActivity.art==0 || LoginActivity.assort==0)
+        {
+            service_partner.connect(getApplicationContext());
+            service_article.connect(getApplicationContext());
+            service_assortment.connect(getApplicationContext());
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setMax(100);
+            progressDialog.setMessage("Loading....");
+            progressDialog.setTitle("Refreshing database");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.show();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        while (progressDialog.getProgress() <= progressDialog
+                                .getMax()) {
+                            Thread.sleep(60);
+                            handle.sendMessage(handle.obtainMessage());
+                            if (progressDialog.getProgress() == progressDialog
+                                    .getMax()) {
+                                progressDialog.dismiss();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
 
         Cursor c=db.rawQuery("select * from user1",null);
         while(c.moveToNext())
@@ -107,12 +138,10 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent2);
                                 finish();
                                 break;
-                            case R.id.assortment:
-                                Intent intent3=new Intent(getApplicationContext(), AssortmentActivity.class);
-                                startActivity(intent3);
-                                finish();
-                                break;
                             case R.id.refresh:
+                                LoginActivity.assort=0;
+                                LoginActivity.art=0;
+                                LoginActivity.part=0;
                                 service_partner.connect(getApplicationContext());
                                 service_article.connect(getApplicationContext());
                                 service_assortment.connect(getApplicationContext());
@@ -201,5 +230,17 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        db.execSQL("delete from orderitems");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        MainActivity.db.execSQL("delete from orderitems");
     }
 }

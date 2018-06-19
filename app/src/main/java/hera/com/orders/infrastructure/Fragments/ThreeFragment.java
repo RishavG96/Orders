@@ -23,7 +23,7 @@ public class ThreeFragment extends Fragment {
     hera.com.orders.infrastructure.sqlite.OrderItems orderItems;
     hera.com.orders.infrastructure.sqlite.Orders orders;
     ListView lv;
-    TextView total;
+    TextView total,partnerName;
     Button submit;
     OrderItemsAdapter adapter;
     public ThreeFragment() {
@@ -43,8 +43,11 @@ public class ThreeFragment extends Fragment {
         orders = new hera.com.orders.infrastructure.sqlite.Orders();
         lv=view.findViewById(R.id.listview6);
         total=view.findViewById(R.id.totalprice);
+        partnerName=view.findViewById(R.id.partnername);
         submit=view.findViewById(R.id.placeorder);
+        partnerName.setText("Partner Name: "+OrderPartnersActivity.partnerName);
         orderItems.showOrders(getContext());
+        total.setText("The Total price is: "+orderItems.calculateTotalPrice());
         adapter=new OrderItemsAdapter(getContext(), orderItems.articleId, orderItems.articleName,orderItems.articleCode,
                 orderItems.articleUnits,orderItems.units,orderItems.packaging,orderItems.price);
         lv.setAdapter(adapter);
