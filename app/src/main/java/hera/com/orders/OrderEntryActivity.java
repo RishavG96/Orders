@@ -19,18 +19,19 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class OrderEntry extends AppCompatActivity {
+public class OrderEntryActivity extends AppCompatActivity {
 
     TextView name;
     EditText et, note;
     Button submit;
     Calendar myCalendar;
-    String n;
+    public static String notes="",dates="";
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
@@ -63,7 +64,7 @@ public class OrderEntry extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                new DatePickerDialog(OrderEntry.this, date, myCalendar
+                new DatePickerDialog(OrderEntryActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -71,8 +72,13 @@ public class OrderEntry extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), CombinedActivity.class);
-                startActivity(intent);
+                notes=note.getText().toString();
+                if(et.getText().toString().isEmpty())
+                    Toast.makeText(getApplicationContext(),"Please enter date",Toast.LENGTH_SHORT).show();
+                else {
+                    Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
+                    startActivity(intent);
+                }
             }
         });
         navigationView=findViewById(R.id.nav_view4);
@@ -118,7 +124,7 @@ public class OrderEntry extends AppCompatActivity {
         String myFormat = "MM/dd/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         et.setText(sdf.format(myCalendar.getTime()));
-        n=sdf.format(myCalendar.getTime());
+        dates=sdf.format(myCalendar.getTime());
     }
 
     @Override

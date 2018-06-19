@@ -12,6 +12,7 @@ import hera.com.orders.MainActivity;
 public class OrderItems {
     SQLiteDatabase db;
     public static ArrayList<String> articleId, articleName, articleCode,articleUnits, units, packaging, price;
+    public static int item_count=0;
     public void addOrders(Context context, int articleId, String articleName, String articleCode,String articleUnits, String units, String packaging,
                             String price)
     {
@@ -31,6 +32,7 @@ public class OrderItems {
         packaging=new ArrayList();
         price=new ArrayList();
         Cursor c = MainActivity.db.rawQuery("select * from orderitems", null);
+        item_count=0;
         while(c.moveToNext())
         {
             articleId.add(c.getString(0));
@@ -40,6 +42,7 @@ public class OrderItems {
             units.add(c.getString(4));
             packaging.add(c.getString(5));
             price.add(c.getString(6));
+            item_count++;
         }
     }
 }

@@ -34,7 +34,7 @@
             android:name=".AssortmentActivity"
             android:label="ASSORTMENT" />
         <activity
-            android:name=".OrderEntry"
+            android:name=".OrderEntryActivity"
             android:label="ORDER ENTRY" />
         <activity android:name=".CombinedActivity" />
         <activity

@@ -25,7 +25,7 @@ tools:openDrawer="start">
             android:id="@+id/listview2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="155dp" />
+             />
     </LinearLayout>
 
 <include

@@ -25,6 +25,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import hera.com.orders.infrastructure.adapters.ArticleListAdapter;
+import hera.com.orders.infrastructure.adapters.OrdersAdapter;
 import hera.com.orders.infrastructure.adapters.PartnerListAdapter;
 
 
@@ -40,11 +42,12 @@ public class MainActivity extends AppCompatActivity {
     hera.com.orders.infrastructure.sqlite.Partner sqlite_partner;
     hera.com.orders.infrastructure.service.Article service_article;
     hera.com.orders.infrastructure.service.Assortment service_assortment;
+    hera.com.orders.infrastructure.sqlite.Orders orders;
     Handler handle;
-    PartnerListAdapter adapter;
     SearchView searchView;
     ListView lv;
     Button newOrder;
+    OrdersAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         sqlite_partner = new hera.com.orders.infrastructure.sqlite.Partner();
         service_article = new hera.com.orders.infrastructure.service.Article();
         service_assortment = new hera.com.orders.infrastructure.service.Assortment();
+        orders = new hera.com.orders.infrastructure.sqlite.Orders();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
 
         Cursor c=db.rawQuery("select * from user1",null);
@@ -63,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         {
             Id=c.getInt(0);
         }
+        orders.showOrders(this);
+        adapter=new OrdersAdapter(this,orders.orderId, orders.partnerName, orders.date);
+        lv.setAdapter(adapter);
 
         navigationView=findViewById(R.id.nav_view);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
@@ -152,28 +159,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.mainmenu,menu);
-
-        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.performClick();
-        searchView.requestFocus();
-        searchView.setIconifiedByDefault(false);
-        searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                adapter.getFilter().filter(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return true;
-            }
-        });
-
         return super.onCreateOptionsMenu(menu);
     }
 

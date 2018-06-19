@@ -50,7 +50,7 @@ public class OrderPartnersActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 partnerID=Integer.parseInt(sqlite_partner.id.get(position));
                 partnerName=sqlite_partner.name.get(position);
-                Intent intent=new Intent(getApplicationContext(), OrderEntry.class);
+                Intent intent=new Intent(getApplicationContext(), OrderEntryActivity.class);
                 startActivity(intent);
             }
         });

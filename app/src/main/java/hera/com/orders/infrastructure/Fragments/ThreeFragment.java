@@ -1,8 +1,6 @@
 package hera.com.orders.infrastructure.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,15 +9,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import hera.com.orders.MainActivity;
+import hera.com.orders.OrderEntryActivity;
+import hera.com.orders.OrderPartnersActivity;
 import hera.com.orders.R;
-import hera.com.orders.infrastructure.adapters.AssortmentListAdapter;
 import hera.com.orders.infrastructure.adapters.OrderItemsAdapter;
+import hera.com.orders.infrastructure.sqlite.OrderItems;
 
 
 public class ThreeFragment extends Fragment {
     hera.com.orders.infrastructure.sqlite.OrderItems orderItems;
+    hera.com.orders.infrastructure.sqlite.Orders orders;
     ListView lv;
     TextView total;
     Button submit;
@@ -38,6 +40,7 @@ public class ThreeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_three, container, false);
         orderItems = new hera.com.orders.infrastructure.sqlite.OrderItems();
+        orders = new hera.com.orders.infrastructure.sqlite.Orders();
         lv=view.findViewById(R.id.listview6);
         total=view.findViewById(R.id.totalprice);
         submit=view.findViewById(R.id.placeorder);
@@ -48,9 +51,18 @@ public class ThreeFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.db.execSQL("delete from orderitems");
-                Intent intent=new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
+                orderItems.showOrders(getContext());
+                if(OrderItems.item_count!=0) {
+                    orders.addOrder(getContext(),  OrderPartnersActivity.partnerID, OrderPartnersActivity.partnerName,
+                            OrderEntryActivity.dates, OrderEntryActivity.notes);
+                    MainActivity.db.execSQL("delete from orderitems");
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Please add items first!",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
