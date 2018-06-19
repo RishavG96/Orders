@@ -1,6 +1,7 @@
 package hera.com.orders;
 
-import android.app.DatePickerDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.PersistableBundle;
@@ -10,75 +11,135 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+public class ArticleAmountActivity extends AppCompatActivity {
 
-public class OrderEntry extends AppCompatActivity {
-
-    TextView name;
-    EditText et, note;
-    Button submit;
-    Calendar myCalendar;
-    String n;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    TextView tv1, tv2;
+    EditText et1,et2;
+    Button submit;
+    hera.com.orders.infrastructure.sqlite.OrderItems orderItems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_entry);
-        name=findViewById(R.id.textView12);
-        et=findViewById(R.id.editText3);
-        note=findViewById(R.id.editText4);
-        submit=findViewById(R.id.button2);
-        myCalendar= Calendar.getInstance();
+        setContentView(R.layout.activity_article_amount);
 
-        name.setText(OrderPartnersActivity.partnerName);
-
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
+        tv1=findViewById(R.id.textView18);
+        tv2=findViewById(R.id.textView19);
+        et1=findViewById(R.id.editText5);
+        et2=findViewById(R.id.editText6);
+        submit=findViewById(R.id.button4);
+        tv1.setText(CombinedActivity.articleName);
+        tv2.setText(CombinedActivity.articleUnits);
+        orderItems = new hera.com.orders.infrastructure.sqlite.OrderItems();
+        et1.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
-        };
-        et.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(OrderEntry.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!et2.isFocused()) {
+                    double temp;
+                    if(s.toString().isEmpty())
+                        temp=0;
+                    else
+                        temp = Double.parseDouble(s.toString());
+                    double pack;
+                    if(CombinedActivity.articlePacking.length()!=0)
+                        pack = Double.parseDouble(CombinedActivity.articlePacking);
+                    else
+                        pack=1;
+                    double wei;
+                    if(CombinedActivity.articleWeight.length()!=0)
+                        wei = Integer.parseInt(CombinedActivity.articleWeight);
+                    else
+                        wei=1;
+                    double res = temp / (pack * wei);
+                    et2.setText(res + "");
+                }
+            }
+        });
+        et2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!et1.isFocused()) {
+                    double temp;
+                    if(s.toString().isEmpty())
+                        temp=0;
+                    else
+                        temp = Double.parseDouble(s.toString());
+                    double pack;
+                    if(CombinedActivity.articlePacking.length()!=0)
+                        pack = Double.parseDouble(CombinedActivity.articlePacking);
+                    else
+                        pack=1;
+                    double wei;
+                    if(CombinedActivity.articleWeight.length()!=0)
+                        wei = Integer.parseInt(CombinedActivity.articleWeight);
+                    else
+                        wei=1;
+                    double res = temp * (pack * wei);
+                    et1.setText(res + "");
+                }
             }
         });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), CombinedActivity.class);
-                startActivity(intent);
+                String amount1=et1.getText().toString();
+                String amount2=et2.getText().toString();
+                double price=(Double.parseDouble(amount2)/Double.parseDouble(CombinedActivity.articlePacking))*Double.parseDouble(CombinedActivity.articlePrice);
+                String p=price+"";
+                if(amount1.equals("") || amount1.equals("0.0") || amount1.equals("0") ||
+                        amount2.equals("") || amount2.equals("0.0") || amount2.equals("0"))
+                {
+                    Toast.makeText(getApplicationContext(), "Enter some value please", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    orderItems.addOrders(getApplicationContext(), CombinedActivity.articleId, CombinedActivity.articleName,
+                            CombinedActivity.articleCode,CombinedActivity.articleUnits,amount1, amount2, p);
+                    Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
+                    startActivity(intent);
+                }
             }
         });
-        navigationView=findViewById(R.id.nav_view4);
+
+        navigationView=findViewById(R.id.nav_view3);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        drawerLayout=findViewById(R.id.drawer_layout4);
+        drawerLayout=findViewById(R.id.drawer_layout3);
         actionBarDrawerToggle= new ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -114,13 +175,6 @@ public class OrderEntry extends AppCompatActivity {
                     }
                 });
     }
-    private void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        et.setText(sdf.format(myCalendar.getTime()));
-        n=sdf.format(myCalendar.getTime());
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();

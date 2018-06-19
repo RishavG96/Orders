@@ -13,127 +13,52 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-public class ArticleAmount extends AppCompatActivity {
+import hera.com.orders.infrastructure.adapters.PartnerListAdapter;
+
+public class OrderPartnersActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    TextView tv1, tv2;
-    EditText et1,et2;
-    Button submit;
+    SearchView searchView;
+    ListView lv;
+    PartnerListAdapter adapter;
+    public static int partnerID;
+    public static String partnerName;
+    hera.com.orders.infrastructure.sqlite.Partner sqlite_partner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_article_amount);
+        setContentView(R.layout.activity_orders_partners);
 
-        tv1=findViewById(R.id.textView18);
-        tv2=findViewById(R.id.textView19);
-        et1=findViewById(R.id.editText5);
-        et2=findViewById(R.id.editText6);
-        submit=findViewById(R.id.button4);
-        tv1.setText(CombinedActivity.articleName);
-        tv2.setText(CombinedActivity.articleUnits);
-        et1.addTextChangedListener(new TextWatcher() {
+        lv=findViewById(R.id.listview5);
+        sqlite_partner = new hera.com.orders.infrastructure.sqlite.Partner();
+        sqlite_partner.showPartner(this);
+        adapter=new PartnerListAdapter(this,sqlite_partner.id, sqlite_partner.name, sqlite_partner.code,
+                sqlite_partner.amount, sqlite_partner.address, sqlite_partner.city);
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(!et2.isFocused()) {
-                    double temp;
-                    if(s.toString().isEmpty())
-                        temp=0;
-                    else
-                        temp = Double.parseDouble(s.toString());
-                    double pack;
-                    if(CombinedActivity.articlePacking.length()!=0)
-                        pack = Double.parseDouble(CombinedActivity.articlePacking);
-                    else
-                        pack=1;
-                    double wei;
-                    if(CombinedActivity.articleWeight.length()!=0)
-                        wei = Integer.parseInt(CombinedActivity.articleWeight);
-                    else
-                        wei=1;
-                    double res = temp / (pack * wei);
-                    et2.setText(res + "");
-                }
-            }
-        });
-        et2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(!et1.isFocused()) {
-                    double temp;
-                    if(s.toString().isEmpty())
-                        temp=0;
-                    else
-                        temp = Double.parseDouble(s.toString());
-                    double pack;
-                    if(CombinedActivity.articlePacking.length()!=0)
-                        pack = Double.parseDouble(CombinedActivity.articlePacking);
-                    else
-                        pack=1;
-                    double wei;
-                    if(CombinedActivity.articleWeight.length()!=0)
-                        wei = Integer.parseInt(CombinedActivity.articleWeight);
-                    else
-                        wei=1;
-                    double res = temp * (pack * wei);
-                    et1.setText(res + "");
-                }
-            }
-        });
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String amount1=et1.getText().toString();
-                String amount2=et2.getText().toString();
-                if(amount1.equals("") || amount1.equals("0.0") || amount1.equals("0") ||
-                        amount2.equals("") || amount2.equals("0.0") || amount2.equals("0"))
-                {
-                    Toast.makeText(getApplicationContext(), "Enter some value please", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
-                    startActivity(intent);
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                partnerID=Integer.parseInt(sqlite_partner.id.get(position));
+                partnerName=sqlite_partner.name.get(position);
+                Intent intent=new Intent(getApplicationContext(), OrderEntry.class);
+                startActivity(intent);
             }
         });
 
-        navigationView=findViewById(R.id.nav_view3);
+        navigationView=findViewById(R.id.nav_view6);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        drawerLayout=findViewById(R.id.drawer_layout3);
+        drawerLayout=findViewById(R.id.drawer_layout6);
         actionBarDrawerToggle= new ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -173,6 +98,26 @@ public class ArticleAmount extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.mainmenu,menu);
+        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.performClick();
+        searchView.requestFocus();
+        searchView.setIconifiedByDefault(false);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
 

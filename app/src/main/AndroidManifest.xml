@@ -38,9 +38,9 @@
             android:label="ORDER ENTRY" />
         <activity android:name=".CombinedActivity" />
         <activity
-            android:name=".OrderPartners"
+            android:name=".OrderPartnersActivity"
             android:label="PARTNERS" />
-        <activity android:name=".ArticleAmount"></activity>
+        <activity android:name=".ArticleAmountActivity"></activity>
     </application>
 
 </manifest>

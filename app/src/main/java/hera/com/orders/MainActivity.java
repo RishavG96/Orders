@@ -22,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -143,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         newOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), OrderPartners.class);
+                Intent intent=new Intent(getApplicationContext(), OrderPartnersActivity.class);
                 startActivity(intent);
             }
         });
