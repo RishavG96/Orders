@@ -32,8 +32,11 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
     {
         this.context=context;
         this.orderId=orderId;
+        this.original_orderId=orderId;
         this.partnerName=partnerName;
+        this.original_partnerName=partnerName;
         this.dates=dates;
+        this.original_dates=dates;
         inflater=LayoutInflater.from(context);
     }
     @Override

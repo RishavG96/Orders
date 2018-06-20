@@ -18,10 +18,10 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import hera.com.orders.infrastructure.adapters.DetailsAdapter;
-import hera.com.orders.infrastructure.adapters.PartnerListAdapter;
-import hera.com.orders.infrastructure.sqlite.Partner;
+import hera.com.orders.infrastructure.adapters.AssortmentListAdapter;
+import hera.com.orders.infrastructure.sqlite.Assortment;
 
-public class PartnerDetailsActivity extends AppCompatActivity {
+public class AssortmentDetailsActivity extends AppCompatActivity {
 
     ListView lv;
     DetailsAdapter adapter;
@@ -32,59 +32,50 @@ public class PartnerDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_partner_details);
+        setContentView(R.layout.activity_assortment_details);
 
-        lv=findViewById(R.id.listview9);
+        lv=findViewById(R.id.listview10);
 
-        String id = Partner.id.get(PartnerListAdapter.pos).toString();
-        String code = Partner.code.get(PartnerListAdapter.pos).toString();
-        String name = Partner.name.get(PartnerListAdapter.pos).toString();
-        String address = Partner.address.get(PartnerListAdapter.pos).toString();
-        String city = Partner.city.get(PartnerListAdapter.pos).toString();
-        String amount = Partner.amount.get(PartnerListAdapter.pos).toString();
-        String type = Partner.type.get(PartnerListAdapter.pos).toString();
-        String discount = Partner.discount.get(PartnerListAdapter.pos).toString();
-        String status = Partner.status.get(PartnerListAdapter.pos).toString();
-        String businessHOurs = Partner.businessHours.get(PartnerListAdapter.pos).toString();
-        String timeOfReceipt = Partner.timeOfReceipt.get(PartnerListAdapter.pos).toString();
-        String responsiblePerson = Partner.responsiblePerson.get(PartnerListAdapter.pos).toString();
-        String forMobile = Partner.forMobile.get(PartnerListAdapter.pos).toString();
+        String id= Assortment.id.get(AssortmentListAdapter.pos);
+        String code=Assortment.code.get(AssortmentListAdapter.pos);
+        String name=Assortment.name.get(AssortmentListAdapter.pos);
+        String shortName=Assortment.shortName.get(AssortmentListAdapter.pos);
+        String units=Assortment.units.get(AssortmentListAdapter.pos);
+        String packing=Assortment.packing.get(AssortmentListAdapter.pos);
+        String brutto=Assortment.brutto.get(AssortmentListAdapter.pos);
+        String netto=Assortment.netto.get(AssortmentListAdapter.pos);
+        String weight=Assortment.weight.get(AssortmentListAdapter.pos);
+        String price=Assortment.price.get(AssortmentListAdapter.pos);
         ArrayList values=new ArrayList();
         ArrayList heading=new ArrayList();
-        heading.add("Partner ID");
-        heading.add("Partner Code");
-        heading.add("Partner Name");
-        heading.add("Partner Address");
-        heading.add("Partner City");
-        heading.add("Partner Amount");
-        heading.add("Partner Type");
-        heading.add("Discount");
-        heading.add("Partner Status");
-        heading.add("Business Hours");
-        heading.add("Time Of Recepit");
-        heading.add("Responsible Person");
-        heading.add("For Mobile");
+        heading.add("Assortment ID");
+        heading.add("Assortment Code");
+        heading.add("Assortment Name");
+        heading.add("Assortment Short Name");
+        heading.add("Assortment Units");
+        heading.add("Assortment Packing");
+        heading.add("Assortment Brutto");
+        heading.add("Assortment Netto");
+        heading.add("Assortment Weight");
+        heading.add("Assortment Price");
         values.add(id);
         values.add(code);
         values.add(name);
-        values.add(address);
-        values.add(city);
-        values.add(amount);
-        values.add(type);
-        values.add(discount);
-        values.add(status);
-        values.add(businessHOurs);
-        values.add(timeOfReceipt);
-        values.add(responsiblePerson);
-        values.add(forMobile);
+        values.add(shortName);
+        values.add(units);
+        values.add(packing);
+        values.add(brutto);
+        values.add(netto);
+        values.add(weight);
+        values.add(price);
 
         adapter=new DetailsAdapter(this, heading, values);
         lv.setAdapter(adapter);
 
-        navigationView=findViewById(R.id.nav_view8);
+        navigationView=findViewById(R.id.nav_view9);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        drawerLayout=findViewById(R.id.drawer_layout8);
+        drawerLayout=findViewById(R.id.drawer_layout9);
         actionBarDrawerToggle= new ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -114,6 +105,7 @@ public class PartnerDetailsActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

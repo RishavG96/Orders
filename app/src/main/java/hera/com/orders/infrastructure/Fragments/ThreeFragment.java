@@ -15,7 +15,6 @@ import hera.com.orders.MainActivity;
 import hera.com.orders.OrderEntryActivity;
 import hera.com.orders.OrderPartnersActivity;
 import hera.com.orders.R;
-import hera.com.orders.infrastructure.adapters.OrderItemsAdapter;
 import hera.com.orders.infrastructure.sqlite.OrderItems;
 
 

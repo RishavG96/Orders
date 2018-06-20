@@ -1,6 +1,7 @@
 package hera.com.orders.infrastructure.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import hera.com.orders.AssortmentDetailsActivity;
 import hera.com.orders.R;
 
 public class AssortmentListAdapter extends BaseAdapter implements Filterable {
@@ -78,8 +80,8 @@ public class AssortmentListAdapter extends BaseAdapter implements Filterable {
                                 switch (item.getItemId()) {
                                     case R.id.show:
                                         pos=position;
-                                        //Intent intent=new Intent(context, PartnerDetailsActivity.class);
-                                        //context.startActivity(intent);
+                                        Intent intent=new Intent(context, AssortmentDetailsActivity.class);
+                                        context.startActivity(intent);
                                         break;
                                     case R.id.delete:
                                         break;

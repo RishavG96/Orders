@@ -1,6 +1,7 @@
 package hera.com.orders.infrastructure.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import hera.com.orders.ArticleDetailsActivity;
 import hera.com.orders.R;
 import hera.com.orders.infrastructure.sqlite.Article;
 import hera.com.orders.infrastructure.sqlite.Partner;
@@ -85,8 +87,8 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                                 switch (item.getItemId()) {
                                     case R.id.show:
                                         pos=position;
-                                        //Intent intent=new Intent(context, PartnerDetailsActivity.class);
-                                        //context.startActivity(intent);
+                                        Intent intent=new Intent(context, ArticleDetailsActivity.class);
+                                        context.startActivity(intent);
                                         break;
                                     case R.id.delete:
                                         break;
