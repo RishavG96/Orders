@@ -1,6 +1,7 @@
 package hera.com.orders.infrastructure.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +13,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import hera.com.orders.ArticleAmountActivity;
+import hera.com.orders.CombinedActivity;
 import hera.com.orders.R;
+import hera.com.orders.infrastructure.Fragments.ThreeFragment;
+import hera.com.orders.infrastructure.sqlite.OrderItems;
 
 public class OrderItemsAdapter extends BaseAdapter{
     LayoutInflater inflater;
@@ -64,18 +69,31 @@ public class OrderItemsAdapter extends BaseAdapter{
                 {
                     case R.id.imageButton3:
                         final PopupMenu popup = new PopupMenu(context, v);
-                        popup.getMenuInflater().inflate(R.menu.listoption, popup.getMenu());
+                        popup.getMenuInflater().inflate(R.menu.orderedit, popup.getMenu());
                         popup.show();
                         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
-                                    case R.id.show:
+                                    case R.id.edit:
                                         pos=position;
-                                        //Intent intent=new Intent(context, OrderItemsDetailsActivity.class);
-                                        //context.startActivity(intent);
+                                        CombinedActivity.articleId=Integer.parseInt(OrderItems.articleId.get(position));
+                                        CombinedActivity.articleName=OrderItems.articleName.get(position);
+                                        CombinedActivity.articleUnits=OrderItems.articleUnits.get(position);
+                                        CombinedActivity.articlePacking=OrderItems.articlePacking.get(position);
+                                        CombinedActivity.articleWeight=OrderItems.articleWeight.get(position);
+                                        CombinedActivity.articlePrice=OrderItems.price.get(position);
+                                        CombinedActivity.articleCode=OrderItems.articleCode.get(position);
+                                        Intent intent=new Intent(context, ArticleAmountActivity.class);
+                                        context.startActivity(intent);
                                         break;
-                                    case R.id.delete:
+                                    case R.id.remove:
+                                        pos=position;
+                                        CombinedActivity.articleId=Integer.parseInt(OrderItems.articleId.get(position));
+                                        OrderItems.deleteItem(CombinedActivity.articleId);
+                                        Intent intent1=new Intent(context,CombinedActivity.class);
+                                        context.startActivity(intent1);
+                                        ((CombinedActivity)context).finish();
                                         break;
                                 }
                                 return true;

@@ -129,7 +129,8 @@ public class ArticleAmountActivity extends AppCompatActivity {
                 else
                 {
                     orderItems.addOrders(getApplicationContext(), CombinedActivity.articleId, CombinedActivity.articleName,
-                            CombinedActivity.articleCode,CombinedActivity.articleUnits,amount1, amount2, p);
+                            CombinedActivity.articleCode,CombinedActivity.articleUnits, CombinedActivity.articlePacking,
+                            CombinedActivity.articleWeight,amount1, amount2, p);
                     Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
                     startActivity(intent);
                     setResult(1);

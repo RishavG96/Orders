@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        MainActivity.db.execSQL("delete from orderitems");
+        db.execSQL("delete from orderitems");
     }
 
     @Override
