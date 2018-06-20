@@ -10,7 +10,7 @@ import hera.com.orders.MainActivity;
 
 public class Orders {
     public static ArrayList partnerId, orderId, partnerName, date, note;
-    ArrayList articleId, articleName, quantity, price;
+    public static ArrayList articleId, articleName, articleCode, articleUnits, quantity, packaging, price;
     public void addOrder(Context context, int partnerId,  String partnerName, String date, String note)
     {
         MainActivity.db.execSQL("create table if not exists orders(orderId integer, partnerId integer, partnerName varchar(1000)," +
@@ -46,6 +46,27 @@ public class Orders {
             note.add(c.getString(4));
         }
     }
+    public static void showOrderItems(Context context, int orderId)
+    {
+        articleId=new ArrayList();
+        articleName=new ArrayList();
+        articleCode=new ArrayList();
+        articleUnits=new ArrayList();
+        quantity=new ArrayList();
+        packaging=new ArrayList();
+        price=new ArrayList();
+        Cursor c=MainActivity.db.rawQuery("select * from orderdetails where orderId="+orderId+"",null);
+        while(c.moveToNext())
+        {
+            articleId.add(c.getString(1));
+            articleName.add(c.getString(2));
+            articleCode.add(c.getString(3));
+            articleUnits.add(c.getString(4));
+            quantity.add(c.getString(5));
+            packaging.add(c.getString(6));
+            price.add(c.getString(7));
+        }
+    }
     public int getNextOrderId()
     {
         Cursor c=MainActivity.db.rawQuery("select * from orders", null);
@@ -55,5 +76,15 @@ public class Orders {
             count++;
         }
         return ++count;
+    }
+    public static double calculateTotalPrice(int orderId)
+    {
+        Cursor c = MainActivity.db.rawQuery("select * from orderdetails where orderId="+orderId+"", null);
+        double total=0.0;
+        while(c.moveToNext())
+        {
+            total+=Double.parseDouble(c.getString(7));
+        }
+        return total;
     }
 }

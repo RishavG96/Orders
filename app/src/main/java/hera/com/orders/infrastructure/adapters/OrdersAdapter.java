@@ -1,24 +1,33 @@
 package hera.com.orders.infrastructure.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import hera.com.orders.OrderDetailsActivity;
 import hera.com.orders.R;
+import hera.com.orders.infrastructure.sqlite.Article;
+import hera.com.orders.infrastructure.sqlite.Orders;
 
-public class OrdersAdapter extends BaseAdapter {
+public class OrdersAdapter extends BaseAdapter implements Filterable {
     LayoutInflater inflater;
     Context context;
     public static int pos;
-    ArrayList orderId, partnerName, dates;
+    ArrayList orderId, original_orderId, partnerName, original_partnerName, dates, original_dates;
+    ArrayList FilteredArrList1;
+    ArrayList FilteredArrList2;
+    ArrayList FilteredArrList3;
     public OrdersAdapter(Context context, ArrayList orderId, ArrayList partnerName, ArrayList dates)
     {
         this.context=context;
@@ -67,8 +76,8 @@ public class OrdersAdapter extends BaseAdapter {
                                 switch (item.getItemId()) {
                                     case R.id.show:
                                         pos=position;
-                                        //Intent intent=new Intent(context, PartnerDetailsActivity.class);
-                                        //context.startActivity(intent);
+                                        Intent intent=new Intent(context, OrderDetailsActivity.class);
+                                        context.startActivity(intent);
                                         break;
                                     case R.id.delete:
                                         break;
@@ -86,5 +95,87 @@ public class OrdersAdapter extends BaseAdapter {
         pr.setText("Date: "+dates.get(position).toString());
         un.setText("");
         return convertView;
+    }
+
+    @Override
+    public Filter getFilter() {
+        Filter filter = new Filter() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,FilterResults results) {
+                orderId = (ArrayList)results.values; // has the filtered values
+                partnerName=FilteredArrList1;
+                dates=FilteredArrList2;
+                Orders.orderId=orderId;
+                Orders.partnerName=partnerName;
+                Orders.date=dates;
+                notifyDataSetChanged();  // notifies the data with new filtered values
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
+                ArrayList FilteredArrList = new ArrayList();
+                FilteredArrList1 = new ArrayList();
+                FilteredArrList2 = new ArrayList();
+
+                if (original_orderId == null) {
+                    original_orderId = new ArrayList(orderId);
+                }
+                if (original_partnerName == null) {
+                    original_partnerName = new ArrayList(partnerName);
+                }
+                if (original_dates == null) {
+                    original_dates = new ArrayList(dates);
+                }
+
+                if (constraint == null || constraint.length() == 0) {
+
+                    // set the Original result to return
+                    results.count =original_orderId.size();
+                    results.values = original_orderId;
+                    FilteredArrList1=original_partnerName;
+                    FilteredArrList2=original_dates;
+                } else {
+                    constraint = constraint.toString().toLowerCase();
+                    String[] temp=new String[1000];
+                    int flag;
+                    String filterString=constraint.toString();
+                    if(filterString.contains(" ")) {
+                        temp = filterString.split(" ");
+                        flag=1;
+                    }
+                    else
+                    {
+                        flag=0;
+                    }
+                    for (int i = 0; i < original_orderId.size(); i++) {
+                        String name_data = (String)original_orderId.get(i);
+                        String code_data = (String)original_partnerName.get(i);
+                        if(flag==0) {
+                            if (name_data.toLowerCase().contains(constraint.toString())) {
+                                FilteredArrList.add(original_orderId.get(i));
+                                FilteredArrList1.add(original_partnerName.get(i));
+                                FilteredArrList2.add(original_dates.get(i));
+                            }
+                        }
+                        else if(temp.length >1)
+                        {
+                            if (name_data.toLowerCase().contains(temp[0]) && code_data.toLowerCase().contains(temp[1])) {
+                                FilteredArrList.add(original_orderId.get(i));
+                                FilteredArrList1.add(original_partnerName.get(i));
+                                FilteredArrList2.add(original_dates.get(i));
+                            }
+                        }
+                    }
+                    // set the Filtered result to return
+                    results.count = FilteredArrList.size();
+                    results.values = FilteredArrList;
+                }
+                return results;
+            }
+        };
+        return filter;
     }
 }

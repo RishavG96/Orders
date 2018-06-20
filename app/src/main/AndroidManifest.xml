@@ -40,7 +40,8 @@
         <activity
             android:name=".OrderPartnersActivity"
             android:label="PARTNERS" />
-        <activity android:name=".ArticleAmountActivity"></activity>
+        <activity android:name=".ArticleAmountActivity" />
+        <activity android:name=".OrderDetailsActivity"></activity>
     </application>
 
 </manifest>
