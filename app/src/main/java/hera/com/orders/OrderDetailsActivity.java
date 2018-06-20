@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import hera.com.orders.infrastructure.adapters.OrderItemsAdapter;
+import hera.com.orders.infrastructure.adapters.OrdersAdapter;
 import hera.com.orders.infrastructure.sqlite.Orders;
 
 public class OrderDetailsActivity extends AppCompatActivity {
