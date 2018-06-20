@@ -38,12 +38,16 @@ public class CombinedActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    hera.com.orders.infrastructure.sqlite.Orders orders;
     public static int articleId;
     public static String articleName, articleUnits,articlePacking,articleWeight, articlePrice, articleCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_combined);
+        orders = new hera.com.orders.infrastructure.sqlite.Orders();
+        orders.addOrder(this,  OrderPartnersActivity.partnerID, OrderPartnersActivity.partnerName,
+                OrderEntryActivity.dates, OrderEntryActivity.notes);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -62,6 +62,7 @@ public class ThreeFragment extends Fragment {
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     startActivity(intent);
                     getActivity().setResult(3);
+                    getActivity().setResult(6);
                     getActivity().finish();
                 }
                 else

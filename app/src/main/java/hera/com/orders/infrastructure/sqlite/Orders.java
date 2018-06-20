@@ -27,7 +27,7 @@ public class Orders {
                     "'"+cursor.getString(1)+"','"+cursor.getString(2)+"','"+cursor.getString(3)+"'," +
                     "'"+cursor.getString(4)+"','"+cursor.getString(5)+"','"+cursor.getString(6)+"')");
         }
-        Toast.makeText(context,"Order Placed!",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context,"Order Placed!",Toast.LENGTH_SHORT).show();
     }
     public void showOrders(Context context)
     {

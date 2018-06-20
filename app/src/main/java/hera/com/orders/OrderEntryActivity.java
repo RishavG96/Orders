@@ -81,15 +81,9 @@ public class OrderEntryActivity extends AppCompatActivity {
                 if(et.getText().toString().isEmpty())
                     Toast.makeText(getApplicationContext(),"Please enter date",Toast.LENGTH_SHORT).show();
                 else {
-                    if(et.getText().toString().compareTo(todaysDate) >= 0) {
                         int exit = 4;
                         Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
                         startActivityForResult(intent, exit);
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(),"Please enter a valid date!",Toast.LENGTH_SHORT).show();
-                    }
                 }
             }
         });
