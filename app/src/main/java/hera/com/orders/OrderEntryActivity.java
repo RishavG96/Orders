@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class OrderEntryActivity extends AppCompatActivity {
@@ -35,6 +37,7 @@ public class OrderEntryActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    String todaysDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +59,16 @@ public class OrderEntryActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                view.setMinDate(System.currentTimeMillis() - 1000);
                 updateLabel();
             }
-
         };
+
         et.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+                //date.setMinDate(System.currentTimeMillis() - 1000);
                 new DatePickerDialog(OrderEntryActivity.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -76,9 +81,15 @@ public class OrderEntryActivity extends AppCompatActivity {
                 if(et.getText().toString().isEmpty())
                     Toast.makeText(getApplicationContext(),"Please enter date",Toast.LENGTH_SHORT).show();
                 else {
-                    int exit=4;
-                    Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
-                    startActivityForResult(intent,exit);
+                    if(et.getText().toString().compareTo(todaysDate) >= 0) {
+                        int exit = 4;
+                        Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
+                        startActivityForResult(intent, exit);
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),"Please enter a valid date!",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -117,8 +128,10 @@ public class OrderEntryActivity extends AppCompatActivity {
                 });
     }
     private void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
+        String myFormat = "dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        Date c = Calendar.getInstance().getTime();
+        todaysDate=sdf.format(c);
         et.setText(sdf.format(myCalendar.getTime()));
         dates=sdf.format(myCalendar.getTime());
     }

@@ -21,8 +21,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
         lv=findViewById(R.id.listview7);
         partnerName=findViewById(R.id.textView31);
         total=findViewById(R.id.textView32);
-        int orderId=Integer.parseInt(Orders.orderId.get(OrdersAdapter.pos).toString());
-        String pn=Orders.partnerName.get(OrdersAdapter.pos).toString();
+        int orderId=Integer.parseInt(Orders.orderId.get(MainActivity.pos).toString());
+        String pn=Orders.partnerName.get(MainActivity.pos).toString();
         total.setText("Total Order Price: "+Orders.calculateTotalPrice(orderId));
         partnerName.setText("Partner Name: "+ pn);
         Orders.showOrderItems(this, orderId);

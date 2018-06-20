@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import hera.com.orders.MainActivity;
 import hera.com.orders.OrderDetailsActivity;
 import hera.com.orders.R;
 import hera.com.orders.infrastructure.sqlite.Article;
@@ -23,7 +24,6 @@ import hera.com.orders.infrastructure.sqlite.Orders;
 public class OrdersAdapter extends BaseAdapter implements Filterable {
     LayoutInflater inflater;
     Context context;
-    public static int pos;
     ArrayList orderId, original_orderId, partnerName, original_partnerName, dates, original_dates;
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
@@ -75,7 +75,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.show:
-                                        pos=position;
+                                        MainActivity.pos=position;
                                         Intent intent=new Intent(context, OrderDetailsActivity.class);
                                         context.startActivity(intent);
                                         break;

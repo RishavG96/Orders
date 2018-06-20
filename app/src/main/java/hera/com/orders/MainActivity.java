@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lv;
     Button newOrder;
     OrdersAdapter adapter;
+    public static int pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +103,14 @@ public class MainActivity extends AppCompatActivity {
         orders.showOrders(this);
         adapter=new OrdersAdapter(this,orders.orderId, orders.partnerName, orders.date);
         lv.setAdapter(adapter);
-
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                pos=position;
+                Intent intent=new Intent(getApplicationContext(), OrderDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
         navigationView=findViewById(R.id.nav_view);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
