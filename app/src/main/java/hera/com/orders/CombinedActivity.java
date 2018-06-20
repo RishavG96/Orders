@@ -163,4 +163,18 @@ public class CombinedActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
+
+    @Override
+    protected void onStop() {
+        setResult(1);
+        setResult(3);
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        setResult(1);
+        setResult(3);
+        super.onDestroy();
+    }
 }

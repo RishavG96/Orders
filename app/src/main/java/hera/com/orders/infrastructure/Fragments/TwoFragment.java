@@ -56,10 +56,18 @@ public class TwoFragment extends Fragment {
                 CombinedActivity.articleWeight=sqlite_assort.weight.get(position);
                 CombinedActivity.articlePrice=sqlite_assort.price.get(position);
                 CombinedActivity.articleCode=sqlite_assort.code.get(position);
+                int exit=0;
                 Intent intent=new Intent(getContext(), ArticleAmountActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, exit);
             }
         });
         return view;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==0)
+            if(resultCode==1)
+                getActivity().finish();
     }
 }

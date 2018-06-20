@@ -53,8 +53,9 @@ public class OrderPartnersActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 partnerID=Integer.parseInt(sqlite_partner.id.get(position));
                 partnerName=sqlite_partner.name.get(position);
+                int exit=2;
                 Intent intent=new Intent(getApplicationContext(), OrderEntryActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,exit);
             }
         });
 
@@ -162,5 +163,24 @@ public class OrderPartnersActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         MainActivity.db.execSQL("delete from orderitems");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2)
+            if(resultCode==3)
+                finish();
+    }
+    @Override
+    protected void onStop() {
+        setResult(6);
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        setResult(6);
+        super.onDestroy();
     }
 }

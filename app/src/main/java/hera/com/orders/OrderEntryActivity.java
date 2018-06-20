@@ -76,8 +76,9 @@ public class OrderEntryActivity extends AppCompatActivity {
                 if(et.getText().toString().isEmpty())
                     Toast.makeText(getApplicationContext(),"Please enter date",Toast.LENGTH_SHORT).show();
                 else {
+                    int exit=4;
                     Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,exit);
                 }
             }
         });
@@ -161,5 +162,24 @@ public class OrderEntryActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==4)
+            if(resultCode==3)
+                finish();
+    }
+    @Override
+    protected void onStop() {
+        setResult(3);
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        setResult(3);
+        super.onDestroy();
     }
 }

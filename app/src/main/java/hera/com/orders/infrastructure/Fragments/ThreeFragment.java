@@ -61,6 +61,8 @@ public class ThreeFragment extends Fragment {
                     MainActivity.db.execSQL("delete from orderitems");
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     startActivity(intent);
+                    getActivity().setResult(3);
+                    getActivity().finish();
                 }
                 else
                 {

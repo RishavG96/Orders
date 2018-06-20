@@ -132,6 +132,8 @@ public class ArticleAmountActivity extends AppCompatActivity {
                             CombinedActivity.articleCode,CombinedActivity.articleUnits,amount1, amount2, p);
                     Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
                     startActivity(intent);
+                    setResult(1);
+                    finish();
                 }
             }
         });

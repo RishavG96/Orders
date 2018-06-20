@@ -178,8 +178,9 @@ public class MainActivity extends AppCompatActivity {
         newOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int exit=5;
                 Intent intent=new Intent(getApplicationContext(), OrderPartnersActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,exit);
             }
         });
     }
@@ -242,5 +243,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         MainActivity.db.execSQL("delete from orderitems");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==5)
+            if(resultCode==6)
+                finish();
     }
 }

@@ -17,7 +17,7 @@ tools:openDrawer="start">
         <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:layout_marginTop="55dp"
             android:text="Create New Order"/>
 

@@ -49,10 +49,19 @@ public class OneFragment extends Fragment {
                 CombinedActivity.articleWeight=sqlite_article.weight.get(position);
                 CombinedActivity.articlePrice=sqlite_article.price.get(position);
                 CombinedActivity.articleCode=sqlite_article.code.get(position);
+                int exit=0;
                 Intent intent=new Intent(getContext(), ArticleAmountActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, exit);
             }
         });
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==0)
+            if(resultCode==1)
+                getActivity().finish();
     }
 }
