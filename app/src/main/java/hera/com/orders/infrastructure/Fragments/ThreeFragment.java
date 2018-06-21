@@ -45,7 +45,7 @@ public class ThreeFragment extends Fragment {
         total=view.findViewById(R.id.totalprice);
         partnerName=view.findViewById(R.id.partnername);
         submit=view.findViewById(R.id.placeorder);
-        partnerName.setText("Partner Name: "+OrderPartnersActivity.partnerName);
+        partnerName.setText("Partner Name: "+MainActivity.partnerName);
         orderItems.showOrders(getContext());
         total.setText("The Total price is: "+orderItems.calculateTotalPrice());
         adapter=new OrderItemsAdapter(getContext(), orderItems.articleId, orderItems.articleName,orderItems.articleCode,
@@ -56,8 +56,7 @@ public class ThreeFragment extends Fragment {
             public void onClick(View v) {
                 orderItems.showOrders(getContext());
                 if(OrderItems.item_count!=0) {
-                    orders.addOrder(getContext(),  OrderPartnersActivity.partnerID, OrderPartnersActivity.partnerName,
-                            OrderEntryActivity.dates, OrderEntryActivity.notes);
+                    orders.addToOrderDetails(getContext());
                     MainActivity.db.execSQL("delete from orderitems");
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     startActivity(intent);

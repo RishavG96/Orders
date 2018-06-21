@@ -25,10 +25,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import hera.com.orders.infrastructure.adapters.ArticleListAdapter;
 import hera.com.orders.infrastructure.adapters.OrdersAdapter;
 import hera.com.orders.infrastructure.adapters.PartnerListAdapter;
+import hera.com.orders.infrastructure.sqlite.Orders;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -50,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
     Button newOrder;
     OrdersAdapter adapter;
     public static int pos;
+    public static String notes="",dates="";
+    public static int partnerID;
+    public static String partnerName;
+    public static int orderID=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         service_article = new hera.com.orders.infrastructure.service.Article();
         service_assortment = new hera.com.orders.infrastructure.service.Assortment();
         orders = new hera.com.orders.infrastructure.sqlite.Orders();
+        orderID=0;
+        //Toast.makeText(getApplicationContext(),"here",Toast.LENGTH_SHORT).show();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
         db.execSQL("delete from orderitems");
         if(LoginActivity.part==0 || LoginActivity.art==0 || LoginActivity.assort==0)
@@ -107,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 pos=position;
+                MainActivity.orderID= Integer.parseInt(Orders.orderId.get(position).toString());
                 Intent intent=new Intent(getApplicationContext(), OrderDetailsActivity.class);
                 startActivity(intent);
             }
@@ -265,12 +274,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        orderID=0;
         db.execSQL("delete from orderitems");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        orderID=0;
         db.execSQL("delete from orderitems");
     }
 

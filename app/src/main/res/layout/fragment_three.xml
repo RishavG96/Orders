@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginBottom="0dp"
-            android:text="Place order" />
+            android:text="Create Order" />
     </LinearLayout>
 
 </FrameLayout>

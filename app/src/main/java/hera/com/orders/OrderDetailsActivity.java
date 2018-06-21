@@ -13,9 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,6 +30,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
     ListView lv;
     TextView tv;
+    Button editOrder, submitOrder;
     TextView partnerName,total;
     OrderItemsAdapter adapter;
     DrawerLayout drawerLayout;
@@ -39,19 +43,34 @@ public class OrderDetailsActivity extends AppCompatActivity {
         lv=findViewById(R.id.listview7);
         tv=findViewById(R.id.textView35);
         partnerName=findViewById(R.id.textView31);
+        partnerName.setMovementMethod(new ScrollingMovementMethod());
         total=findViewById(R.id.textView32);
-        int orderId=Integer.parseInt(Orders.orderId.get(MainActivity.pos).toString());
+        editOrder=findViewById(R.id.editorder);
+        submitOrder=findViewById(R.id.submitorder);
+        MainActivity.orderID=Integer.parseInt(Orders.orderId.get(MainActivity.pos).toString());
         String pn=Orders.partnerName.get(MainActivity.pos).toString();
-        total.setText("Total Order Price: "+Orders.calculateTotalPrice(orderId));
+        total.setText("Total Order Price: "+Orders.calculateTotalPrice(MainActivity.orderID));
         partnerName.setText("Partner Name: "+ pn);
-        Orders.showOrderItems(this, orderId);
+        Orders.showOrderItems(this, MainActivity.orderID);
         adapter=new OrderItemsAdapter(this, Orders.articleId, Orders.articleName,Orders.articleCode,
                 Orders.articleUnits,Orders.quantity,Orders.packaging,Orders.price);
         lv.setAdapter(adapter);
-        if(Orders.calculateTotalPrice(orderId)==0)
+        if(Orders.calculateTotalPrice(MainActivity.orderID)==0)
         {
             tv.setText("No Order Items added.");
         }
+
+        editOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Orders.pushOrderItems(getApplicationContext(), MainActivity.orderID);
+                MainActivity.partnerName=Orders.getPartnerName(getApplicationContext(), MainActivity.orderID);
+                Intent intent=new Intent(getApplicationContext(), CombinedActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         navigationView=findViewById(R.id.nav_view10);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);

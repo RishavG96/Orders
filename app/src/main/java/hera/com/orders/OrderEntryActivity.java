@@ -33,7 +33,7 @@ public class OrderEntryActivity extends AppCompatActivity {
     EditText et, note;
     Button submit;
     Calendar myCalendar;
-    public static String notes="",dates="";
+
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
@@ -48,7 +48,7 @@ public class OrderEntryActivity extends AppCompatActivity {
         submit=findViewById(R.id.button2);
         myCalendar= Calendar.getInstance();
 
-        name.setText(OrderPartnersActivity.partnerName);
+        name.setText(MainActivity.partnerName);
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -77,7 +77,7 @@ public class OrderEntryActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notes=note.getText().toString();
+                MainActivity.notes=note.getText().toString();
                 if(et.getText().toString().isEmpty())
                     Toast.makeText(getApplicationContext(),"Please enter date",Toast.LENGTH_SHORT).show();
                 else {
@@ -127,7 +127,7 @@ public class OrderEntryActivity extends AppCompatActivity {
         Date c = Calendar.getInstance().getTime();
         todaysDate=sdf.format(c);
         et.setText(sdf.format(myCalendar.getTime()));
-        dates=sdf.format(myCalendar.getTime());
+        MainActivity.dates=sdf.format(myCalendar.getTime());
     }
 
     @Override

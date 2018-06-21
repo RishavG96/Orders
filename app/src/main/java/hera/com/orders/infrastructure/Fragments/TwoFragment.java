@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import hera.com.orders.ArticleAmountActivity;
 import hera.com.orders.CombinedActivity;
+import hera.com.orders.MainActivity;
 import hera.com.orders.OrderPartnersActivity;
 import hera.com.orders.R;
 import hera.com.orders.infrastructure.adapters.AssortmentListAdapter;
@@ -40,7 +41,7 @@ public class TwoFragment extends Fragment {
         lv=view.findViewById(R.id.listview4);
         empty=view.findViewById(R.id.empty);
         sqlite_assort=new hera.com.orders.infrastructure.sqlite.Assortment();
-        sqlite_assort.showAssortment(getContext(), OrderPartnersActivity.partnerID);
+        sqlite_assort.showAssortment(getContext(), MainActivity.partnerID);
         adapter=new AssortmentListAdapter(getContext(), sqlite_assort.name, sqlite_assort.code,
                 sqlite_assort.price, sqlite_assort.units);
         if(sqlite_assort.name.isEmpty())

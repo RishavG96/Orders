@@ -30,8 +30,7 @@ public class OrderPartnersActivity extends AppCompatActivity {
     SearchView searchView;
     ListView lv;
     PartnerListAdapter adapter;
-    public static int partnerID;
-    public static String partnerName;
+
     hera.com.orders.infrastructure.sqlite.Partner sqlite_partner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +50,8 @@ public class OrderPartnersActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                partnerID=Integer.parseInt(sqlite_partner.id.get(position));
-                partnerName=sqlite_partner.name.get(position);
+                MainActivity.partnerID=Integer.parseInt(sqlite_partner.id.get(position));
+                MainActivity.partnerName=sqlite_partner.name.get(position);
                 int exit=2;
                 Intent intent=new Intent(getApplicationContext(), OrderEntryActivity.class);
                 startActivityForResult(intent,exit);
