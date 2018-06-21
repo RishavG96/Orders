@@ -1,7 +1,5 @@
 package hera.com.orders;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.PersistableBundle;
@@ -11,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,7 +29,7 @@ public class ArticleAmountActivity extends AppCompatActivity {
     TextView tv1, tv2;
     EditText et1,et2;
     Button submit;
-    hera.com.orders.infrastructure.sqlite.OrderItems orderItems;
+    hera.com.orders.sqlite.OrderItems orderItems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +42,7 @@ public class ArticleAmountActivity extends AppCompatActivity {
         submit=findViewById(R.id.button4);
         tv1.setText(CombinedActivity.articleName);
         tv2.setText(CombinedActivity.articleUnits);
-        orderItems = new hera.com.orders.infrastructure.sqlite.OrderItems();
+        orderItems = new hera.com.orders.sqlite.OrderItems();
         et1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -165,6 +162,11 @@ public class ArticleAmountActivity extends AppCompatActivity {
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
+                                finish();
+                                break;
+                            case R.id.partnerweek:
+                                Intent intent3=new Intent(getApplicationContext(), WeekDaysActivity.class);
+                                startActivity(intent3);
                                 finish();
                                 break;
                         }

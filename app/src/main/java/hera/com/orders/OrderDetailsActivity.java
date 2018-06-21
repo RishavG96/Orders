@@ -1,7 +1,5 @@
 package hera.com.orders;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.PersistableBundle;
@@ -11,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
@@ -22,9 +19,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import hera.com.orders.infrastructure.adapters.OrderItemsAdapter;
-import hera.com.orders.infrastructure.adapters.OrdersAdapter;
-import hera.com.orders.infrastructure.sqlite.Orders;
+import hera.com.orders.adapters.OrderItemsAdapter;
+import hera.com.orders.sqlite.Orders;
 
 public class OrderDetailsActivity extends AppCompatActivity {
 
@@ -97,6 +93,11 @@ public class OrderDetailsActivity extends AppCompatActivity {
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
+                                finish();
+                                break;
+                            case R.id.partnerweek:
+                                Intent intent3=new Intent(getApplicationContext(), WeekDaysActivity.class);
+                                startActivity(intent3);
                                 finish();
                                 break;
                         }

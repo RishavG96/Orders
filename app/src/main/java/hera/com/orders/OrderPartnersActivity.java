@@ -20,7 +20,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import hera.com.orders.infrastructure.adapters.PartnerListAdapter;
+import hera.com.orders.adapters.PartnerListAdapter;
 
 public class OrderPartnersActivity extends AppCompatActivity {
 
@@ -31,14 +31,14 @@ public class OrderPartnersActivity extends AppCompatActivity {
     ListView lv;
     PartnerListAdapter adapter;
 
-    hera.com.orders.infrastructure.sqlite.Partner sqlite_partner;
+    hera.com.orders.sqlite.Partner sqlite_partner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orders_partners);
 
         lv=findViewById(R.id.listview5);
-        sqlite_partner = new hera.com.orders.infrastructure.sqlite.Partner();
+        sqlite_partner = new hera.com.orders.sqlite.Partner();
         sqlite_partner.showPartner(this);
 
         MainActivity.db.execSQL("delete from orderitems");
@@ -84,6 +84,11 @@ public class OrderPartnersActivity extends AppCompatActivity {
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
+                                finish();
+                                break;
+                            case R.id.partnerweek:
+                                Intent intent3=new Intent(getApplicationContext(), WeekDaysActivity.class);
+                                startActivity(intent3);
                                 finish();
                                 break;
                         }
@@ -173,13 +178,13 @@ public class OrderPartnersActivity extends AppCompatActivity {
     }
     @Override
     protected void onStop() {
-        setResult(6);
+        //setResult(6);
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        setResult(6);
+        //setResult(6);
         super.onDestroy();
     }
 }

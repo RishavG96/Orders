@@ -13,14 +13,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import hera.com.orders.infrastructure.adapters.DetailsAdapter;
+import hera.com.orders.adapters.DetailsAdapter;
 
-import hera.com.orders.infrastructure.adapters.PartnerWeekListAdapter;
-import hera.com.orders.infrastructure.sqlite.PartnerByWeek;
+import hera.com.orders.adapters.PartnerWeekListAdapter;
+import hera.com.orders.sqlite.PartnerByWeek;
 
 
 public class PartnerWeekDetailsActivity extends AppCompatActivity {
@@ -108,6 +110,11 @@ public class PartnerWeekDetailsActivity extends AppCompatActivity {
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
+                                finish();
+                                break;
+                            case R.id.partnerweek:
+                                Intent intent3=new Intent(getApplicationContext(), WeekDaysActivity.class);
+                                startActivity(intent3);
                                 finish();
                                 break;
                         }

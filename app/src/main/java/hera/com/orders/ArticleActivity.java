@@ -14,21 +14,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.ListView;
 
-import hera.com.orders.infrastructure.adapters.ArticleListAdapter;
+import hera.com.orders.adapters.ArticleListAdapter;
 
 public class ArticleActivity extends AppCompatActivity {
 
     public static String article_url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/artikli";
-    hera.com.orders.infrastructure.service.Article service_article;
-    hera.com.orders.infrastructure.sqlite.Article sqlite_article;
+    hera.com.orders.service.Article service_article;
+    hera.com.orders.sqlite.Article sqlite_article;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
@@ -43,8 +40,8 @@ public class ArticleActivity extends AppCompatActivity {
 
         listView=findViewById(R.id.listview1);
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
-        service_article = new hera.com.orders.infrastructure.service.Article();
-        sqlite_article = new hera.com.orders.infrastructure.sqlite.Article();
+        service_article = new hera.com.orders.service.Article();
+        sqlite_article = new hera.com.orders.sqlite.Article();
 
         service_article.connect(this);
         sqlite_article.showArticle(this);
@@ -78,6 +75,11 @@ public class ArticleActivity extends AppCompatActivity {
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
+                                finish();
+                                break;
+                            case R.id.partnerweek:
+                                Intent intent3=new Intent(getApplicationContext(), WeekDaysActivity.class);
+                                startActivity(intent3);
                                 finish();
                                 break;
                         }

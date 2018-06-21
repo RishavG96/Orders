@@ -1,7 +1,5 @@
 package hera.com.orders;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,20 +10,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
-
-import hera.com.orders.infrastructure.adapters.ArticleListAdapter;
 
 public class AssortmentActivity extends AppCompatActivity {
 
     public static String assortment_url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/asortiman";
-    hera.com.orders.infrastructure.service.Assortment service_assortment;
-    hera.com.orders.infrastructure.sqlite.Assortment sqlite_assortment;
+    hera.com.orders.service.Assortment service_assortment;
+    hera.com.orders.sqlite.Assortment sqlite_assortment;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
@@ -33,8 +26,8 @@ public class AssortmentActivity extends AppCompatActivity {
     public AssortmentActivity()
     {
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
-        service_assortment = new hera.com.orders.infrastructure.service.Assortment();
-        sqlite_assortment = new hera.com.orders.infrastructure.sqlite.Assortment();
+        service_assortment = new hera.com.orders.service.Assortment();
+        sqlite_assortment = new hera.com.orders.sqlite.Assortment();
         service_assortment.connect(this);
     }
 

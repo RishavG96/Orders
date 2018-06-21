@@ -4,7 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -17,42 +16,52 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
-import hera.com.orders.adapters.PartnerListAdapter;
+import hera.com.orders.adapters.PartnerWeekListAdapter;
 
-public class PartnersActivity extends AppCompatActivity {
+public class ShowPartnersByWeekActivity extends AppCompatActivity {
 
-    public static hera.com.orders.service.Partner service_partner;
-    hera.com.orders.sqlite.Partner sqlite_partner;
-    public static String partner_url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/partneri";
-    public static ListView lv;
-    PartnerListAdapter adapter;
+    PartnerWeekListAdapter adapter;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    public static SQLiteDatabase db;
+    ListView lv;
+    public static String partner_week="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/planovi";
+    hera.com.orders.service.PartnerByWeek service_partner_week;
+    hera.com.orders.sqlite.PartnerByWeek sqlite_partner_week;
     SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_partners);
-
-        db=openOrCreateDatabase("order",MODE_PRIVATE, null);
-        lv=findViewById(R.id.listview);
-        service_partner=new hera.com.orders.service.Partner();
-        sqlite_partner=new hera.com.orders.sqlite.Partner();
-
-        service_partner.connect(this);
-        sqlite_partner.showPartner(this);
-        adapter=new PartnerListAdapter(this, sqlite_partner.id,sqlite_partner.name, sqlite_partner.code,
-                sqlite_partner.amount, sqlite_partner.address, sqlite_partner.city);
+        setContentView(R.layout.activity_show_partners_by_week);
+        lv=findViewById(R.id.listview12);
+        service_partner_week=new hera.com.orders.service.PartnerByWeek();
+        sqlite_partner_week=new hera.com.orders.sqlite.PartnerByWeek();
+        service_partner_week.connect(this);
+        sqlite_partner_week.showPartner(this);
+        sqlite_partner_week.showPartner(this, WeekDaysActivity.pos);
+        adapter=new PartnerWeekListAdapter(this, sqlite_partner_week.id,sqlite_partner_week.name, sqlite_partner_week.code,
+                sqlite_partner_week.amount, sqlite_partner_week.address, sqlite_partner_week.city);
         lv.setAdapter(adapter);
 
-        navigationView=findViewById(R.id.nav_view1);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MainActivity.partnerID=Integer.parseInt(sqlite_partner_week.id.get(position));
+                MainActivity.partnerName=sqlite_partner_week.name.get(position);
+                int exit=2;
+                Intent intent=new Intent(getApplicationContext(), OrderEntryActivity.class);
+                startActivityForResult(intent,exit);
+            }
+        });
+
+        navigationView=findViewById(R.id.nav_view12);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        drawerLayout=findViewById(R.id.drawer_layout1);
+        drawerLayout=findViewById(R.id.drawer_layout12);
         actionBarDrawerToggle= new ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -131,7 +140,7 @@ public class PartnersActivity extends AppCompatActivity {
                     Intent intent1 = new Intent(this, LoginActivity.class);
                     startActivity(intent1);
                     finish();
-                    db.execSQL("delete from login");
+                    MainActivity.db.execSQL("delete from login");
                     break;
             }
         }
@@ -148,5 +157,34 @@ public class PartnersActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MainActivity.db.execSQL("delete from orderitems");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        MainActivity.db.execSQL("delete from orderitems");
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==2)
+            if(resultCode==3)
+                finish();
+    }
+    @Override
+    protected void onStop() {
+        setResult(6);
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        setResult(6);
+        super.onDestroy();
     }
 }

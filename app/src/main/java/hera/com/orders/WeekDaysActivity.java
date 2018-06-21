@@ -1,10 +1,7 @@
 package hera.com.orders;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -12,47 +9,44 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import hera.com.orders.adapters.PartnerListAdapter;
+public class WeekDaysActivity extends AppCompatActivity {
 
-public class PartnersActivity extends AppCompatActivity {
-
-    public static hera.com.orders.service.Partner service_partner;
-    hera.com.orders.sqlite.Partner sqlite_partner;
-    public static String partner_url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/partneri";
-    public static ListView lv;
-    PartnerListAdapter adapter;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    public static SQLiteDatabase db;
-    SearchView searchView;
+    ListView listView;
+    public static int pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_partners);
+        setContentView(R.layout.activity_week_days);
 
-        db=openOrCreateDatabase("order",MODE_PRIVATE, null);
-        lv=findViewById(R.id.listview);
-        service_partner=new hera.com.orders.service.Partner();
-        sqlite_partner=new hera.com.orders.sqlite.Partner();
+        listView=findViewById(R.id.listview11);
+        String days[]={"Monday", "Tuesday", "Wednesday","Thursday", "Friday","Saturday"};
+        ArrayAdapter adapter=new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1,days);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                pos=position;
+                Intent intent=new Intent(getApplicationContext(), ShowPartnersByWeekActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        service_partner.connect(this);
-        sqlite_partner.showPartner(this);
-        adapter=new PartnerListAdapter(this, sqlite_partner.id,sqlite_partner.name, sqlite_partner.code,
-                sqlite_partner.amount, sqlite_partner.address, sqlite_partner.city);
-        lv.setAdapter(adapter);
-
-        navigationView=findViewById(R.id.nav_view1);
+        navigationView = findViewById(R.id.nav_view11);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        drawerLayout=findViewById(R.id.drawer_layout1);
+        drawerLayout=findViewById(R.id.drawer_layout11);
         actionBarDrawerToggle= new ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,6 +56,11 @@ public class PartnersActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
+                            case R.id.orders:
+                                Intent intent2=new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent2);
+                                finish();
+                                break;
                             case R.id.partner:
                                 Intent intent = new Intent(getApplicationContext(), PartnersActivity.class);
                                 startActivity(intent);
@@ -70,11 +69,6 @@ public class PartnersActivity extends AppCompatActivity {
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
-                                finish();
-                                break;
-                            case R.id.orders:
-                                Intent intent2=new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent2);
                                 finish();
                                 break;
                             case R.id.partnerweek:
@@ -91,28 +85,7 @@ public class PartnersActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.mainmenu,menu);
-
-        SearchManager searchManager = (SearchManager)getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.performClick();
-        searchView.requestFocus();
-        searchView.setIconifiedByDefault(false);
-        searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                adapter.getFilter().filter(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return true;
-            }
-        });
+        inflater.inflate(R.menu.combined_activitymenu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -131,7 +104,7 @@ public class PartnersActivity extends AppCompatActivity {
                     Intent intent1 = new Intent(this, LoginActivity.class);
                     startActivity(intent1);
                     finish();
-                    db.execSQL("delete from login");
+                    MainActivity.db.execSQL("delete from login");
                     break;
             }
         }

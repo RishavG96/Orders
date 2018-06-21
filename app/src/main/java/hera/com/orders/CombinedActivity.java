@@ -1,7 +1,5 @@
 package hera.com.orders;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -25,10 +23,9 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import hera.com.orders.infrastructure.Fragments.OneFragment;
-import hera.com.orders.infrastructure.Fragments.ThreeFragment;
-import hera.com.orders.infrastructure.Fragments.TwoFragment;
-import hera.com.orders.infrastructure.sqlite.Orders;
+import hera.com.orders.Fragments.OneFragment;
+import hera.com.orders.Fragments.ThreeFragment;
+import hera.com.orders.Fragments.TwoFragment;
 
 
 public class CombinedActivity extends AppCompatActivity {
@@ -39,7 +36,7 @@ public class CombinedActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    hera.com.orders.infrastructure.sqlite.Orders orders;
+    hera.com.orders.sqlite.Orders orders;
     SearchView searchView;
     public static int articleId;
     public static String articleName, articleUnits,articlePacking,articleWeight, articlePrice, articleCode;
@@ -47,7 +44,7 @@ public class CombinedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_combined);
-        orders = new hera.com.orders.infrastructure.sqlite.Orders();
+        orders = new hera.com.orders.sqlite.Orders();
         if(MainActivity.orderID==0) {
             orders.addOrder(this, MainActivity.partnerID, MainActivity.partnerName,
                     MainActivity.dates, MainActivity.notes);
@@ -96,6 +93,11 @@ public class CombinedActivity extends AppCompatActivity {
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
+                                finish();
+                                break;
+                            case R.id.partnerweek:
+                                Intent intent3=new Intent(getApplicationContext(), WeekDaysActivity.class);
+                                startActivity(intent3);
                                 finish();
                                 break;
                         }

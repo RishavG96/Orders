@@ -25,12 +25,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import hera.com.orders.infrastructure.adapters.ArticleListAdapter;
-import hera.com.orders.infrastructure.adapters.OrdersAdapter;
-import hera.com.orders.infrastructure.adapters.PartnerListAdapter;
-import hera.com.orders.infrastructure.sqlite.Orders;
+import hera.com.orders.adapters.OrdersAdapter;
+import hera.com.orders.sqlite.Orders;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     ProgressDialog progressDialog;
     public static SQLiteDatabase db;
-    hera.com.orders.infrastructure.service.Partner service_partner;
-    hera.com.orders.infrastructure.sqlite.Partner sqlite_partner;
-    hera.com.orders.infrastructure.service.Article service_article;
-    hera.com.orders.infrastructure.service.Assortment service_assortment;
-    hera.com.orders.infrastructure.sqlite.Orders orders;
+    hera.com.orders.service.Partner service_partner;
+    hera.com.orders.sqlite.Partner sqlite_partner;
+    hera.com.orders.service.Article service_article;
+    hera.com.orders.service.Assortment service_assortment;
+    hera.com.orders.sqlite.Orders orders;
     Handler handle;
     SearchView searchView;
     ListView lv;
@@ -63,16 +60,16 @@ public class MainActivity extends AppCompatActivity {
 
         lv=findViewById(R.id.listview2);
         newOrder=findViewById(R.id.button3);
-        service_partner = new hera.com.orders.infrastructure.service.Partner();
-        sqlite_partner = new hera.com.orders.infrastructure.sqlite.Partner();
-        service_article = new hera.com.orders.infrastructure.service.Article();
-        service_assortment = new hera.com.orders.infrastructure.service.Assortment();
-        orders = new hera.com.orders.infrastructure.sqlite.Orders();
+        service_partner = new hera.com.orders.service.Partner();
+        sqlite_partner = new hera.com.orders.sqlite.Partner();
+        service_article = new hera.com.orders.service.Article();
+        service_assortment = new hera.com.orders.service.Assortment();
+        orders = new hera.com.orders.sqlite.Orders();
         orderID=0;
         //Toast.makeText(getApplicationContext(),"here",Toast.LENGTH_SHORT).show();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
         db.execSQL("delete from orderitems");
-        if(LoginActivity.part==0 || LoginActivity.art==0 || LoginActivity.assort==0)
+        if(LoginActivity.part==0 || LoginActivity.art==0 || LoginActivity.assort==0 || LoginActivity.part_week==0)
         {
             service_partner.connect(getApplicationContext());
             service_article.connect(getApplicationContext());
@@ -157,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                                 finish();
                                 break;
                             case R.id.partnerweek:
-                                Intent intent3=new Intent(getApplicationContext(), WeekDays.class);
+                                Intent intent3=new Intent(getApplicationContext(), WeekDaysActivity.class);
                                 startActivity(intent3);
                                 finish();
                                 break;
@@ -165,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
                                 LoginActivity.assort=0;
                                 LoginActivity.art=0;
                                 LoginActivity.part=0;
+                                LoginActivity.part_week=0;
                                 service_partner.connect(getApplicationContext());
                                 service_article.connect(getApplicationContext());
                                 service_assortment.connect(getApplicationContext());

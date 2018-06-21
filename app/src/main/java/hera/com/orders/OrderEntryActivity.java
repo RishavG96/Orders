@@ -115,6 +115,11 @@ public class OrderEntryActivity extends AppCompatActivity {
                                 startActivity(intent1);
                                 finish();
                                 break;
+                            case R.id.partnerweek:
+                                Intent intent3=new Intent(getApplicationContext(), WeekDaysActivity.class);
+                                startActivity(intent3);
+                                finish();
+                                break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER
                         return true;

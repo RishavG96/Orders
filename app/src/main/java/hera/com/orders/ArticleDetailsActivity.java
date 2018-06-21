@@ -17,9 +17,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import hera.com.orders.infrastructure.adapters.DetailsAdapter;
-import hera.com.orders.infrastructure.adapters.ArticleListAdapter;
-import hera.com.orders.infrastructure.sqlite.Article;
+import hera.com.orders.adapters.DetailsAdapter;
+import hera.com.orders.adapters.ArticleListAdapter;
+import hera.com.orders.sqlite.Article;
 
 public class ArticleDetailsActivity extends AppCompatActivity {
 
@@ -98,6 +98,11 @@ public class ArticleDetailsActivity extends AppCompatActivity {
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
+                                finish();
+                                break;
+                            case R.id.partnerweek:
+                                Intent intent3=new Intent(getApplicationContext(), WeekDaysActivity.class);
+                                startActivity(intent3);
                                 finish();
                                 break;
                         }
