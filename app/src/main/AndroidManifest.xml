@@ -44,6 +44,9 @@
         <activity android:name=".OrderDetailsActivity" />
         <activity android:name=".ArticleDetailsActivity" />
         <activity android:name=".AssortmentDetailsActivity" />
+        <activity android:name=".WeekDays" />
+        <activity android:name=".ShowPartnersByWeek" />
+        <activity android:name=".PartnerWeekDetailsActivity"></activity>
     </application>
 
 </manifest>

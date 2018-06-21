@@ -156,6 +156,11 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent2);
                                 finish();
                                 break;
+                            case R.id.partnerweek:
+                                Intent intent3=new Intent(getApplicationContext(), WeekDays.class);
+                                startActivity(intent3);
+                                finish();
+                                break;
                             case R.id.refresh:
                                 LoginActivity.assort=0;
                                 LoginActivity.art=0;

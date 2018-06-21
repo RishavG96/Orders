@@ -18,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText pass;
     Button submit;
     EditText newurl;
-    public static int part, art,assort;
+    public static int part, art,assort,part_week;
     public static hera.com.orders.infrastructure.module.User classes_user;
     public static hera.com.orders.infrastructure.sqlite.User sqlite_user;
     public static hera.com.orders.infrastructure.service.User service_user;
@@ -62,12 +62,14 @@ public class LoginActivity extends AppCompatActivity {
             part=0;
             art=0;
             assort=0;
+            part_week=0;
         }
         else
         {
             part=1;
             art=1;
             assort=1;
+            part_week=1;
             Intent intent=new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -104,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
             part=1;
             art=1;
             assort=1;
+            part_week=1;
             Intent intent=new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -113,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             part=0;
             art=0;
             assort=0;
+            part_week=0;
         }
     }
 }
