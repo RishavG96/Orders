@@ -92,6 +92,7 @@ public class OrderItemsAdapter extends BaseAdapter{
                                         CombinedActivity.articleId=Integer.parseInt(OrderItems.articleId.get(position));
                                         OrderItems.deleteItem(CombinedActivity.articleId);
                                         Intent intent1=new Intent(context,CombinedActivity.class);
+                                        intent1.putExtra("fragToLoad", 2);
                                         context.startActivity(intent1);
                                         ((CombinedActivity)context).finish();
                                         break;

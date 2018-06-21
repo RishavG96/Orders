@@ -40,6 +40,7 @@ public class CombinedActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     hera.com.orders.infrastructure.sqlite.Orders orders;
+    SearchView searchView;
     public static int articleId;
     public static String articleName, articleUnits,articlePacking,articleWeight, articlePrice, articleCode;
     @Override
@@ -57,10 +58,18 @@ public class CombinedActivity extends AppCompatActivity {
         //MainActivity.db.execSQL("drop table if exists orderitems");
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        if(getIntent().hasExtra("fragToLoad"))
+        {
+            int frag=getIntent().getIntExtra("fragToLoad",0);
+            if(frag==2)
+            {
+                viewPager.setCurrentItem(2,true);
+            }
+        }
+        //viewPager.setCurrentItem(0,true);
         navigationView=findViewById(R.id.nav_view5);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -133,7 +142,7 @@ public class CombinedActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.mainmenu,menu);
+        inflater.inflate(R.menu.combined_activitymenu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 

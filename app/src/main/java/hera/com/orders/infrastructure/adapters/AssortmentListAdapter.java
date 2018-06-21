@@ -17,18 +17,23 @@ import java.util.ArrayList;
 
 import hera.com.orders.AssortmentDetailsActivity;
 import hera.com.orders.R;
+import hera.com.orders.infrastructure.sqlite.Article;
+import hera.com.orders.infrastructure.sqlite.Assortment;
 
 public class AssortmentListAdapter extends BaseAdapter implements Filterable {
     LayoutInflater inflater;
     Context context;
-    ArrayList name, code, amount, units, original_name, original_code, original_amount, original_units;
+    ArrayList id, name, code, amount, units, original_id, original_name, original_code, original_amount, original_units;
     public static int pos;
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
-    public AssortmentListAdapter(Context context, ArrayList name, ArrayList code, ArrayList amount, ArrayList units)
+    ArrayList FilteredArrList4;
+    public AssortmentListAdapter(Context context, ArrayList id, ArrayList name, ArrayList code, ArrayList amount, ArrayList units)
     {
         this.context=context;
+        this.id=id;
+        this.original_id=id;
         this.name=name;
         this.original_name=name;
         this.code=code;
@@ -101,6 +106,101 @@ public class AssortmentListAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public Filter getFilter() {
-        return null;
+        Filter filter = new Filter() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,FilterResults results) {
+                name = (ArrayList)results.values; // has the filtered values
+                code=FilteredArrList1;
+                amount=FilteredArrList2;
+                units=FilteredArrList3;
+                id=FilteredArrList4;
+                Assortment.name=name;
+                Assortment.code=code;
+                Assortment.price=amount;
+                Assortment.units=units;
+                Assortment.id=id;
+                notifyDataSetChanged();  // notifies the data with new filtered values
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
+                ArrayList FilteredArrList = new ArrayList();
+                FilteredArrList1 = new ArrayList();
+                FilteredArrList2 = new ArrayList();
+                FilteredArrList3 = new ArrayList();
+                FilteredArrList4 = new ArrayList();
+
+                if (original_id == null) {
+                    original_id = new ArrayList(id);
+                }
+                if (original_name == null) {
+                    original_name = new ArrayList(name);
+                }
+                if (original_code == null) {
+                    original_code = new ArrayList(code);
+                }
+                if (original_amount == null) {
+                    original_amount = new ArrayList(amount);
+                }
+                if (original_units == null) {
+                    original_units = new ArrayList(units);
+                }
+
+                if (constraint == null || constraint.length() == 0) {
+
+                    // set the Original result to return
+                    results.count =original_name.size();
+                    results.values = original_name;
+                    FilteredArrList1=original_code;
+                    FilteredArrList2=original_amount;
+                    FilteredArrList3=original_units;
+                    FilteredArrList4=original_id;
+                } else {
+                    constraint = constraint.toString().toLowerCase();
+                    String[] temp=new String[1000];
+                    int flag;
+                    String filterString=constraint.toString();
+                    if(filterString.contains(" ")) {
+                        temp = filterString.split(" ");
+                        flag=1;
+                    }
+                    else
+                    {
+                        flag=0;
+                    }
+                    for (int i = 0; i < original_name.size(); i++) {
+                        String name_data = (String)original_name.get(i);
+                        String code_data = (String)original_code.get(i);
+                        if(flag==0) {
+                            if (name_data.toLowerCase().contains(constraint.toString())) {
+                                FilteredArrList.add(original_name.get(i));
+                                FilteredArrList1.add(original_code.get(i));
+                                FilteredArrList2.add(original_amount.get(i));
+                                FilteredArrList3.add(original_units.get(i));
+                                FilteredArrList4.add(original_id.get(i));
+                            }
+                        }
+                        else if(temp.length >1)
+                        {
+                            if (name_data.toLowerCase().contains(temp[0]) && code_data.toLowerCase().contains(temp[1])) {
+                                FilteredArrList.add(original_name.get(i));
+                                FilteredArrList1.add(original_code.get(i));
+                                FilteredArrList2.add(original_amount.get(i));
+                                FilteredArrList3.add(original_units.get(i));
+                                FilteredArrList4.add(original_id.get(i));
+                            }
+                        }
+                    }
+                    // set the Filtered result to return
+                    results.count = FilteredArrList.size();
+                    results.values = FilteredArrList;
+                }
+                return results;
+            }
+        };
+        return filter;
     }
 }
