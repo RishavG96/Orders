@@ -44,7 +44,9 @@ public class ThreeFragment extends Fragment {
         partnerName=view.findViewById(R.id.partnername);
         submit=view.findViewById(R.id.placeorder);
         partnerName.setText("Partner Name: "+MainActivity.partnerName);
-        orderItems.showOrders(getContext());
+        try {
+            orderItems.showOrders(getContext());
+        }catch (Exception e){}
         total.setText("The Total price is: "+orderItems.calculateTotalPrice());
         adapter=new OrderItemsAdapter(getContext(), orderItems.articleId, orderItems.articleName,orderItems.articleCode,
                 orderItems.articleUnits,orderItems.units,orderItems.packaging,orderItems.price);
@@ -53,7 +55,7 @@ public class ThreeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 orderItems.showOrders(getContext());
-                if(OrderItems.item_count!=0) {
+//                if(OrderItems.item_count!=0) {
                     orders.addToOrderDetails(getContext());
                     MainActivity.db.execSQL("delete from orderitems");
                     Intent intent = new Intent(getContext(), MainActivity.class);
@@ -61,11 +63,11 @@ public class ThreeFragment extends Fragment {
                     getActivity().setResult(3);
                     getActivity().setResult(6);
                     getActivity().finish();
-                }
-                else
-                {
-                    Toast.makeText(getContext(),"Please add items first!",Toast.LENGTH_SHORT).show();
-                }
+//                }
+//                else
+//                {
+//                    Toast.makeText(getContext(),"Please add items first!",Toast.LENGTH_SHORT).show();
+//                }
             }
         });
         return view;

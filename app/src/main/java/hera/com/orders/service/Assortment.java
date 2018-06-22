@@ -56,7 +56,9 @@ public class Assortment {
                         try {
                             if(LoginActivity.assort==0) {
                                 db=context.openOrCreateDatabase("order",context.MODE_PRIVATE,null);
-                                db.execSQL("delete from assortment");
+                                try {
+                                    db.execSQL("delete from assortment");
+                                }catch (Exception e){}
                                 db.beginTransaction();
                                 for (int i = 0; i < response.length(); i++) {
                                     JSONObject ob = (JSONObject) response.opt(i);

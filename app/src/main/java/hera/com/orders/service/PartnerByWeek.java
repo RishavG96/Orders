@@ -55,8 +55,9 @@ public class PartnerByWeek {
                     public void onResponse(JSONArray response)
                     {
                         try {
-
+                            //Toast.makeText(context,"here",Toast.LENGTH_SHORT).show();
                             if(LoginActivity.part_week==0) {
+
                                 db=context.openOrCreateDatabase("order", MODE_PRIVATE,null);
                                 //partnerByWeek.deletePartner(context);
                                 db.beginTransaction();

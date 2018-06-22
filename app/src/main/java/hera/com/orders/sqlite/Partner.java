@@ -153,6 +153,9 @@ public class Partner {
     public void deletePartner(Context context)
     {
         PartnersActivity.db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
-        PartnersActivity.db.execSQL("delete from partners");
+        try {
+            PartnersActivity.db.execSQL("delete from partners");
+        }
+        catch (Exception e){}
     }
 }

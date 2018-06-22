@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import hera.com.orders.adapters.OrdersAdapter;
 import hera.com.orders.sqlite.Orders;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     hera.com.orders.service.Article service_article;
     hera.com.orders.service.Assortment service_assortment;
     hera.com.orders.sqlite.Orders orders;
+    hera.com.orders.service.PartnerByWeek service_partner_week;
     Handler handle;
     SearchView searchView;
     ListView lv;
@@ -65,15 +67,25 @@ public class MainActivity extends AppCompatActivity {
         service_article = new hera.com.orders.service.Article();
         service_assortment = new hera.com.orders.service.Assortment();
         orders = new hera.com.orders.sqlite.Orders();
+        service_partner_week = new hera.com.orders.service.PartnerByWeek();
         orderID=0;
         //Toast.makeText(getApplicationContext(),"here",Toast.LENGTH_SHORT).show();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
-        db.execSQL("delete from orderitems");
+        try {
+            db.execSQL("delete from orderitems");
+        }
+        catch (Exception e)
+        {
+
+        }
         if(LoginActivity.part==0 || LoginActivity.art==0 || LoginActivity.assort==0 || LoginActivity.part_week==0)
         {
             service_partner.connect(getApplicationContext());
             service_article.connect(getApplicationContext());
+            //Toast.makeText(this, "art"+LoginActivity.art,Toast.LENGTH_SHORT).show();
             service_assortment.connect(getApplicationContext());
+            service_partner_week.connect(getApplicationContext());
+            //Toast.makeText(this, "ass"+LoginActivity.assort,Toast.LENGTH_SHORT).show();
             progressDialog = new ProgressDialog(MainActivity.this);
             progressDialog.setMax(100);
             progressDialog.setMessage("Loading....");
@@ -105,7 +117,10 @@ public class MainActivity extends AppCompatActivity {
         {
             Id=c.getInt(0);
         }
-        orders.showOrders(this);
+        try {
+            orders.showOrders(this);
+        }
+        catch (Exception e){}
         adapter=new OrdersAdapter(this,orders.orderId, orders.partnerName, orders.date);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -166,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
                                 service_partner.connect(getApplicationContext());
                                 service_article.connect(getApplicationContext());
                                 service_assortment.connect(getApplicationContext());
+                                service_partner_week.connect(getApplicationContext());
                                 progressDialog = new ProgressDialog(MainActivity.this);
                                 progressDialog.setMax(100);
                                 progressDialog.setMessage("Loading....");
@@ -278,14 +294,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         orderID=0;
-        db.execSQL("delete from orderitems");
+        try {
+            db.execSQL("delete from orderitems");
+        }
+        catch (Exception e){}
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         orderID=0;
-        db.execSQL("delete from orderitems");
+        try {
+            db.execSQL("delete from orderitems");
+        }
+        catch (Exception e){}
     }
 
     @Override

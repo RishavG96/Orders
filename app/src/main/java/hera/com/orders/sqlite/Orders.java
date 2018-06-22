@@ -127,12 +127,14 @@ public class Orders {
     }
     public static double calculateTotalPrice(int orderId)
     {
-        Cursor c = MainActivity.db.rawQuery("select * from orderdetails1 where orderId="+orderId+"", null);
         double total=0.0;
-        while(c.moveToNext())
-        {
-            total+=Double.parseDouble(c.getString(9));
-        }
+        try {
+            Cursor c = MainActivity.db.rawQuery("select * from orderdetails1 where orderId=" + orderId + "", null);
+
+            while (c.moveToNext()) {
+                total += Double.parseDouble(c.getString(9));
+            }
+        }catch (Exception e){}
         return total;
     }
 }

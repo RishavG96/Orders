@@ -161,13 +161,17 @@ public class ShowPartnersByWeekActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MainActivity.db.execSQL("delete from orderitems");
+        try {
+            MainActivity.db.execSQL("delete from orderitems");
+        }catch (Exception e){}
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        MainActivity.db.execSQL("delete from orderitems");
+        try {
+            MainActivity.db.execSQL("delete from orderitems");
+        }catch (Exception e){}
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

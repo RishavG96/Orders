@@ -55,7 +55,9 @@ public class Article {
                     {
                         try {
                             if(LoginActivity.art==0) {
-                                db.execSQL("delete from articles");
+                                try {
+                                    db.execSQL("delete from articles");
+                                }catch (Exception e){}
                                 db.beginTransaction();
                                 for (int i = 0; i < response.length(); i++) {
 

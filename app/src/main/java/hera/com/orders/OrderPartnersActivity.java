@@ -41,7 +41,9 @@ public class OrderPartnersActivity extends AppCompatActivity {
         sqlite_partner = new hera.com.orders.sqlite.Partner();
         sqlite_partner.showPartner(this);
 
-        MainActivity.db.execSQL("delete from orderitems");
+        try {
+            MainActivity.db.execSQL("delete from orderitems");
+        }catch (Exception e){}
 
         adapter=new PartnerListAdapter(this,sqlite_partner.id, sqlite_partner.name, sqlite_partner.code,
                 sqlite_partner.amount, sqlite_partner.address, sqlite_partner.city);
@@ -160,13 +162,17 @@ public class OrderPartnersActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MainActivity.db.execSQL("delete from orderitems");
+        try {
+            MainActivity.db.execSQL("delete from orderitems");
+        }catch (Exception e){}
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        MainActivity.db.execSQL("delete from orderitems");
+        try {
+            MainActivity.db.execSQL("delete from orderitems");
+        }catch (Exception e){}
     }
 
     @Override

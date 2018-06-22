@@ -70,17 +70,23 @@ public class OrderItems {
     }
     public double calculateTotalPrice()
     {
-        Cursor c = MainActivity.db.rawQuery("select * from orderitems", null);
         double total=0.0;
-        while(c.moveToNext())
-        {
-            total+=Double.parseDouble(c.getString(8));
-        }
+        try {
+            Cursor c = MainActivity.db.rawQuery("select * from orderitems", null);
+            while(c.moveToNext())
+            {
+                total+=Double.parseDouble(c.getString(8));
+            }
+        }catch (Exception e){}
+
+
         return total;
     }
     public static void deleteItem(int articleId)
     {
-        MainActivity.db.delete("orderitems", "articleId" + "=" + articleId, null);
+        try {
+            MainActivity.db.delete("orderitems", "articleId" + "=" + articleId, null);
+        }catch (Exception e){}
 
     }
 }

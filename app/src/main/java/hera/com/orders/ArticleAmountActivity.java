@@ -129,6 +129,7 @@ public class ArticleAmountActivity extends AppCompatActivity {
                             CombinedActivity.articleCode,CombinedActivity.articleUnits, CombinedActivity.articlePacking,
                             CombinedActivity.articleWeight,amount1, amount2, p);
                     Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
+                    intent.putExtra("fragToLoad", 2);
                     startActivity(intent);
                     setResult(1);
                     finish();

@@ -56,10 +56,10 @@ public class Partner {
                     public void onResponse(JSONArray response)
                     {
                         try {
-
                             if(LoginActivity.part==0) {
                                 db=context.openOrCreateDatabase("order", MODE_PRIVATE,null);
                                 partner.deletePartner(context);
+                                //Toast.makeText(context, "part"+LoginActivity.part,Toast.LENGTH_SHORT).show();
                                 db.beginTransaction();
                                 for (int i = 0; i < response.length(); i++) {
 
@@ -79,7 +79,6 @@ public class Partner {
                                     //String phone=ob.getString("");
                                     String responsiblePerson = ob.optString("responsiblePerson");
                                     String forMobile = ob.optString("forMobile");
-
                                     partner.addPartner(context, Id, code, name, address, city, amount, type, discount, status,
                                             businessHours, timeOfReceipt, responsiblePerson, forMobile);
                                 }
