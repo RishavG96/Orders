@@ -19,7 +19,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hera.com.orders.adapters.ArticleListAdapter;
+import hera.com.orders.module.Article;
 
 public class ArticleActivity extends AppCompatActivity {
 
@@ -44,9 +48,9 @@ public class ArticleActivity extends AppCompatActivity {
         sqlite_article = new hera.com.orders.sqlite.Article();
 
         service_article.connect(this);
-        sqlite_article.showArticle(this);
-        adapter=new ArticleListAdapter(this,sqlite_article.id, sqlite_article.name, sqlite_article.code,
-                sqlite_article.price, sqlite_article.units);
+        List<Article> articleList=new ArrayList<>();
+        articleList=(List<Article>)sqlite_article.showArticle(this);
+        adapter=new ArticleListAdapter(this,articleList);
         listView.setAdapter(adapter);
 
         navigationView=findViewById(R.id.nav_view2);

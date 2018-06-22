@@ -12,10 +12,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hera.com.orders.ArticleAmountActivity;
 import hera.com.orders.CombinedActivity;
 import hera.com.orders.R;
 import hera.com.orders.adapters.ArticleListAdapter;
+import hera.com.orders.module.Article;
 
 
 public class OneFragment extends Fragment {
@@ -23,6 +27,7 @@ public class OneFragment extends Fragment {
     hera.com.orders.sqlite.Article sqlite_article;
     ArticleListAdapter adapter;
     SearchView searchView;
+    List<Article> articleList;
     public OneFragment() {
         // Required empty public constructor
     }
@@ -40,21 +45,21 @@ public class OneFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_one, container, false);
         lv=view.findViewById(R.id.listview3);
         sqlite_article = new hera.com.orders.sqlite.Article();
-        sqlite_article.showArticle(getContext());
-        adapter=new ArticleListAdapter(getContext(),sqlite_article.id, sqlite_article.name, sqlite_article.code,
-                sqlite_article.price, sqlite_article.units);
+        articleList=new ArrayList<>();
+        articleList=(List<Article>)sqlite_article.showArticle(getContext());
+        adapter=new ArticleListAdapter(getContext(),articleList);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CombinedActivity.articleId=Integer.parseInt(sqlite_article.id.get(position));
-                CombinedActivity.articleName=sqlite_article.name.get(position);
-                CombinedActivity.articleUnits=sqlite_article.units.get(position);
-                CombinedActivity.articlePacking=sqlite_article.packing.get(position);
-                CombinedActivity.articleWeight=sqlite_article.weight.get(position);
-                CombinedActivity.articlePrice=sqlite_article.price.get(position);
-                CombinedActivity.articleCode=sqlite_article.code.get(position);
+                CombinedActivity.articleId=articleList.get(position).id;
+                CombinedActivity.articleName=articleList.get(position).name;
+                CombinedActivity.articleUnits=articleList.get(position).units;
+                CombinedActivity.articlePacking=articleList.get(position).packing;
+                CombinedActivity.articleWeight=articleList.get(position).weight;
+                CombinedActivity.articlePrice=articleList.get(position).price;
+                CombinedActivity.articleCode=articleList.get(position).code;
                 int exit=0;
                 Intent intent=new Intent(getContext(), ArticleAmountActivity.class);
                 startActivityForResult(intent, exit);

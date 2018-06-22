@@ -62,19 +62,18 @@ public class Article {
                                 for (int i = 0; i < response.length(); i++) {
 
                                     JSONObject ob = (JSONObject) response.opt(i);
-
-                                    int Id = Integer.parseInt(ob.optString("id"));
-                                    String code = ob.optString("code");
-                                    String name = ob.optString("name");
-                                    String brutto = ob.optString("brutto");
-                                    String netto = ob.optString("netto");
-                                    String packing = ob.optString("packing");
-                                    String price = ob.optString("price");
-                                    String shortname = ob.optString("shortname");
-                                    String units = ob.optString("units");
-                                    String weight = ob.optString("weight");
-                                    sqlite_article.addArticle(context, Id, code, name, shortname, units, packing, brutto,
-                                            netto, weight, price);
+                                    hera.com.orders.module.Article article_mod=new hera.com.orders.module.Article();
+                                    article_mod.id = Integer.parseInt(ob.optString("id"));
+                                    article_mod.code = ob.optString("code");
+                                    article_mod.name = ob.optString("name");
+                                    article_mod.brutto = ob.optString("brutto");
+                                    article_mod.netto = ob.optString("netto");
+                                    article_mod.packing = ob.optString("packing");
+                                    article_mod.price = ob.optString("price");
+                                    article_mod.shortName = ob.optString("shortname");
+                                    article_mod.units = ob.optString("units");
+                                    article_mod.weight = ob.optString("weight");
+                                    sqlite_article.addArticle(context,article_mod);
                                 }
                                 db.setTransactionSuccessful();
                                 db.endTransaction();

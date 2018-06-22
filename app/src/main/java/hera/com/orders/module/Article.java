@@ -3,24 +3,24 @@ package hera.com.orders.module;
 
 public class Article {
 
-    public Integer Id;
+    public Integer id;
 
-    public String Code;
+    public String code;
 
-    public String Name;
+    public String name;
 
-    public String ShortName;
+    public String shortName;
 
-    public String Units;
+    public String units;
 
-    public String Packing;
+    public String packing;
 
-    public String Brutto;
+    public String brutto;
 
-    public String Netto;
+    public String netto;
 
-    public String Weight;
+    public String weight;
 
-    public String Price;
+    public String price;
 
 }

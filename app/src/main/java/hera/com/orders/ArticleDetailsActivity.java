@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hera.com.orders.adapters.DetailsAdapter;
 import hera.com.orders.adapters.ArticleListAdapter;
@@ -28,24 +29,28 @@ public class ArticleDetailsActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    Article sqlite_article;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_details);
 
-        lv=findViewById(R.id.listview8);
+        sqlite_article=new Article()
+;        lv=findViewById(R.id.listview8);
+        List<hera.com.orders.module.Article> articleList=new ArrayList<>();
+        articleList=(List<hera.com.orders.module.Article>)sqlite_article.showArticle(this, ArticleListAdapter.pos);
 
-        String id= Article.id.get(ArticleListAdapter.pos);
-        String code=Article.code.get(ArticleListAdapter.pos);
-        String name=Article.name.get(ArticleListAdapter.pos);
-        String shortName=Article.shortName.get(ArticleListAdapter.pos);
-        String units=Article.units.get(ArticleListAdapter.pos);
-        String packing=Article.packing.get(ArticleListAdapter.pos);
-        String brutto=Article.brutto.get(ArticleListAdapter.pos);
-        String netto=Article.netto.get(ArticleListAdapter.pos);
-        String weight=Article.weight.get(ArticleListAdapter.pos);
-        String price=Article.price.get(ArticleListAdapter.pos);
+        String id= articleList.get(0).id.toString();
+        String code=articleList.get(0).code;
+        String name=articleList.get(0).name;
+        String shortName=articleList.get(0).shortName;
+        String units=articleList.get(0).units;
+        String packing=articleList.get(0).packing;
+        String brutto=articleList.get(0).brutto;
+        String netto=articleList.get(0).netto;
+        String weight=articleList.get(0).weight;
+        String price=articleList.get(0).price;
         ArrayList values=new ArrayList();
         ArrayList heading=new ArrayList();
         heading.add("Article ID");

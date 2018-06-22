@@ -107,7 +107,7 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.show:
-                                        pos=position;
+                                        pos=getItem(position).id;
                                         Intent intent=new Intent(context, PartnerDetailsActivity.class);
                                         context.startActivity(intent);
                                         break;

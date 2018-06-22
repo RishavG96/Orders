@@ -56,6 +56,31 @@ public class Partner {
         }
         return partnerList;
     }
+    public Iterable<hera.com.orders.module.Partner> showPartner(Context context, int id)
+    {
+        Cursor c= MainActivity.db.rawQuery("select * from partners where id="+id+" order by name asc",null);
+        StringBuffer stringBuffer=new StringBuffer();
+        List<hera.com.orders.module.Partner> partnerList=new ArrayList<hera.com.orders.module.Partner>();
+        while(c.moveToNext())
+        {
+            hera.com.orders.module.Partner partner=new hera.com.orders.module.Partner();
+            partner.id = c.getInt(0);
+            partner.name=c.getString(2);
+            partner.code=c.getString(1);
+            partner.amount=c.getString(5);
+            partner.address=c.getString(3);
+            partner.city=c.getString(4);
+            partner.type=c.getString(6);
+            partner.discount=c.getString(7);
+            partner.status=c.getString(8);
+            partner.businessHours=c.getString(9);
+            partner.timeOfReceipt=c.getString(10);
+            partner.responsiblePerson=c.getString(11);
+            partner.forMobile=c.getString(12);
+            partnerList.add(partner);
+        }
+        return partnerList;
+    }
     public static Iterable<hera.com.orders.module.Partner> showPartner(Context context, ArrayList n)
     {
         List<hera.com.orders.module.Partner> partnerList=new ArrayList<hera.com.orders.module.Partner>();
