@@ -20,7 +20,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hera.com.orders.adapters.PartnerListAdapter;
+import hera.com.orders.module.Partner;
 
 public class OrderPartnersActivity extends AppCompatActivity {
 
@@ -30,6 +34,7 @@ public class OrderPartnersActivity extends AppCompatActivity {
     SearchView searchView;
     ListView lv;
     PartnerListAdapter adapter;
+    List<Partner> partnerList;
 
     hera.com.orders.sqlite.Partner sqlite_partner;
     @Override
@@ -44,16 +49,16 @@ public class OrderPartnersActivity extends AppCompatActivity {
         try {
             MainActivity.db.execSQL("delete from orderitems");
         }catch (Exception e){}
-
-        adapter=new PartnerListAdapter(this,sqlite_partner.id, sqlite_partner.name, sqlite_partner.code,
-                sqlite_partner.amount, sqlite_partner.address, sqlite_partner.city);
+        partnerList=new ArrayList<>();
+        partnerList=(List<hera.com.orders.module.Partner>)sqlite_partner.showPartner(this);
+        adapter=new PartnerListAdapter(this,partnerList);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MainActivity.partnerID=Integer.parseInt(sqlite_partner.id.get(position));
-                MainActivity.partnerName=sqlite_partner.name.get(position);
+                MainActivity.partnerID=partnerList.get(position).id;
+                MainActivity.partnerName=partnerList.get(position).name;
                 int exit=2;
                 Intent intent=new Intent(getApplicationContext(), OrderEntryActivity.class);
                 startActivityForResult(intent,exit);

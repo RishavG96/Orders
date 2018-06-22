@@ -14,54 +14,73 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hera.com.orders.PartnerDetailsActivity;
 import hera.com.orders.R;
-import hera.com.orders.sqlite.Partner;
+import hera.com.orders.module.Partner;
 
 public class PartnerListAdapter extends BaseAdapter implements Filterable{
 
     LayoutInflater inflater;
     Context context;
-    ArrayList id, original_id, name, code, amount, address, city, original_name, original_code, original_amount, original_address, original_city;
     public static int pos;
+    ArrayList id, original_id, name, code, amount, address, city, original_name, original_code, original_amount, original_address, original_city;
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
     ArrayList FilteredArrList4;
     ArrayList FilteredArrList5;
+    List<Partner> partners;
 
-    public PartnerListAdapter(Context context, ArrayList id, ArrayList name, ArrayList code, ArrayList amount, ArrayList address, ArrayList city)
+    public PartnerListAdapter(Context context, List<Partner> partnerIterable)
     {
         this.context=context;
-        this.id=id;
-        this.original_id=id;
-        this.name=name;
-        this.original_name=name;
-        this.code=code;
-        this.original_code=code;
-        this.amount=amount;
-        this.original_amount=amount;
-        this.address=address;
-        this.original_address=address;
-        this.city=city;
-        this.original_city=city;
-        inflater=LayoutInflater.from(context);
+        partners=partnerIterable;
 
+        name=new ArrayList();
+        code=new ArrayList();
+        amount=new ArrayList();
+        address=new ArrayList();
+        city=new ArrayList();
+        id=new ArrayList();
+        original_name=new ArrayList();
+        original_code=new ArrayList();
+        original_amount=new ArrayList();
+        original_address=new ArrayList();
+        original_city=new ArrayList();
+        original_id=new ArrayList();
+        for(Partner partner:partnerIterable)
+        {
+            id.add(partner.id);
+            original_id.add(partner.id);
+            name.add(partner.name);
+            original_name.add(partner.name);
+            code.add(partner.code);
+            original_code.add(partner.code);
+            amount.add(partner.amount);
+            original_amount.add(partner.amount);
+            address.add(partner.address);
+            original_address.add(partner.address);
+            city.add(partner.city);
+            original_city.add(partner.city);
+        }
+
+        inflater=LayoutInflater.from(context);
     }
     @Override
     public int getCount() {
-        return name.size();
+        return partners.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public Partner getItem(int position) {
+        return partners.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -101,11 +120,11 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
                 }
             }
         });
-        n.setText(name.get(position).toString());
-        co.setText("Code: "+code.get(position).toString());
-        am.setText("    Amount: "+amount.get(position).toString()+"     ");
-        ad.setText("Address: "+address.get(position).toString());
-        ci.setText("    City: "+city.get(position).toString());
+        n.setText((getItem(position)).name);
+        co.setText("Code: "+getItem(position).code);
+        am.setText("    Amount: "+getItem(position).amount+"     ");
+        ad.setText("Address: "+getItem(position).address);
+        ci.setText("    City: "+getItem(position).city);
         return convertView;
     }
 
@@ -116,18 +135,26 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint,FilterResults results) {
+
                 name = (ArrayList)results.values; // has the filtered values
                 code=FilteredArrList1;
                 amount=FilteredArrList2;
                 address=FilteredArrList3;
                 city=FilteredArrList4;
                 id=FilteredArrList5;
-                Partner.name=name;
-                Partner.code=code;
-                Partner.amount=amount;
-                Partner.address=address;
-                Partner.city=city;
-                Partner.id=id;
+                List<Partner> partnerList=new ArrayList<Partner>();
+                for(int i=0;i<name.size();i++)
+                {
+                    Partner partner=new Partner();
+                    partner.id=Integer.parseInt(id.get(i).toString());
+                    partner.name=name.get(i).toString();
+                    partner.code=code.get(i).toString();
+                    partner.amount=amount.get(i).toString();
+                    partner.address=address.get(i).toString();
+                    partner.city=city.get(i).toString();
+                    partnerList.add(partner);
+                }
+                partners=partnerList;
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
@@ -140,6 +167,7 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
                 FilteredArrList3 = new ArrayList();
                 FilteredArrList4 = new ArrayList();
                 FilteredArrList5 = new ArrayList();
+
 
                 if (original_id == null) {
                     original_id = new ArrayList(id);

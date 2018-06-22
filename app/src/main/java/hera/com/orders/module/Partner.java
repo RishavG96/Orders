@@ -1,36 +1,38 @@
 package hera.com.orders.module;
 
+import java.io.Serializable;
+
 /**
  * Created by rishavg on 6/7/18.
  */
 
-public class Partner {
+public class Partner implements Serializable{
 
-    public Integer Id;
+    public Integer id;
 
-    public String Code;
+    public String code;
 
-    public String Name;
+    public String name;
 
-    public String Address;
+    public String address;
 
-    public String City;
+    public String city;
 
-    public String Amount;
+    public String amount;
 
-    public String Type;
+    public String type;
 
-    public String Discount;
+    public String discount;
 
-    public String Status;
+    public String status;
 
-    public String BusinessHours;
+    public String businessHours;
 
-    public String TimeOfReceipt;
+    public String timeOfReceipt;
 
-    public String Phone;
+    public String phone;
 
-    public String ResponsiblePerson;
+    public String responsiblePerson;
 
-    public String ForMobile;
+    public String forMobile;
 }

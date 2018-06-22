@@ -64,23 +64,21 @@ public class Partner {
                                 for (int i = 0; i < response.length(); i++) {
 
                                     JSONObject ob = (JSONObject) response.opt(i);
-
-                                    int Id = Integer.parseInt(ob.optString("id"));
-                                    String code = ob.optString("code");
-                                    String name = ob.optString("name");
-                                    String address = ob.optString("address");
-                                    String city = ob.optString("city");
-                                    String amount = ob.optString("amount");
-                                    String type = ob.optString("type");
-                                    String discount = ob.optString("discount");
-                                    String status = ob.optString("status");
-                                    String businessHours = ob.optString("businessHours");
-                                    String timeOfReceipt = ob.optString("timeOfReceipt");
-                                    //String phone=ob.getString("");
-                                    String responsiblePerson = ob.optString("responsiblePerson");
-                                    String forMobile = ob.optString("forMobile");
-                                    partner.addPartner(context, Id, code, name, address, city, amount, type, discount, status,
-                                            businessHours, timeOfReceipt, responsiblePerson, forMobile);
+                                    hera.com.orders.module.Partner partner_mod=new hera.com.orders.module.Partner();
+                                    partner_mod.id = Integer.parseInt(ob.optString("id"));
+                                    partner_mod.code = ob.optString("code");
+                                    partner_mod.name = ob.optString("name");
+                                    partner_mod.address = ob.optString("address");
+                                    partner_mod.city = ob.optString("city");
+                                    partner_mod.amount = ob.optString("amount");
+                                    partner_mod.type = ob.optString("type");
+                                    partner_mod.discount = ob.optString("discount");
+                                    partner_mod.status = ob.optString("status");
+                                    partner_mod.businessHours = ob.optString("businessHours");
+                                    partner_mod.timeOfReceipt = ob.optString("timeOfReceipt");
+                                    partner_mod.responsiblePerson = ob.optString("responsiblePerson");
+                                    partner_mod.forMobile = ob.optString("forMobile");
+                                    partner.addPartner(context, partner_mod);
                                 }
                                 db.setTransactionSuccessful();
                                 db.endTransaction();

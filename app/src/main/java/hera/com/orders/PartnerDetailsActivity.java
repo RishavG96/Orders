@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hera.com.orders.adapters.DetailsAdapter;
 import hera.com.orders.adapters.PartnerListAdapter;
@@ -28,27 +29,30 @@ public class PartnerDetailsActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    Partner sqlite_partner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partner_details);
 
+        sqlite_partner=new Partner();
         lv=findViewById(R.id.listview9);
-
-        String id = Partner.id.get(PartnerListAdapter.pos).toString();
-        String code = Partner.code.get(PartnerListAdapter.pos).toString();
-        String name = Partner.name.get(PartnerListAdapter.pos).toString();
-        String address = Partner.address.get(PartnerListAdapter.pos).toString();
-        String city = Partner.city.get(PartnerListAdapter.pos).toString();
-        String amount = Partner.amount.get(PartnerListAdapter.pos).toString();
-        String type = Partner.type.get(PartnerListAdapter.pos).toString();
-        String discount = Partner.discount.get(PartnerListAdapter.pos).toString();
-        String status = Partner.status.get(PartnerListAdapter.pos).toString();
-        String businessHOurs = Partner.businessHours.get(PartnerListAdapter.pos).toString();
-        String timeOfReceipt = Partner.timeOfReceipt.get(PartnerListAdapter.pos).toString();
-        String responsiblePerson = Partner.responsiblePerson.get(PartnerListAdapter.pos).toString();
-        String forMobile = Partner.forMobile.get(PartnerListAdapter.pos).toString();
+        List<hera.com.orders.module.Partner> partnerList=new ArrayList<>();
+        partnerList=(List<hera.com.orders.module.Partner>)sqlite_partner.showPartner(this);
+        String id = partnerList.get(PartnerListAdapter.pos).id.toString();
+        String code = partnerList.get(PartnerListAdapter.pos).code.toString();
+        String name = partnerList.get(PartnerListAdapter.pos).name.toString();
+        String address = partnerList.get(PartnerListAdapter.pos).address.toString();
+        String city = partnerList.get(PartnerListAdapter.pos).city.toString();
+        String amount = partnerList.get(PartnerListAdapter.pos).amount.toString();
+        String type = partnerList.get(PartnerListAdapter.pos).type.toString();
+        String discount = partnerList.get(PartnerListAdapter.pos).discount.toString();
+        String status = partnerList.get(PartnerListAdapter.pos).status.toString();
+        String businessHOurs = partnerList.get(PartnerListAdapter.pos).businessHours.toString();
+        String timeOfReceipt = partnerList.get(PartnerListAdapter.pos).timeOfReceipt.toString();
+        String responsiblePerson = partnerList.get(PartnerListAdapter.pos).responsiblePerson.toString();
+        String forMobile = partnerList.get(PartnerListAdapter.pos).forMobile.toString();
         ArrayList values=new ArrayList();
         ArrayList heading=new ArrayList();
         heading.add("Partner ID");

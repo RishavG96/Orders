@@ -19,7 +19,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hera.com.orders.adapters.PartnerListAdapter;
+import hera.com.orders.module.Partner;
 
 public class PartnersActivity extends AppCompatActivity {
 
@@ -44,9 +48,9 @@ public class PartnersActivity extends AppCompatActivity {
         sqlite_partner=new hera.com.orders.sqlite.Partner();
 
         service_partner.connect(this);
-        sqlite_partner.showPartner(this);
-        adapter=new PartnerListAdapter(this, sqlite_partner.id,sqlite_partner.name, sqlite_partner.code,
-                sqlite_partner.amount, sqlite_partner.address, sqlite_partner.city);
+        List<Partner> partnerList=new ArrayList<>();
+        partnerList= (List<Partner>) sqlite_partner.showPartner(this);
+        adapter=new PartnerListAdapter(this, partnerList );
         lv.setAdapter(adapter);
 
         navigationView=findViewById(R.id.nav_view1);

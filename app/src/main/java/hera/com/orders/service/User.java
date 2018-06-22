@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -51,9 +52,11 @@ public class User {
                             LoginActivity.classes_user.Id=Integer.parseInt(id);
                             LoginActivity.classes_user.Token=jwt;
                             LoginActivity.sqlite_user.addUser(context, Integer.parseInt(id), username, password, LoginActivity.url, jwt);
-                            Intent intent=new Intent(context, MainActivity.class);
+                            Intent intent=new Intent(context,MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
                             ((Activity)context).finish();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
