@@ -30,13 +30,13 @@ public class PartnerWeekDetailsActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
-    hera.com.orders.sqlite.PartnerByWeek sqlite_partner;
+    hera.com.orders.sqlite.Partner sqlite_partner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partner_week_details);
 
-        sqlite_partner=new hera.com.orders.sqlite.PartnerByWeek();
+        sqlite_partner=new hera.com.orders.sqlite.Partner();
         lv=findViewById(R.id.listview13);
 
         List<hera.com.orders.model.Partner> partnerList=new ArrayList<>();

@@ -124,7 +124,6 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
             @Override
             protected void publishResults(CharSequence constraint,FilterResults results) {
                 orderId = (ArrayList)results.values; // has the filtered values
-                //Toast.makeText(context, "here"+orderId,Toast.LENGTH_SHORT).show();
                 partnerName=FilteredArrList1;
                 dates=FilteredArrList2;
                 List<hera.com.orders.model.Orders> ordersList1=new ArrayList<>();
@@ -146,7 +145,6 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                 ArrayList FilteredArrList = new ArrayList();
                 FilteredArrList1 = new ArrayList();
                 FilteredArrList2 = new ArrayList();
-
                 if (original_orderId == null) {
                     original_orderId = new ArrayList(orderId);
                 }
@@ -178,10 +176,10 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                         flag=0;
                     }
                     for (int i = 0; i < original_orderId.size(); i++) {
-                        String name_data = (String)original_orderId.get(i);
+                        String name_data = original_orderId.get(i).toString();
                         String code_data = (String)original_partnerName.get(i);
                         if(flag==0) {
-                            if (name_data.toLowerCase().contains(constraint.toString())) {
+                            if (name_data.contains(constraint.toString())) {
                                 FilteredArrList.add(original_orderId.get(i));
                                 FilteredArrList1.add(original_partnerName.get(i));
                                 FilteredArrList2.add(original_dates.get(i));
@@ -189,13 +187,14 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                         }
                         else if(temp.length >1)
                         {
-                            if (name_data.toLowerCase().contains(temp[0]) && code_data.toLowerCase().contains(temp[1])) {
+                            if (name_data.contains(temp[0]) && code_data.toLowerCase().contains(temp[1])) {
                                 FilteredArrList.add(original_orderId.get(i));
                                 FilteredArrList1.add(original_partnerName.get(i));
                                 FilteredArrList2.add(original_dates.get(i));
                             }
                         }
                     }
+
                     // set the Filtered result to return
                     results.count = FilteredArrList.size();
                     results.values = FilteredArrList;
