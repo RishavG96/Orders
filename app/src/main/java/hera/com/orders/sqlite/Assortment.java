@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hera.com.orders.MainActivity;
-import hera.com.orders.module.Article;
+import hera.com.orders.model.Article;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class Assortment {
     //public static ArrayList<String> assortmentId, assortmentItemId, partnerId, articleId;
     //public static ArrayList<String> id, code, name, shortName, units, packing, brutto, netto, weight, price;
-    public void addAssortment(Context context, hera.com.orders.module.Assortment assortment){
+    public void addAssortment(Context context, hera.com.orders.model.Assortment assortment){
         hera.com.orders.service.Assortment.db.execSQL("create table if not exists assortment(assortmentId varchar(1000)," +
                 " assortmentItemId varchar(1000), partnerId vharchar(1000), articleId varchar(1000))");
         hera.com.orders.service.Assortment
@@ -26,9 +26,9 @@ public class Assortment {
         String identity=Id+"";
         int count=0;
         Cursor c = MainActivity.db.rawQuery("select * from assortment where partnerId = '"+identity+"'", null);
-        List<hera.com.orders.module.Assortment> assortmentList = new ArrayList<>();
+        List<hera.com.orders.model.Assortment> assortmentList = new ArrayList<>();
         while (c.moveToNext()) {
-            hera.com.orders.module.Assortment assortment=new hera.com.orders.module.Assortment();
+            hera.com.orders.model.Assortment assortment=new hera.com.orders.model.Assortment();
             assortment.assortmentId=c.getString(0);
             assortment.partnerId=c.getString(2);
             assortment.assortmentItemId=c.getString(1);
@@ -58,12 +58,12 @@ public class Assortment {
         }
         return articleList;
     }
-    public Iterable<hera.com.orders.module.Article> showAssortmentDetails(Context context, int id) {
+    public Iterable<hera.com.orders.model.Article> showAssortmentDetails(Context context, int id) {
         MainActivity.db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
         Cursor c = MainActivity.db.rawQuery("select * from articles where id="+id+" order by name asc", null);
-        List<hera.com.orders.module.Article> articleList=new ArrayList<>();
+        List<hera.com.orders.model.Article> articleList=new ArrayList<>();
         while (c.moveToNext()) {
-            hera.com.orders.module.Article article=new hera.com.orders.module.Article();
+            hera.com.orders.model.Article article=new hera.com.orders.model.Article();
             article.id=c.getInt(0);
             article.name=c.getString(2);
             article.code=c.getString(1);

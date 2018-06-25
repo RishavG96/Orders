@@ -21,6 +21,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import hera.com.orders.model.OrderItems;
+
 public class ArticleAmountActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
@@ -125,9 +127,17 @@ public class ArticleAmountActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    orderItems.addOrders(getApplicationContext(), CombinedActivity.articleId, CombinedActivity.articleName,
-                            CombinedActivity.articleCode,CombinedActivity.articleUnits, CombinedActivity.articlePacking,
-                            CombinedActivity.articleWeight,amount1, amount2, p);
+                    OrderItems orderItems2=new OrderItems();
+                    orderItems2.articleId=CombinedActivity.articleId;
+                    orderItems2.articleName= CombinedActivity.articleName;
+                    orderItems2.articleCode=CombinedActivity.articleCode;
+                    orderItems2.articleUnits=CombinedActivity.articleUnits;
+                    orderItems2.articlePacking= CombinedActivity.articlePacking;
+                    orderItems2.articleWeight= CombinedActivity.articleWeight;
+                    orderItems2.quantity=amount1;
+                    orderItems2.packaging=amount2;
+                    orderItems2.price=p;
+                    orderItems.addOrders(getApplicationContext(),orderItems2);
                     Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
                     intent.putExtra("fragToLoad", 2);
                     startActivity(intent);

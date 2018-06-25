@@ -38,8 +38,8 @@ public class PartnerDetailsActivity extends AppCompatActivity {
 
         sqlite_partner=new Partner();
         lv=findViewById(R.id.listview9);
-        List<hera.com.orders.module.Partner> partnerList=new ArrayList<>();
-        partnerList=(List<hera.com.orders.module.Partner>)sqlite_partner.showPartner(this,PartnerListAdapter.pos);
+        List<hera.com.orders.model.Partner> partnerList=new ArrayList<>();
+        partnerList=(List<hera.com.orders.model.Partner>)sqlite_partner.showPartner(this,PartnerListAdapter.pos);
         String id = partnerList.get(0).id.toString();
         String code = partnerList.get(0).code;
         String name = partnerList.get(0).name;

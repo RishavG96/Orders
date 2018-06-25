@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     Button submit;
     EditText newurl;
     public static int part, art,assort,part_week;
-    public static hera.com.orders.module.User classes_user;
+    public static hera.com.orders.model.User classes_user;
     public static hera.com.orders.sqlite.User sqlite_user;
     public static hera.com.orders.service.User service_user;
     SQLiteDatabase db;
@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        classes_user=new hera.com.orders.module.User();
+        classes_user=new hera.com.orders.model.User();
         sqlite_user=new hera.com.orders.sqlite.User();
         service_user=new hera.com.orders.service.User();
 

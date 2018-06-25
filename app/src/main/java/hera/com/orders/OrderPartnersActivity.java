@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hera.com.orders.adapters.PartnerListAdapter;
-import hera.com.orders.module.Partner;
+import hera.com.orders.model.Partner;
 
 public class OrderPartnersActivity extends AppCompatActivity {
 
@@ -50,7 +50,7 @@ public class OrderPartnersActivity extends AppCompatActivity {
             MainActivity.db.execSQL("delete from orderitems");
         }catch (Exception e){}
         partnerList=new ArrayList<>();
-        partnerList=(List<hera.com.orders.module.Partner>)sqlite_partner.showPartner(this);
+        partnerList=(List<hera.com.orders.model.Partner>)sqlite_partner.showPartner(this);
         adapter=new PartnerListAdapter(this,partnerList);
         lv.setAdapter(adapter);
 

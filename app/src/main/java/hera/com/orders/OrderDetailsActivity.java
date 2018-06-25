@@ -19,7 +19,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hera.com.orders.adapters.OrderItemsAdapter;
+import hera.com.orders.model.OrderItems;
 import hera.com.orders.sqlite.Orders;
 
 public class OrderDetailsActivity extends AppCompatActivity {
@@ -32,6 +36,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    Orders orders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +48,16 @@ public class OrderDetailsActivity extends AppCompatActivity {
         total=findViewById(R.id.textView32);
         editOrder=findViewById(R.id.editorder);
         submitOrder=findViewById(R.id.submitorder);
-        MainActivity.orderID=Integer.parseInt(Orders.orderId.get(MainActivity.pos).toString());
-        String pn=Orders.partnerName.get(MainActivity.pos).toString();
+        orders=new Orders();
+        List<hera.com.orders.model.Orders> ordersList=new ArrayList<>();
+        ordersList=(List<hera.com.orders.model.Orders>)orders.showOrders(this);
+        MainActivity.orderID=ordersList.get(MainActivity.pos).orderId;
+        String pn=ordersList.get(MainActivity.pos).partnerName.toString();
         total.setText("Total Order Price: "+Orders.calculateTotalPrice(MainActivity.orderID));
         partnerName.setText("Partner Name: "+ pn);
-        Orders.showOrderItems(this, MainActivity.orderID);
-        adapter=new OrderItemsAdapter(this, Orders.articleId, Orders.articleName,Orders.articleCode,
-                Orders.articleUnits,Orders.quantity,Orders.packaging,Orders.price);
+        List<OrderItems> orderItemsList=new ArrayList<>();
+        orderItemsList=(List<OrderItems>) orders.showOrderItems(this, MainActivity.orderID);
+        adapter=new OrderItemsAdapter(this, orderItemsList);
         lv.setAdapter(adapter);
         if(Orders.calculateTotalPrice(MainActivity.orderID)==0)
         {

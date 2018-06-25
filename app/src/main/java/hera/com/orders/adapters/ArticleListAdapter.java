@@ -18,7 +18,6 @@ import java.util.List;
 
 import hera.com.orders.ArticleDetailsActivity;
 import hera.com.orders.R;
-import hera.com.orders.sqlite.Article;
 
 public class ArticleListAdapter extends BaseAdapter implements Filterable {
 
@@ -33,9 +32,9 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
     ArrayList FilteredArrList4;
     ArrayList FilteredArrList5;
     ArrayList FilteredArrList6;
-    public List<hera.com.orders.module.Article> articles;
+    public List<hera.com.orders.model.Article> articles;
 
-    public ArticleListAdapter(Context context, List<hera.com.orders.module.Article> articleIterable)
+    public ArticleListAdapter(Context context, List<hera.com.orders.model.Article> articleIterable)
     {
         this.context=context;
         articles=articleIterable;
@@ -54,7 +53,7 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
         original_units=new ArrayList();
         original_packing=new ArrayList();
         original_weight=new ArrayList();
-        for(hera.com.orders.module.Article article: articleIterable)
+        for(hera.com.orders.model.Article article: articleIterable)
         {
             id.add(article.id);
             original_id.add(article.id);
@@ -81,7 +80,7 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
     }
 
     @Override
-    public hera.com.orders.module.Article getItem(int position) {
+    public hera.com.orders.model.Article getItem(int position) {
         return articles.get(position);
     }
 
@@ -148,10 +147,10 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                 id=FilteredArrList4;
                 packing=FilteredArrList5;
                 weight=FilteredArrList6;
-                List<hera.com.orders.module.Article> articleList=new ArrayList<hera.com.orders.module.Article>();
+                List<hera.com.orders.model.Article> articleList=new ArrayList<hera.com.orders.model.Article>();
                 for(int i=0;i<name.size();i++)
                 {
-                    hera.com.orders.module.Article article=new hera.com.orders.module.Article();
+                    hera.com.orders.model.Article article=new hera.com.orders.model.Article();
                     article.id=Integer.parseInt(id.get(i).toString());
                     article.name=name.get(i).toString();
                     article.code=code.get(i).toString();

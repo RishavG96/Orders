@@ -15,7 +15,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Article {
     SQLiteDatabase db;
-    public void addArticle(Context context, hera.com.orders.module.Article article){
+    public void addArticle(Context context, hera.com.orders.model.Article article){
         hera.com.orders.service.Article.db.execSQL("create table if not exists articles(id integer, code varchar(1000), name vharchar(1000), shortName varchar(1000)," +
                 "units vharchar(1000), packing varchar(1000), brutto varchar(1000), netto varchar(1000), weight varchar(1000)," +
                 "price varchar(1000))");
@@ -23,12 +23,12 @@ public class Article {
                 "'"+article.shortName+"','"+article.units+"','"+article.packing+"','"+article.brutto+"'," + "'"+article.netto+"'," +
                 "'"+article.weight+"','"+article.price+"')");
     }
-    public Iterable<hera.com.orders.module.Article> showArticle(Context context) {
+    public Iterable<hera.com.orders.model.Article> showArticle(Context context) {
         db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
         Cursor c = db.rawQuery("select * from articles order by name asc", null);
-        List<hera.com.orders.module.Article> articleList=new ArrayList<>();
+        List<hera.com.orders.model.Article> articleList=new ArrayList<>();
         while (c.moveToNext()) {
-            hera.com.orders.module.Article article=new hera.com.orders.module.Article();
+            hera.com.orders.model.Article article=new hera.com.orders.model.Article();
             article.id=c.getInt(0);
             article.name=c.getString(2);
             article.code=c.getString(1);
@@ -43,12 +43,12 @@ public class Article {
         }
         return articleList;
     }
-    public Iterable<hera.com.orders.module.Article> showArticle(Context context, int id) {
+    public Iterable<hera.com.orders.model.Article> showArticle(Context context, int id) {
         db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
         Cursor c = db.rawQuery("select * from articles where id="+id+" order by name asc", null);
-        List<hera.com.orders.module.Article> articleList=new ArrayList<>();
+        List<hera.com.orders.model.Article> articleList=new ArrayList<>();
         while (c.moveToNext()) {
-            hera.com.orders.module.Article article=new hera.com.orders.module.Article();
+            hera.com.orders.model.Article article=new hera.com.orders.model.Article();
             article.id=c.getInt(0);
             article.name=c.getString(2);
             article.code=c.getString(1);

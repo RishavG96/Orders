@@ -62,7 +62,7 @@ public class Assortment {
                                 db.beginTransaction();
                                 for (int i = 0; i < response.length(); i++) {
                                     JSONObject ob = (JSONObject) response.opt(i);
-                                    hera.com.orders.module.Assortment assortment = new hera.com.orders.module.Assortment();
+                                    hera.com.orders.model.Assortment assortment = new hera.com.orders.model.Assortment();
                                     assortment.assortmentId = ob.optString("assortmentId");
                                     assortment.assortmentItemId = ob.optString("assortmentItemId");
                                     assortment.partnerId = ob.optString("partnerId");

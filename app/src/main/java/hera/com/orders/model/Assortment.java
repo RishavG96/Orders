@@ -1,4 +1,4 @@
-package hera.com.orders.module;
+package hera.com.orders.model;
 
 public class Assortment {
 

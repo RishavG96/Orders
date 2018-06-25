@@ -13,8 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -22,10 +20,7 @@ import java.util.List;
 
 import hera.com.orders.adapters.DetailsAdapter;
 
-import hera.com.orders.adapters.PartnerListAdapter;
 import hera.com.orders.adapters.PartnerWeekListAdapter;
-import hera.com.orders.sqlite.Partner;
-import hera.com.orders.sqlite.PartnerByWeek;
 
 
 public class PartnerWeekDetailsActivity extends AppCompatActivity {
@@ -44,8 +39,8 @@ public class PartnerWeekDetailsActivity extends AppCompatActivity {
         sqlite_partner=new hera.com.orders.sqlite.PartnerByWeek();
         lv=findViewById(R.id.listview13);
 
-        List<hera.com.orders.module.Partner> partnerList=new ArrayList<>();
-        partnerList=(List<hera.com.orders.module.Partner>)sqlite_partner.showPartner(this, PartnerWeekListAdapter.pos);
+        List<hera.com.orders.model.Partner> partnerList=new ArrayList<>();
+        partnerList=(List<hera.com.orders.model.Partner>)sqlite_partner.showPartner(this, PartnerWeekListAdapter.pos);
         String id = partnerList.get(0).id.toString();
         String code = partnerList.get(0).code;
         String name = partnerList.get(0).name;

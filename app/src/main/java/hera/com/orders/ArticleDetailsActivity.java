@@ -36,10 +36,10 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_details);
 
-        sqlite_article=new Article()
-;        lv=findViewById(R.id.listview8);
-        List<hera.com.orders.module.Article> articleList=new ArrayList<>();
-        articleList=(List<hera.com.orders.module.Article>)sqlite_article.showArticle(this, ArticleListAdapter.pos);
+        sqlite_article=new Article();
+        lv=findViewById(R.id.listview8);
+        List<hera.com.orders.model.Article> articleList=new ArrayList<>();
+        articleList=(List<hera.com.orders.model.Article>)sqlite_article.showArticle(this, ArticleListAdapter.pos);
 
         String id= articleList.get(0).id.toString();
         String code=articleList.get(0).code;

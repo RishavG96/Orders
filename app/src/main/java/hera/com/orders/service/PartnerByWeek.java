@@ -66,7 +66,7 @@ public class PartnerByWeek {
                                 for (int i = 0; i < response.length(); i++) {
 
                                     JSONObject ob = (JSONObject) response.opt(i);
-                                    hera.com.orders.module.PartnerByWeek partnerByWeekMod=new hera.com.orders.module.PartnerByWeek();
+                                    hera.com.orders.model.PartnerByWeek partnerByWeekMod=new hera.com.orders.model.PartnerByWeek();
                                     partnerByWeekMod.partnerId = Integer.parseInt(ob.optString("partnerId"));
                                     partnerByWeekMod.weekDay = ob.optString("weekDay");
 

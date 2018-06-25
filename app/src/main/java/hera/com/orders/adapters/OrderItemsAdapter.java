@@ -12,6 +12,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hera.com.orders.ArticleAmountActivity;
 import hera.com.orders.CombinedActivity;
@@ -23,32 +24,46 @@ public class OrderItemsAdapter extends BaseAdapter{
     Context context;
     ArrayList id, name, code, unit,quantity, packaging, price;
     public static int pos;
-    public OrderItemsAdapter(Context context, ArrayList id, ArrayList name, ArrayList code, ArrayList unit,ArrayList quantity, ArrayList packaging, ArrayList price)
+    public List<hera.com.orders.model.OrderItems> orderItems;
+    public OrderItemsAdapter(Context context, List<hera.com.orders.model.OrderItems> orderItems)
     {
         this.context=context;
-        this.id=id;
-        this.name=name;
-        this.code=code;
-        this.quantity=quantity;
-        this.unit=unit;
-        this.packaging=packaging;
-        this.price=price;
+
+        this.orderItems=orderItems;
+        for(hera.com.orders.model.OrderItems orderItems1: orderItems)
+        {
+            id=new ArrayList();
+            name=new ArrayList();
+            code=new ArrayList();
+            unit=new ArrayList();
+            quantity=new ArrayList();
+            packaging=new ArrayList();
+            price=new ArrayList();
+            id.add(orderItems1.articleId);
+            name.add(orderItems1.articleName);
+            code.add(orderItems1.articleCode);
+            quantity.add(orderItems1.quantity);
+            unit.add(orderItems1.articleUnits);
+            packaging.add(orderItems1.articlePacking);
+            price.add(orderItems1.price);
+        }
+
         inflater=LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return id.size();
+        return orderItems.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public hera.com.orders.model.OrderItems getItem(int position) {
+        return orderItems.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -75,20 +90,20 @@ public class OrderItemsAdapter extends BaseAdapter{
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.edit:
-                                        pos=position;
-                                        CombinedActivity.articleId=Integer.parseInt(OrderItems.articleId.get(position));
-                                        CombinedActivity.articleName=OrderItems.articleName.get(position);
-                                        CombinedActivity.articleUnits=OrderItems.articleUnits.get(position);
-                                        CombinedActivity.articlePacking=OrderItems.articlePacking.get(position);
-                                        CombinedActivity.articleWeight=OrderItems.articleWeight.get(position);
-                                        CombinedActivity.articlePrice=OrderItems.price.get(position);
-                                        CombinedActivity.articleCode=OrderItems.articleCode.get(position);
+                                        pos=getItem(position).articleId;
+                                        CombinedActivity.articleId=orderItems.get(position).articleId;
+                                        CombinedActivity.articleName=orderItems.get(position).articleName;
+                                        CombinedActivity.articleUnits=orderItems.get(position).articleUnits;
+                                        CombinedActivity.articlePacking=orderItems.get(position).articlePacking;
+                                        CombinedActivity.articleWeight=orderItems.get(position).articleWeight;
+                                        CombinedActivity.articlePrice=orderItems.get(position).price;
+                                        CombinedActivity.articleCode=orderItems.get(position).articleCode;
                                         Intent intent=new Intent(context, ArticleAmountActivity.class);
                                         context.startActivity(intent);
                                         break;
                                     case R.id.remove:
                                         pos=position;
-                                        CombinedActivity.articleId=Integer.parseInt(OrderItems.articleId.get(position));
+                                        CombinedActivity.articleId=orderItems.get(position).articleId;
                                         OrderItems.deleteItem(CombinedActivity.articleId);
                                         Intent intent1=new Intent(context,CombinedActivity.class);
                                         intent1.putExtra("fragToLoad", 2);
@@ -102,10 +117,10 @@ public class OrderItemsAdapter extends BaseAdapter{
                 }
             }
         });
-        n.setText(name.get(position).toString());
-        co.setText("Code: "+code.get(position).toString()+"     ");
-        q.setText("Quantity: "+quantity.get(position).toString()+"  "+unit.get(position).toString() );
-        pr.setText("Price: "+price.get(position).toString()+"    ");
+        n.setText(getItem(position).articleName);
+        co.setText("Code: "+getItem(position).articleCode+"     ");
+        q.setText("Quantity: "+getItem(position).quantity+"  "+getItem(position).articleUnits );
+        pr.setText("Price: "+getItem(position).price+"    ");
         un.setText("");
         return convertView;
     }

@@ -64,7 +64,7 @@ public class Partner {
                                 for (int i = 0; i < response.length(); i++) {
 
                                     JSONObject ob = (JSONObject) response.opt(i);
-                                    hera.com.orders.module.Partner partner_mod=new hera.com.orders.module.Partner();
+                                    hera.com.orders.model.Partner partner_mod=new hera.com.orders.model.Partner();
                                     partner_mod.id = Integer.parseInt(ob.optString("id"));
                                     partner_mod.code = ob.optString("code");
                                     partner_mod.name = ob.optString("name");

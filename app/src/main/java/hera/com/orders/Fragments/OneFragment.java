@@ -19,7 +19,7 @@ import hera.com.orders.ArticleAmountActivity;
 import hera.com.orders.CombinedActivity;
 import hera.com.orders.R;
 import hera.com.orders.adapters.ArticleListAdapter;
-import hera.com.orders.module.Article;
+import hera.com.orders.model.Article;
 
 
 public class OneFragment extends Fragment {

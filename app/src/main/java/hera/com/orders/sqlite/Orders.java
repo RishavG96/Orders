@@ -4,20 +4,22 @@ import android.content.Context;
 import android.database.Cursor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hera.com.orders.MainActivity;
 
 public class Orders {
-    public static ArrayList partnerId, orderId, partnerName, date, note;
-    public static ArrayList articleId, articleName, articleCode, articleUnits, articlePacking, articleWeight, quantity, packaging, price;
-    public void addOrder(Context context, int partnerId,  String partnerName, String date, String note)
+    //public static ArrayList partnerId, orderId, partnerName, date, note;
+    //public static ArrayList articleId, articleName, articleCode, articleUnits, articlePacking, articleWeight, quantity, packaging, price;
+    public void addOrder(Context context, hera.com.orders.model.Orders orders)
     {
         MainActivity.db.execSQL("create table if not exists orders(orderId integer, partnerId integer, partnerName varchar(1000)," +
                 "date varchar(1000), note varchar(1000))");
         int orderId = getNextOrderId();
         MainActivity.orderID=orderId;
         //Toast.makeText(context,"here",Toast.LENGTH_SHORT).show();
-        MainActivity.db.execSQL("insert into orders values("+orderId+","+partnerId+",'"+partnerName+"','"+date+"','"+note+"')");
+        MainActivity.db.execSQL("insert into orders values("+orderId+","+orders.partnerId+",'"+orders.partnerName+"','"+orders.dates+"'," +
+                "'"+orders.note+"')");
 
         //Toast.makeText(context,"Order Placed!",Toast.LENGTH_SHORT).show();
     }
@@ -36,22 +38,21 @@ public class Orders {
                     "'"+cursor.getString(7)+"','"+cursor.getString(8)+"')");
         }
     }
-    public void showOrders(Context context)
+    public Iterable<hera.com.orders.model.Orders> showOrders(Context context)
     {
-        partnerId=new ArrayList();
-        orderId=new ArrayList();
-        partnerName=new ArrayList();
-        date=new ArrayList();
-        note=new ArrayList();
         Cursor c=MainActivity.db.rawQuery("select * from orders", null);
+        List<hera.com.orders.model.Orders> ordersList=new ArrayList<>();
         while(c.moveToNext())
         {
-            orderId.add(c.getString(0));
-            partnerId.add(c.getString(1));
-            partnerName.add(c.getString(2));
-            date.add(c.getString(3));
-            note.add(c.getString(4));
+            hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
+            orders.orderId=c.getInt(0);
+            orders.partnerId=c.getInt(1);
+            orders.partnerName=c.getString(2);
+            orders.dates=c.getString(3);
+            orders.note=c.getString(4);
+            ordersList.add(orders);
         }
+        return ordersList;
     }
     public static String getPartnerName(Context context, int orderId)
     {
@@ -62,58 +63,48 @@ public class Orders {
         }
         return "null";
     }
-    public static void showOrderItems(Context context, int orderId)
+    public static Iterable<hera.com.orders.model.OrderItems> showOrderItems(Context context, int orderId)
     {
-        articleId=new ArrayList();
-        articleName=new ArrayList();
-        articleCode=new ArrayList();
-        articleUnits=new ArrayList();
-        articlePacking=new ArrayList();
-        articleWeight=new ArrayList();
-        quantity=new ArrayList();
-        packaging=new ArrayList();
-        price=new ArrayList();
         Cursor c=MainActivity.db.rawQuery("select * from orderdetails1 where orderId="+orderId+"",null);
+        List<hera.com.orders.model.OrderItems> orderItemsList=new ArrayList<>();
         while(c.moveToNext())
         {
-            articleId.add(c.getString(1));
-            articleName.add(c.getString(2));
-            articleCode.add(c.getString(3));
-            articleUnits.add(c.getString(4));
-            articlePacking.add(c.getString(5));
-            articleWeight.add(c.getString(6));
-            quantity.add(c.getString(7));
-            packaging.add(c.getString(8));
-            price.add(c.getString(9));
+            hera.com.orders.model.OrderItems orderItems=new hera.com.orders.model.OrderItems();
+            orderItems.articleId=c.getInt(1);
+            orderItems.articleName=c.getString(2);
+            orderItems.articleCode=c.getString(3);
+            orderItems.articleUnits=c.getString(4);
+            orderItems.articlePacking=c.getString(5);
+            orderItems.articleWeight=c.getString(6);
+            orderItems.quantity=c.getString(7);
+            orderItems.packaging=c.getString(8);
+            orderItems.price=c.getString(9);
+            orderItemsList.add(orderItems);
         }
+        return orderItemsList;
     }
-    public static void pushOrderItems(Context context, int orderId)
+    public static Iterable<hera.com.orders.model.OrderItems> pushOrderItems(Context context, int orderId)
     {
         Cursor c=MainActivity.db.rawQuery("select * from orderdetails1 where orderId="+orderId+"",null);
+        List<hera.com.orders.model.OrderItems> orderItemsList=new ArrayList<>();
         while(c.moveToNext())
         {
             MainActivity.db.execSQL("insert into orderitems values(" + c.getInt(1) + ",'" + c.getString(2) + "','" + c.getString(3) + "','" +
                     c.getString(4) + "','" + c.getString(5) + "','" + c.getString(6) + "','" + c.getString(7) + "'," +
                     "'" + c.getString(8) + "','" + c.getString(9) + "')");
-            OrderItems.articleId=new ArrayList();
-            OrderItems.articleName=new ArrayList();
-            OrderItems.articleCode=new ArrayList();
-            OrderItems.articleUnits=new ArrayList();
-            OrderItems.articlePacking=new ArrayList();
-            OrderItems.articleWeight=new ArrayList();
-            OrderItems.units=new ArrayList();
-            OrderItems.packaging=new ArrayList();
-            OrderItems.price=new ArrayList();
-            OrderItems.articleId.add(c.getString(0));
-            OrderItems.articleName.add(c.getString(1));
-            OrderItems.articleCode.add(c.getString(2));
-            OrderItems.articleUnits.add(c.getString(3));
-            OrderItems.articlePacking.add(c.getString(4));
-            OrderItems.articleWeight.add(c.getString(5));
-            OrderItems.units.add(c.getString(6));
-            OrderItems.packaging.add(c.getString(7));
-            OrderItems.price.add(c.getString(8));
+            hera.com.orders.model.OrderItems orderItems=new hera.com.orders.model.OrderItems();
+            orderItems.articleId=c.getInt(0);
+            orderItems.articleName=c.getString(1);
+            orderItems.articleCode=c.getString(2);
+            orderItems.articleUnits=c.getString(3);
+            orderItems.articlePacking=c.getString(4);
+            orderItems.articleWeight=c.getString(5);
+            orderItems.quantity=c.getString(6);
+            orderItems.packaging=c.getString(7);
+            orderItems.price=c.getString(8);
+            orderItemsList.add(orderItems);
         }
+        return orderItemsList;
     }
     public int getNextOrderId()
     {

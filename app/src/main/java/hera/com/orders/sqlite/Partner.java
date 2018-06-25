@@ -17,7 +17,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Partner {
 
-    public void addPartner(Context context, hera.com.orders.module.Partner partner)
+    public void addPartner(Context context, hera.com.orders.model.Partner partner)
     {
         hera.com.orders.service.Partner.db.execSQL("create table if not exists partners(id integer, code varchar(1000), name varchar(1000)," +
                 " address varchar(1000), city varchar(1000), amount varchar(1000), type varchar(1000), discount varchar(1000)" +
@@ -31,14 +31,14 @@ public class Partner {
                 ",'"+partner.forMobile+"')");
 
     }
-    public Iterable<hera.com.orders.module.Partner> showPartner(Context context)
+    public Iterable<hera.com.orders.model.Partner> showPartner(Context context)
     {
         Cursor c= MainActivity.db.rawQuery("select * from partners order by name asc",null);
         StringBuffer stringBuffer=new StringBuffer();
-        List<hera.com.orders.module.Partner> partnerList=new ArrayList<hera.com.orders.module.Partner>();
+        List<hera.com.orders.model.Partner> partnerList=new ArrayList<hera.com.orders.model.Partner>();
         while(c.moveToNext())
         {
-            hera.com.orders.module.Partner partner=new hera.com.orders.module.Partner();
+            hera.com.orders.model.Partner partner=new hera.com.orders.model.Partner();
             partner.id = c.getInt(0);
             partner.name=c.getString(2);
             partner.code=c.getString(1);
@@ -56,14 +56,14 @@ public class Partner {
         }
         return partnerList;
     }
-    public Iterable<hera.com.orders.module.Partner> showPartner(Context context, int id)
+    public Iterable<hera.com.orders.model.Partner> showPartner(Context context, int id)
     {
         Cursor c= MainActivity.db.rawQuery("select * from partners where id="+id+" order by name asc",null);
         StringBuffer stringBuffer=new StringBuffer();
-        List<hera.com.orders.module.Partner> partnerList=new ArrayList<hera.com.orders.module.Partner>();
+        List<hera.com.orders.model.Partner> partnerList=new ArrayList<hera.com.orders.model.Partner>();
         while(c.moveToNext())
         {
-            hera.com.orders.module.Partner partner=new hera.com.orders.module.Partner();
+            hera.com.orders.model.Partner partner=new hera.com.orders.model.Partner();
             partner.id = c.getInt(0);
             partner.name=c.getString(2);
             partner.code=c.getString(1);
@@ -81,13 +81,13 @@ public class Partner {
         }
         return partnerList;
     }
-    public static Iterable<hera.com.orders.module.Partner> showPartner(Context context, ArrayList n)
+    public static Iterable<hera.com.orders.model.Partner> showPartner(Context context, ArrayList n)
     {
-        List<hera.com.orders.module.Partner> partnerList=new ArrayList<hera.com.orders.module.Partner>();
+        List<hera.com.orders.model.Partner> partnerList=new ArrayList<hera.com.orders.model.Partner>();
         for(int i =0; i< n.size(); i++) {
             Cursor c = PartnersActivity.db.rawQuery("select * from partners where name =\""+ n.get(i) + "\"", null);
             while (c.moveToNext()) {
-                hera.com.orders.module.Partner partner=new hera.com.orders.module.Partner();
+                hera.com.orders.model.Partner partner=new hera.com.orders.model.Partner();
                 partner.id = c.getInt(0);
                 partner.name=c.getString(2);
                 partner.code=c.getString(1);

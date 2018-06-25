@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hera.com.orders.adapters.PartnerListAdapter;
-import hera.com.orders.module.Partner;
+import hera.com.orders.model.Partner;
 
 public class PartnersActivity extends AppCompatActivity {
 

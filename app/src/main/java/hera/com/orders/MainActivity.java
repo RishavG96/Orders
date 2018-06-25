@@ -27,6 +27,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hera.com.orders.adapters.OrdersAdapter;
 import hera.com.orders.sqlite.Orders;
 
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public static int partnerID;
     public static String partnerName;
     public static int orderID=0;
+    List<hera.com.orders.model.Orders> ordersList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,17 +121,19 @@ public class MainActivity extends AppCompatActivity {
         {
             Id=c.getInt(0);
         }
+        ordersList=new ArrayList<>();
         try {
-            orders.showOrders(this);
+            ordersList=(List<hera.com.orders.model.Orders>) orders.showOrders(this);
         }
         catch (Exception e){}
-        adapter=new OrdersAdapter(this,orders.orderId, orders.partnerName, orders.date);
+        adapter=new OrdersAdapter(this,ordersList);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ordersList=adapter.ordersList;
                 pos=position;
-                MainActivity.orderID= Integer.parseInt(Orders.orderId.get(position).toString());
+                MainActivity.orderID= ordersList.get(position).orderId;
                 Intent intent=new Intent(getApplicationContext(), OrderDetailsActivity.class);
                 startActivity(intent);
             }

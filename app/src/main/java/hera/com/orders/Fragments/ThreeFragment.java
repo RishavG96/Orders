@@ -11,6 +11,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hera.com.orders.MainActivity;
 import hera.com.orders.R;
 import hera.com.orders.adapters.OrderItemsAdapter;
@@ -24,6 +27,7 @@ public class ThreeFragment extends Fragment {
     TextView total,partnerName;
     Button submit;
     OrderItemsAdapter adapter;
+    List<hera.com.orders.model.OrderItems> orderItemsList;
     public ThreeFragment() {
         // Required empty public constructor
     }
@@ -43,19 +47,19 @@ public class ThreeFragment extends Fragment {
         total=view.findViewById(R.id.totalprice);
         partnerName=view.findViewById(R.id.partnername);
         submit=view.findViewById(R.id.placeorder);
+        orderItemsList=new ArrayList<>();
         partnerName.setText("Partner Name: "+MainActivity.partnerName);
         try {
-            orderItems.showOrders(getContext());
+            orderItemsList=(List<hera.com.orders.model.OrderItems>) orderItems.showOrders(getContext());
         }catch (Exception e){}
         total.setText("The Total price is: "+orderItems.calculateTotalPrice());
-        adapter=new OrderItemsAdapter(getContext(), orderItems.articleId, orderItems.articleName,orderItems.articleCode,
-                orderItems.articleUnits,orderItems.units,orderItems.packaging,orderItems.price);
+        adapter=new OrderItemsAdapter(getContext(), orderItemsList);
         lv.setAdapter(adapter);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                orderItems.showOrders(getContext());
-//                if(OrderItems.item_count!=0) {
+                    orderItemsList=adapter.orderItems;
+                    orderItems.showOrders(getContext());
                     orders.addToOrderDetails(getContext());
                     MainActivity.db.execSQL("delete from orderitems");
                     Intent intent = new Intent(getContext(), MainActivity.class);
@@ -63,11 +67,6 @@ public class ThreeFragment extends Fragment {
                     getActivity().setResult(3);
                     getActivity().setResult(6);
                     getActivity().finish();
-//                }
-//                else
-//                {
-//                    Toast.makeText(getContext(),"Please add items first!",Toast.LENGTH_SHORT).show();
-//                }
             }
         });
         return view;

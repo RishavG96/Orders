@@ -14,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hera.com.orders.MainActivity;
 import hera.com.orders.OrderDetailsActivity;
@@ -27,30 +28,44 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
-    public OrdersAdapter(Context context, ArrayList orderId, ArrayList partnerName, ArrayList dates)
+    public List<hera.com.orders.model.Orders> ordersList;
+    public OrdersAdapter(Context context, List<hera.com.orders.model.Orders> ordersList)
     {
         this.context=context;
-        this.orderId=orderId;
-        this.original_orderId=orderId;
-        this.partnerName=partnerName;
-        this.original_partnerName=partnerName;
-        this.dates=dates;
-        this.original_dates=dates;
+
+        this.ordersList=ordersList;
+
+        orderId=new ArrayList();
+        original_orderId=new ArrayList();
+        partnerName=new ArrayList();
+        original_partnerName=new ArrayList();
+        dates=new ArrayList();
+        original_dates=new ArrayList();
+        for(hera.com.orders.model.Orders orders: ordersList)
+        {
+            orderId.add(orders.orderId);
+            original_orderId.add(orders.orderId);
+            partnerName.add(orders.partnerName);
+            original_partnerName.add(orders.partnerName);
+            dates.add(orders.dates);
+            original_dates.add(orders.dates);
+        }
+
         inflater=LayoutInflater.from(context);
     }
     @Override
     public int getCount() {
-        return orderId.size();
+        return ordersList.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public hera.com.orders.model.Orders getItem(int position) {
+        return ordersList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -77,7 +92,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.show:
-                                        MainActivity.pos=position;
+                                        MainActivity.pos=getItem(position).orderId;
                                         Intent intent=new Intent(context, OrderDetailsActivity.class);
                                         context.startActivity(intent);
                                         break;
@@ -90,11 +105,11 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                 }
             }
         });
-        n.setText("Order ID: "+orderId.get(position).toString());
-        co.setText("Partner Name: "+partnerName.get(position).toString());
+        n.setText("Order ID: "+getItem(position).orderId);
+        co.setText("Partner Name: "+getItem(position).partnerName);
 //        q.setText("Quantity: "+quantity.get(position).toString()+"  "+unit.get(position).toString() );
         q.setText("");
-        pr.setText("Date: "+dates.get(position).toString());
+        pr.setText("Date: "+getItem(position).dates);
         un.setText("");
         return convertView;
     }
@@ -109,9 +124,16 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                 orderId = (ArrayList)results.values; // has the filtered values
                 partnerName=FilteredArrList1;
                 dates=FilteredArrList2;
-                Orders.orderId=orderId;
-                Orders.partnerName=partnerName;
-                Orders.date=dates;
+                List<hera.com.orders.model.Orders> ordersList1=new ArrayList<>();
+                for(int i=0;i<ordersList.size();i++)
+                {
+                    hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
+                    orders.orderId=Integer.parseInt(orderId.get(i).toString());
+                    orders.partnerName=partnerName.get(i).toString();
+                    orders.dates=dates.get(i).toString();
+                    ordersList1.add(orders);
+                }
+                ordersList=ordersList1;
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
 

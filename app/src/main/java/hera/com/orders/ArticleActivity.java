@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hera.com.orders.adapters.ArticleListAdapter;
-import hera.com.orders.module.Article;
+import hera.com.orders.model.Article;
 
 public class ArticleActivity extends AppCompatActivity {
 

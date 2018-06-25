@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hera.com.orders.adapters.PartnerWeekListAdapter;
-import hera.com.orders.module.Partner;
-import hera.com.orders.module.PartnerByWeek;
+import hera.com.orders.model.Partner;
+import hera.com.orders.model.PartnerByWeek;
 
 public class ShowPartnersByWeekActivity extends AppCompatActivity {
 

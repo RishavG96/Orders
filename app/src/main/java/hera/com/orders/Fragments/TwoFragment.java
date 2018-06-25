@@ -21,8 +21,7 @@ import hera.com.orders.CombinedActivity;
 import hera.com.orders.MainActivity;
 import hera.com.orders.R;
 import hera.com.orders.adapters.AssortmentListAdapter;
-import hera.com.orders.module.Article;
-import hera.com.orders.module.Assortment;
+import hera.com.orders.model.Article;
 
 
 public class TwoFragment extends Fragment {

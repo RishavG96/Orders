@@ -20,8 +20,7 @@ import java.util.List;
 
 import hera.com.orders.adapters.DetailsAdapter;
 import hera.com.orders.adapters.AssortmentListAdapter;
-import hera.com.orders.module.Article;
-import hera.com.orders.sqlite.Assortment;
+import hera.com.orders.model.Article;
 
 public class AssortmentDetailsActivity extends AppCompatActivity {
 

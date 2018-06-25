@@ -18,8 +18,7 @@ import java.util.List;
 
 import hera.com.orders.AssortmentDetailsActivity;
 import hera.com.orders.R;
-import hera.com.orders.module.Article;
-import hera.com.orders.sqlite.Assortment;
+import hera.com.orders.model.Article;
 
 public class AssortmentListAdapter extends BaseAdapter implements Filterable {
     LayoutInflater inflater;
@@ -33,7 +32,7 @@ public class AssortmentListAdapter extends BaseAdapter implements Filterable {
     ArrayList FilteredArrList4;
     ArrayList FilteredArrList5;
     ArrayList FilteredArrList6;
-    public List<hera.com.orders.module.Article> articles;
+    public List<hera.com.orders.model.Article> articles;
 
     public AssortmentListAdapter(Context context, List<Article> articles)
     {

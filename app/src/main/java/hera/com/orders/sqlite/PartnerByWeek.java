@@ -7,32 +7,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hera.com.orders.MainActivity;
-import hera.com.orders.module.Partner;
+import hera.com.orders.model.Partner;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class PartnerByWeek {
-    public void addPartnerByWeek(Context context, hera.com.orders.module.PartnerByWeek partnerByWeek)
+    public void addPartnerByWeek(Context context, hera.com.orders.model.PartnerByWeek partnerByWeek)
     {
         hera.com.orders.service.PartnerByWeek.db.execSQL("create table if not exists partnerbyweek(partnerId integer, " +
                 "weekDay varchar(1000))");
         hera.com.orders.service.PartnerByWeek.db.execSQL("insert into partnerbyweek values ("+partnerByWeek.partnerId+"," +
                 "'"+partnerByWeek.weekDay+"')");
     }
-    public Iterable<hera.com.orders.module.PartnerByWeek> showPartner(Context context)
+    public Iterable<hera.com.orders.model.PartnerByWeek> showPartner(Context context)
     {
         Cursor c= MainActivity.db.rawQuery("select * from partnerbyweek",null);
-        List<hera.com.orders.module.PartnerByWeek> partnerByWeekList = new ArrayList<>();
+        List<hera.com.orders.model.PartnerByWeek> partnerByWeekList = new ArrayList<>();
         while(c.moveToNext())
         {
-            hera.com.orders.module.PartnerByWeek partnerByWeek=new hera.com.orders.module.PartnerByWeek();
+            hera.com.orders.model.PartnerByWeek partnerByWeek=new hera.com.orders.model.PartnerByWeek();
             partnerByWeek.partnerId=c.getInt(0);
             partnerByWeek.weekDay=c.getString(1);
             partnerByWeekList.add(partnerByWeek);
         }
         return partnerByWeekList;
     }
-    public static Iterable<hera.com.orders.module.Partner> showPartner(Context context, int week)
+    public static Iterable<hera.com.orders.model.Partner> showPartner(Context context, int week)
     {
         String weeks[]={"PON","UTO","SRI","CET","PET","SUB"};
         Cursor c = MainActivity.db.rawQuery("select * from partnerbyweek where weekDay =\""+ weeks[week] + "\"", null);

@@ -18,7 +18,7 @@ import java.util.List;
 
 import hera.com.orders.PartnerDetailsActivity;
 import hera.com.orders.R;
-import hera.com.orders.module.Partner;
+import hera.com.orders.model.Partner;
 
 public class PartnerListAdapter extends BaseAdapter implements Filterable{
 

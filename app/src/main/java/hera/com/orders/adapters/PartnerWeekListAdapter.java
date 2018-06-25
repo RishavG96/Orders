@@ -18,8 +18,7 @@ import java.util.List;
 
 import hera.com.orders.PartnerWeekDetailsActivity;
 import hera.com.orders.R;
-import hera.com.orders.module.Partner;
-import hera.com.orders.sqlite.PartnerByWeek;
+import hera.com.orders.model.Partner;
 
 
 public class PartnerWeekListAdapter extends BaseAdapter implements Filterable{

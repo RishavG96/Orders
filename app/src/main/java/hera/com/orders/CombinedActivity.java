@@ -26,6 +26,7 @@ import java.util.List;
 import hera.com.orders.Fragments.OneFragment;
 import hera.com.orders.Fragments.ThreeFragment;
 import hera.com.orders.Fragments.TwoFragment;
+import hera.com.orders.model.Orders;
 
 
 public class CombinedActivity extends AppCompatActivity {
@@ -46,8 +47,12 @@ public class CombinedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_combined);
         orders = new hera.com.orders.sqlite.Orders();
         if(MainActivity.orderID==0) {
-            orders.addOrder(this, MainActivity.partnerID, MainActivity.partnerName,
-                    MainActivity.dates, MainActivity.notes);
+            Orders orders2=new Orders();
+            orders2.partnerId=MainActivity.partnerID;
+            orders2.partnerName=MainActivity.partnerName;
+            orders2.dates=MainActivity.dates;
+            orders2.note=MainActivity.notes;
+            orders.addOrder(this, orders2);
         }
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -62,7 +62,7 @@ public class Article {
                                 for (int i = 0; i < response.length(); i++) {
 
                                     JSONObject ob = (JSONObject) response.opt(i);
-                                    hera.com.orders.module.Article article_mod=new hera.com.orders.module.Article();
+                                    hera.com.orders.model.Article article_mod=new hera.com.orders.model.Article();
                                     article_mod.id = Integer.parseInt(ob.optString("id"));
                                     article_mod.code = ob.optString("code");
                                     article_mod.name = ob.optString("name");
