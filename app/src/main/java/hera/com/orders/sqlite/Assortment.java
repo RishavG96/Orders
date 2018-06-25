@@ -12,8 +12,6 @@ import hera.com.orders.model.Article;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Assortment {
-    //public static ArrayList<String> assortmentId, assortmentItemId, partnerId, articleId;
-    //public static ArrayList<String> id, code, name, shortName, units, packing, brutto, netto, weight, price;
     public void addAssortment(Context context, hera.com.orders.model.Assortment assortment){
         hera.com.orders.service.Assortment.db.execSQL("create table if not exists assortment(assortmentId varchar(1000)," +
                 " assortmentItemId varchar(1000), partnerId vharchar(1000), articleId varchar(1000))");

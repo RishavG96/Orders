@@ -9,8 +9,6 @@ import java.util.List;
 import hera.com.orders.MainActivity;
 
 public class Orders {
-    //public static ArrayList partnerId, orderId, partnerName, date, note;
-    //public static ArrayList articleId, articleName, articleCode, articleUnits, articlePacking, articleWeight, quantity, packaging, price;
     public void addOrder(Context context, hera.com.orders.model.Orders orders)
     {
         MainActivity.db.execSQL("create table if not exists orders(orderId integer, partnerId integer, partnerName varchar(1000)," +

@@ -25,6 +25,7 @@ public class OrderItemsAdapter extends BaseAdapter{
     ArrayList id, name, code, unit,quantity, packaging, price;
     public static int pos;
     public List<hera.com.orders.model.OrderItems> orderItems;
+
     public OrderItemsAdapter(Context context, List<hera.com.orders.model.OrderItems> orderItems)
     {
         this.context=context;
@@ -91,20 +92,13 @@ public class OrderItemsAdapter extends BaseAdapter{
                                 switch (item.getItemId()) {
                                     case R.id.edit:
                                         pos=getItem(position).articleId;
-                                        CombinedActivity.articleId=orderItems.get(position).articleId;
-                                        CombinedActivity.articleName=orderItems.get(position).articleName;
-                                        CombinedActivity.articleUnits=orderItems.get(position).articleUnits;
-                                        CombinedActivity.articlePacking=orderItems.get(position).articlePacking;
-                                        CombinedActivity.articleWeight=orderItems.get(position).articleWeight;
-                                        CombinedActivity.articlePrice=orderItems.get(position).price;
-                                        CombinedActivity.articleCode=orderItems.get(position).articleCode;
                                         Intent intent=new Intent(context, ArticleAmountActivity.class);
+                                        intent.putExtra("articleId",pos);
                                         context.startActivity(intent);
                                         break;
                                     case R.id.remove:
-                                        pos=position;
-                                        CombinedActivity.articleId=orderItems.get(position).articleId;
-                                        OrderItems.deleteItem(CombinedActivity.articleId);
+                                        pos=getItem(position).articleId;
+                                        OrderItems.deleteItem(orderItems.get(position).articleId);
                                         Intent intent1=new Intent(context,CombinedActivity.class);
                                         intent1.putExtra("fragToLoad", 2);
                                         context.startActivity(intent1);

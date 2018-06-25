@@ -9,9 +9,8 @@ import android.widget.Toast;
 import static android.content.Context.MODE_PRIVATE;
 
 public class User {
-
     SQLiteDatabase db;
-    public void addUser(Context context,int Id, String Username, String Password, String Url, String Token)
+    public void addUser(Context context, hera.com.orders.model.User user)
     {
         db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
         db.execSQL("create table if not exists user1(id integer, username varchar(1000), password varchar(1000)," +
@@ -20,13 +19,13 @@ public class User {
         StringBuffer sb1=new StringBuffer();
         int flag=0;
         while(c1.moveToNext()) {
-            if(c1.getInt(0)==Id)
+            if(c1.getInt(0)==user.Id)
             {
                 flag=1;
             }
         }
         if(flag==0)
-            db.execSQL("insert into user1 values("+Id+",'"+Username+"','"+Password+"','"+Token+"')");
+            db.execSQL("insert into user1 values("+user.Id+",'"+user.Username+"','"+user.Password+"','"+user.Token+"')");
         //db.execSQL("delete from "+ "user1");
         //db.execSQL("delete from "+ "url");
         db.execSQL("create table if not exists url(url varchar(1000))");
@@ -35,9 +34,9 @@ public class User {
         while(c.moveToNext()) {
             sb.append(c.getString(0));
         }
-        if(!sb.equals(Url)) {
+        if(!sb.equals(user.Url)) {
             ContentValues cv = new ContentValues();
-            cv.put("url", Url);
+            cv.put("url", user.Url);
             db.update("url", cv, "", null);
         }
         Toast.makeText(context, "User Added", Toast.LENGTH_SHORT).show();

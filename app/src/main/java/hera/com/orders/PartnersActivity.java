@@ -27,10 +27,10 @@ import hera.com.orders.model.Partner;
 
 public class PartnersActivity extends AppCompatActivity {
 
-    public static hera.com.orders.service.Partner service_partner;
+    hera.com.orders.service.Partner service_partner;
     hera.com.orders.sqlite.Partner sqlite_partner;
     public static String partner_url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/partneri";
-    public static ListView lv;
+    ListView lv;
     PartnerListAdapter adapter;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;

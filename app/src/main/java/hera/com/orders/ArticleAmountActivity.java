@@ -21,7 +21,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import hera.com.orders.adapters.OrderItemsAdapter;
 import hera.com.orders.model.OrderItems;
+import hera.com.orders.sqlite.Article;
 
 public class ArticleAmountActivity extends AppCompatActivity {
 
@@ -31,7 +36,9 @@ public class ArticleAmountActivity extends AppCompatActivity {
     TextView tv1, tv2;
     EditText et1,et2;
     Button submit;
+    hera.com.orders.sqlite.Article articleItems;
     hera.com.orders.sqlite.OrderItems orderItems;
+    List<hera.com.orders.model.Article> articles;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,9 +49,13 @@ public class ArticleAmountActivity extends AppCompatActivity {
         et1=findViewById(R.id.editText5);
         et2=findViewById(R.id.editText6);
         submit=findViewById(R.id.button4);
-        tv1.setText(CombinedActivity.articleName);
-        tv2.setText(CombinedActivity.articleUnits);
-        orderItems = new hera.com.orders.sqlite.OrderItems();
+        articleItems = new hera.com.orders.sqlite.Article();
+        orderItems=new hera.com.orders.sqlite.OrderItems();
+        articles=new ArrayList<>();
+        int id=getIntent().getIntExtra("articleId",0);
+        articles=(List<hera.com.orders.model.Article>)articleItems.showArticle(this, id);
+        tv1.setText(articles.get(0).name);
+        tv2.setText(articles.get(0).units);
         et1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -65,13 +76,13 @@ public class ArticleAmountActivity extends AppCompatActivity {
                     else
                         temp = Double.parseDouble(s.toString());
                     double pack;
-                    if(CombinedActivity.articlePacking.length()!=0)
-                        pack = Double.parseDouble(CombinedActivity.articlePacking);
+                    if(articles.get(0).packing.length()!=0)
+                        pack = Double.parseDouble(articles.get(0).packing);
                     else
                         pack=1;
                     double wei;
-                    if(CombinedActivity.articleWeight.length()!=0)
-                        wei = Integer.parseInt(CombinedActivity.articleWeight);
+                    if(articles.get(0).weight.length()!=0)
+                        wei = Integer.parseInt(articles.get(0).weight);
                     else
                         wei=1;
                     double res = temp / (pack * wei);
@@ -99,13 +110,13 @@ public class ArticleAmountActivity extends AppCompatActivity {
                     else
                         temp = Double.parseDouble(s.toString());
                     double pack;
-                    if(CombinedActivity.articlePacking.length()!=0)
-                        pack = Double.parseDouble(CombinedActivity.articlePacking);
+                    if(articles.get(0).packing.length()!=0)
+                        pack = Double.parseDouble(articles.get(0).packing);
                     else
                         pack=1;
                     double wei;
-                    if(CombinedActivity.articleWeight.length()!=0)
-                        wei = Integer.parseInt(CombinedActivity.articleWeight);
+                    if(articles.get(0).weight.length()!=0)
+                        wei = Integer.parseInt(articles.get(0).weight);
                     else
                         wei=1;
                     double res = temp * (pack * wei);
@@ -118,7 +129,7 @@ public class ArticleAmountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String amount1=et1.getText().toString();
                 String amount2=et2.getText().toString();
-                double price=(Double.parseDouble(amount2)/Double.parseDouble(CombinedActivity.articlePacking))*Double.parseDouble(CombinedActivity.articlePrice);
+                double price=(Double.parseDouble(amount2)/Double.parseDouble(articles.get(0).packing))*Double.parseDouble(articles.get(0).price);
                 String p=price+"";
                 if(amount1.equals("") || amount1.equals("0.0") || amount1.equals("0") ||
                         amount2.equals("") || amount2.equals("0.0") || amount2.equals("0"))
@@ -128,12 +139,12 @@ public class ArticleAmountActivity extends AppCompatActivity {
                 else
                 {
                     OrderItems orderItems2=new OrderItems();
-                    orderItems2.articleId=CombinedActivity.articleId;
-                    orderItems2.articleName= CombinedActivity.articleName;
-                    orderItems2.articleCode=CombinedActivity.articleCode;
-                    orderItems2.articleUnits=CombinedActivity.articleUnits;
-                    orderItems2.articlePacking= CombinedActivity.articlePacking;
-                    orderItems2.articleWeight= CombinedActivity.articleWeight;
+                    orderItems2.articleId=articles.get(0).id;
+                    orderItems2.articleName= articles.get(0).name;
+                    orderItems2.articleCode=articles.get(0).code;
+                    orderItems2.articleUnits=articles.get(0).units;
+                    orderItems2.articlePacking= articles.get(0).packing;
+                    orderItems2.articleWeight= articles.get(0).weight;
                     orderItems2.quantity=amount1;
                     orderItems2.packaging=amount2;
                     orderItems2.price=p;

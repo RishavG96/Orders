@@ -19,9 +19,8 @@ public class LoginActivity extends AppCompatActivity {
     Button submit;
     EditText newurl;
     public static int part, art,assort,part_week;
-    public static hera.com.orders.model.User classes_user;
-    public static hera.com.orders.sqlite.User sqlite_user;
-    public static hera.com.orders.service.User service_user;
+    hera.com.orders.model.User classes_user;
+    hera.com.orders.service.User service_user;
     SQLiteDatabase db;
     public static String url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/login"; // This will hold the full URL which will include the username entered in the id.
     @Override
@@ -31,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
         classes_user=new hera.com.orders.model.User();
-        sqlite_user=new hera.com.orders.sqlite.User();
         service_user=new hera.com.orders.service.User();
 
 
@@ -80,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 classes_user.Username=id.getText().toString();
                 classes_user.Password=pass.getText().toString();
-                service_user.login(getApplicationContext(),classes_user.Username,classes_user.Password);
+                service_user.login(getApplicationContext(),classes_user);
 
                 if(!url.equals(newurl.getText().toString()))
                 {

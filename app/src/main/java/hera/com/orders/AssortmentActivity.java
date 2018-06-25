@@ -36,46 +36,6 @@ public class AssortmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assortment);
 
-
-
-//        navigationView=findViewById(R.id.nav_view3);
-//        Toolbar toolbar=findViewById(R.id.toolbar_main);
-//        setSupportActionBar(toolbar);
-//        drawerLayout=findViewById(R.id.drawer_layout3);
-//        actionBarDrawerToggle= new ActionBarDrawerToggle(this,drawerLayout, toolbar, R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-//        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
-//        navigationView.setNavigationItemSelectedListener(
-//                new NavigationView.OnNavigationItemSelectedListener() {
-//                    @Override
-//                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-//                        switch (menuItem.getItemId()) {
-//                            case R.id.orders:
-//                                Intent intent2=new Intent(getApplicationContext(), MainActivity.class);
-//                                startActivity(intent2);
-//                                finish();
-//                                break;
-//                            case R.id.partner:
-//                                Intent intent = new Intent(getApplicationContext(), PartnersActivity.class);
-//                                startActivity(intent);
-//                                finish();
-//                                break;
-//                            case R.id.article:
-//                                Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
-//                                startActivity(intent1);
-//                                finish();
-//                                break;
-//                            case R.id.assortment:
-//                                Intent intent3=new Intent(getApplicationContext(), AssortmentActivity.class);
-//                                startActivity(intent3);
-//                                finish();
-//                                break;
-//                        }
-//                        drawerLayout.closeDrawers();  // CLOSE DRAWER
-//                        return true;
-//                    }
-//                });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

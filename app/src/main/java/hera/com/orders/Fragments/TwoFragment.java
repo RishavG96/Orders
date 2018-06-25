@@ -59,15 +59,9 @@ public class TwoFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 articleList=adapter.articles;
-                CombinedActivity.articleId=articleList.get(position).id;
-                CombinedActivity.articleName=articleList.get(position).name;
-                CombinedActivity.articleUnits=articleList.get(position).units;
-                CombinedActivity.articlePacking=articleList.get(position).packing;
-                CombinedActivity.articleWeight=articleList.get(position).weight;
-                CombinedActivity.articlePrice=articleList.get(position).price;
-                CombinedActivity.articleCode=articleList.get(position).code;
                 int exit=0;
                 Intent intent=new Intent(getContext(), ArticleAmountActivity.class);
+                intent.putExtra("articleId", articleList.get(position).id);
                 startActivityForResult(intent, exit);
             }
         });

@@ -16,7 +16,6 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class Partner {
-
     public void addPartner(Context context, hera.com.orders.model.Partner partner)
     {
         hera.com.orders.service.Partner.db.execSQL("create table if not exists partners(id integer, code varchar(1000), name varchar(1000)," +

@@ -26,15 +26,19 @@ import static android.content.Context.MODE_PRIVATE;
 public class User {
     RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
     SQLiteDatabase db;
-    public void login(final Context context, final String username, final String password)
+    hera.com.orders.sqlite.User sqlite_user;
+    hera.com.orders.model.User user1;
+    public void login(final Context context, hera.com.orders.model.User user)
     {
+        user1=user;
         requestQueue = Volley.newRequestQueue(context); // This setups up a new request queue which we will need to make HTTP requests
         RequestQueue queue = Volley.newRequestQueue(context);
         JSONObject parameters = new JSONObject();
+        sqlite_user=new hera.com.orders.sqlite.User();
         db=context.openOrCreateDatabase("order",MODE_PRIVATE, null);
         try {
-            parameters.put("username",username);
-            parameters.put("password", password);
+            parameters.put("username",user1.Username);
+            parameters.put("password", user1.Password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -49,9 +53,10 @@ public class User {
                             String jwt = response.getString("jwt");
                             String id = response.getJSONObject("korisnik").getString("id");
                             MainActivity.Id=Integer.parseInt(id);
-                            LoginActivity.classes_user.Id=Integer.parseInt(id);
-                            LoginActivity.classes_user.Token=jwt;
-                            LoginActivity.sqlite_user.addUser(context, Integer.parseInt(id), username, password, LoginActivity.url, jwt);
+                            user1.Id=Integer.parseInt(id);
+                            user1.Token=jwt;
+                            user1.Url=LoginActivity.url;
+                            sqlite_user.addUser(context,user1);
                             Intent intent=new Intent(context,MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
