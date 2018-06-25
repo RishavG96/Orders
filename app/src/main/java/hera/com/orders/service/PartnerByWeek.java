@@ -59,16 +59,18 @@ public class PartnerByWeek {
                             if(LoginActivity.part_week==0) {
 
                                 db=context.openOrCreateDatabase("order", MODE_PRIVATE,null);
-                                //partnerByWeek.deletePartner(context);
+                                try {
+                                    partnerByWeek.deletePartner(context);
+                                }catch (Exception e){}
                                 db.beginTransaction();
                                 for (int i = 0; i < response.length(); i++) {
 
                                     JSONObject ob = (JSONObject) response.opt(i);
+                                    hera.com.orders.module.PartnerByWeek partnerByWeekMod=new hera.com.orders.module.PartnerByWeek();
+                                    partnerByWeekMod.partnerId = Integer.parseInt(ob.optString("partnerId"));
+                                    partnerByWeekMod.weekDay = ob.optString("weekDay");
 
-                                    int partnerId = Integer.parseInt(ob.optString("partnerId"));
-                                    String weekDay = ob.optString("weekDay");
-
-                                    partnerByWeek.addPartnerByWeek(context, partnerId, weekDay);
+                                    partnerByWeek.addPartnerByWeek(context, partnerByWeekMod);
                                 }
                                 db.setTransactionSuccessful();
                                 db.endTransaction();

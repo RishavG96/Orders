@@ -20,7 +20,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hera.com.orders.adapters.PartnerWeekListAdapter;
+import hera.com.orders.module.Partner;
+import hera.com.orders.module.PartnerByWeek;
 
 public class ShowPartnersByWeekActivity extends AppCompatActivity {
 
@@ -29,6 +34,7 @@ public class ShowPartnersByWeekActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     ListView lv;
+    List<Partner> partnerList;
     public static String partner_week="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/planovi";
     hera.com.orders.service.PartnerByWeek service_partner_week;
     hera.com.orders.sqlite.PartnerByWeek sqlite_partner_week;
@@ -41,17 +47,19 @@ public class ShowPartnersByWeekActivity extends AppCompatActivity {
         service_partner_week=new hera.com.orders.service.PartnerByWeek();
         sqlite_partner_week=new hera.com.orders.sqlite.PartnerByWeek();
         service_partner_week.connect(this);
-        sqlite_partner_week.showPartner(this);
-        sqlite_partner_week.showPartner(this, WeekDaysActivity.pos);
-        adapter=new PartnerWeekListAdapter(this, sqlite_partner_week.id,sqlite_partner_week.name, sqlite_partner_week.code,
-                sqlite_partner_week.amount, sqlite_partner_week.address, sqlite_partner_week.city);
+        List<PartnerByWeek> partnerByWeekList=new ArrayList<>();
+        partnerList=new ArrayList<>();
+        partnerByWeekList=(List<PartnerByWeek>) sqlite_partner_week.showPartner(this);
+        partnerList=(List<Partner>) sqlite_partner_week.showPartner(this, WeekDaysActivity.pos);
+        adapter=new PartnerWeekListAdapter(this, partnerList);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MainActivity.partnerID=Integer.parseInt(sqlite_partner_week.id.get(position));
-                MainActivity.partnerName=sqlite_partner_week.name.get(position);
+                partnerList=adapter.partners;
+                MainActivity.partnerID=Integer.parseInt(partnerList.get(position).id.toString());
+                MainActivity.partnerName=partnerList.get(position).name;
                 int exit=2;
                 Intent intent=new Intent(getApplicationContext(), OrderEntryActivity.class);
                 startActivityForResult(intent,exit);

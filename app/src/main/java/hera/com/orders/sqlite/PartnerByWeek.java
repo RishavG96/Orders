@@ -4,73 +4,62 @@ import android.content.Context;
 import android.database.Cursor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hera.com.orders.MainActivity;
+import hera.com.orders.module.Partner;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class PartnerByWeek {
-    public static ArrayList<String> id, code, name, address, city, amount, type, discount, status, businessHours, timeOfReceipt, responsiblePerson, forMobile;
-    public static ArrayList<String> partnerId,weekDay;
-    public void addPartnerByWeek(Context context, int partnerId, String weekDay)
+    public void addPartnerByWeek(Context context, hera.com.orders.module.PartnerByWeek partnerByWeek)
     {
         hera.com.orders.service.PartnerByWeek.db.execSQL("create table if not exists partnerbyweek(partnerId integer, " +
                 "weekDay varchar(1000))");
-        hera.com.orders.service.PartnerByWeek.db.execSQL("insert into partnerbyweek values ("+partnerId+",'"+weekDay+"')");
-//        Toast.makeText(context,"here",Toast.LENGTH_SHORT).show();
+        hera.com.orders.service.PartnerByWeek.db.execSQL("insert into partnerbyweek values ("+partnerByWeek.partnerId+"," +
+                "'"+partnerByWeek.weekDay+"')");
     }
-    public void showPartner(Context context)
+    public Iterable<hera.com.orders.module.PartnerByWeek> showPartner(Context context)
     {
-        partnerId=new ArrayList();
-        weekDay=new ArrayList();
-
-        //db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
         Cursor c= MainActivity.db.rawQuery("select * from partnerbyweek",null);
+        List<hera.com.orders.module.PartnerByWeek> partnerByWeekList = new ArrayList<>();
         while(c.moveToNext())
         {
-            partnerId.add(c.getString(0));
-            weekDay.add(c.getString(1));
+            hera.com.orders.module.PartnerByWeek partnerByWeek=new hera.com.orders.module.PartnerByWeek();
+            partnerByWeek.partnerId=c.getInt(0);
+            partnerByWeek.weekDay=c.getString(1);
+            partnerByWeekList.add(partnerByWeek);
         }
+        return partnerByWeekList;
     }
-    public static void showPartner(Context context, int week)
+    public static Iterable<hera.com.orders.module.Partner> showPartner(Context context, int week)
     {
-        id=new ArrayList();
-        code=new ArrayList();
-        name=new ArrayList();
-        type=new ArrayList();
-        amount=new ArrayList();
-        address=new ArrayList();
-        city=new ArrayList();
-        discount=new ArrayList();
-        status=new ArrayList();
-        businessHours=new ArrayList();
-        timeOfReceipt=new ArrayList();
-        responsiblePerson=new ArrayList();
-        forMobile=new ArrayList();
-        //db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
         String weeks[]={"PON","UTO","SRI","CET","PET","SUB"};
-            Cursor c = MainActivity.db.rawQuery("select * from partnerbyweek where weekDay =\""+ weeks[week] + "\"", null);
-            while (c.moveToNext()) {
-                Cursor c1=MainActivity.db.rawQuery("select * from partners where id="+ c.getInt(0)+"",null);
-                {
-                    while(c1.moveToNext()) {
-                        id.add(c1.getString(0));
-                        name.add(c1.getString(2));
-                        code.add(c1.getString(1));
-                        amount.add(c1.getString(5));
-                        address.add(c1.getString(3));
-                        city.add(c1.getString(4));
-                        type.add(c1.getString(6));
-                        discount.add(c1.getString(7));
-                        status.add(c1.getString(8));
-                        businessHours.add(c1.getString(9));
-                        timeOfReceipt.add(c1.getString(10));
-                        responsiblePerson.add(c1.getString(11));
-                        forMobile.add(c1.getString(12));
-                    }
+        Cursor c = MainActivity.db.rawQuery("select * from partnerbyweek where weekDay =\""+ weeks[week] + "\"", null);
+        List<Partner> partnerList=new ArrayList<>();
+        while (c.moveToNext()) {
+            Cursor c1=MainActivity.db.rawQuery("select * from partners where id="+ c.getInt(0)+"",null);
+            {
+                while(c1.moveToNext()) {
+                    Partner partner=new Partner();
+                    partner.id=c1.getInt(0);
+                    partner.name=c1.getString(2);
+                    partner.code=c1.getString(1);
+                    partner.amount=c1.getString(5);
+                    partner.address=c1.getString(3);
+                    partner.city=c1.getString(4);
+                    partner.type=c1.getString(6);
+                    partner.discount=c1.getString(7);
+                    partner.status=c1.getString(8);
+                    partner.businessHours=c1.getString(9);
+                    partner.timeOfReceipt=c1.getString(10);
+                    partner.responsiblePerson=c1.getString(11);
+                    partner.forMobile=c1.getString(12);
+                    partnerList.add(partner);
                 }
             }
-
+        }
+        return  partnerList;
     }
     public void deletePartner(Context context)
     {

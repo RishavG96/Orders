@@ -18,10 +18,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hera.com.orders.adapters.DetailsAdapter;
 
+import hera.com.orders.adapters.PartnerListAdapter;
 import hera.com.orders.adapters.PartnerWeekListAdapter;
+import hera.com.orders.sqlite.Partner;
 import hera.com.orders.sqlite.PartnerByWeek;
 
 
@@ -32,26 +35,30 @@ public class PartnerWeekDetailsActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    hera.com.orders.sqlite.PartnerByWeek sqlite_partner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partner_week_details);
 
+        sqlite_partner=new hera.com.orders.sqlite.PartnerByWeek();
         lv=findViewById(R.id.listview13);
 
-        String id = PartnerByWeek.id.get(PartnerWeekListAdapter.pos).toString();
-        String code = PartnerByWeek.code.get(PartnerWeekListAdapter.pos).toString();
-        String name = PartnerByWeek.name.get(PartnerWeekListAdapter.pos).toString();
-        String address = PartnerByWeek.address.get(PartnerWeekListAdapter.pos).toString();
-        String city = PartnerByWeek.city.get(PartnerWeekListAdapter.pos).toString();
-        String amount = PartnerByWeek.amount.get(PartnerWeekListAdapter.pos).toString();
-        String type = PartnerByWeek.type.get(PartnerWeekListAdapter.pos).toString();
-        String discount = PartnerByWeek.discount.get(PartnerWeekListAdapter.pos).toString();
-        String status = PartnerByWeek.status.get(PartnerWeekListAdapter.pos).toString();
-        String businessHOurs = PartnerByWeek.businessHours.get(PartnerWeekListAdapter.pos).toString();
-        String timeOfReceipt = PartnerByWeek.timeOfReceipt.get(PartnerWeekListAdapter.pos).toString();
-        String responsiblePerson = PartnerByWeek.responsiblePerson.get(PartnerWeekListAdapter.pos).toString();
-        String forMobile = PartnerByWeek.forMobile.get(PartnerWeekListAdapter.pos).toString();
+        List<hera.com.orders.module.Partner> partnerList=new ArrayList<>();
+        partnerList=(List<hera.com.orders.module.Partner>)sqlite_partner.showPartner(this, PartnerWeekListAdapter.pos);
+        String id = partnerList.get(0).id.toString();
+        String code = partnerList.get(0).code;
+        String name = partnerList.get(0).name;
+        String address = partnerList.get(0).address;
+        String city = partnerList.get(0).city;
+        String amount = partnerList.get(0).amount;
+        String type = partnerList.get(0).type;
+        String discount = partnerList.get(0).discount;
+        String status = partnerList.get(0).status;
+        String businessHOurs = partnerList.get(0).businessHours;
+        String timeOfReceipt = partnerList.get(0).timeOfReceipt;
+        String responsiblePerson = partnerList.get(0).responsiblePerson;
+        String forMobile = partnerList.get(0).forMobile;
         ArrayList values=new ArrayList();
         ArrayList heading=new ArrayList();
         heading.add("Partner ID");

@@ -14,9 +14,11 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hera.com.orders.PartnerWeekDetailsActivity;
 import hera.com.orders.R;
+import hera.com.orders.module.Partner;
 import hera.com.orders.sqlite.PartnerByWeek;
 
 
@@ -31,38 +33,57 @@ public class PartnerWeekListAdapter extends BaseAdapter implements Filterable{
     ArrayList FilteredArrList3;
     ArrayList FilteredArrList4;
     ArrayList FilteredArrList5;
+    public List<Partner> partners;
 
-    public PartnerWeekListAdapter(Context context, ArrayList id, ArrayList name, ArrayList code, ArrayList amount, ArrayList address, ArrayList city)
+    public PartnerWeekListAdapter(Context context, List<Partner> partners)
     {
         this.context=context;
-        this.id=id;
-        this.original_id=id;
-        this.name=name;
-        this.original_name=name;
-        this.code=code;
-        this.original_code=code;
-        this.amount=amount;
-        this.original_amount=amount;
-        this.address=address;
-        this.original_address=address;
-        this.city=city;
-        this.original_city=city;
+        this.partners=partners;
+
+        name=new ArrayList();
+        code=new ArrayList();
+        amount=new ArrayList();
+        address=new ArrayList();
+        city=new ArrayList();
+        id=new ArrayList();
+        original_name=new ArrayList();
+        original_code=new ArrayList();
+        original_amount=new ArrayList();
+        original_address=new ArrayList();
+        original_city=new ArrayList();
+        original_id=new ArrayList();
+        for(Partner partner:partners)
+        {
+            id.add(partner.id);
+            original_id.add(partner.id);
+            name.add(partner.name);
+            original_name.add(partner.name);
+            code.add(partner.code);
+            original_code.add(partner.code);
+            amount.add(partner.amount);
+            original_amount.add(partner.amount);
+            address.add(partner.address);
+            original_address.add(partner.address);
+            city.add(partner.city);
+            original_city.add(partner.city);
+        }
+
         inflater=LayoutInflater.from(context);
 
     }
     @Override
     public int getCount() {
-        return name.size();
+        return partners.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public Partner getItem(int position) {
+        return partners.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -89,7 +110,7 @@ public class PartnerWeekListAdapter extends BaseAdapter implements Filterable{
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.show:
-                                        pos=position;
+                                        pos=getItem(position).id;
                                         Intent intent=new Intent(context, PartnerWeekDetailsActivity.class);
                                         context.startActivity(intent);
                                         break;
@@ -123,12 +144,19 @@ public class PartnerWeekListAdapter extends BaseAdapter implements Filterable{
                 address=FilteredArrList3;
                 city=FilteredArrList4;
                 id=FilteredArrList5;
-                PartnerByWeek.name=name;
-                PartnerByWeek.code=code;
-                PartnerByWeek.amount=amount;
-                PartnerByWeek.address=address;
-                PartnerByWeek.city=city;
-                PartnerByWeek.id=id;
+                List<Partner> partnerList=new ArrayList<Partner>();
+                for(int i=0;i<name.size();i++)
+                {
+                    Partner partner=new Partner();
+                    partner.id=Integer.parseInt(id.get(i).toString());
+                    partner.name=name.get(i).toString();
+                    partner.code=code.get(i).toString();
+                    partner.amount=amount.get(i).toString();
+                    partner.address=address.get(i).toString();
+                    partner.city=city.get(i).toString();
+                    partnerList.add(partner);
+                }
+                partners=partnerList;
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
