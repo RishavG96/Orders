@@ -39,8 +39,6 @@ public class CombinedActivity extends AppCompatActivity {
     NavigationView navigationView;
     hera.com.orders.sqlite.Orders orders;
     SearchView searchView;
-//    public static int articleId;
-//    public static String articleName, articleUnits,articlePacking,articleWeight, articlePrice, articleCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

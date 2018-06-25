@@ -2,6 +2,7 @@ package hera.com.orders.sqlite;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,7 @@ public class Orders {
     {
         Cursor c=MainActivity.db.rawQuery("select * from orderdetails1 where orderId="+orderId+"",null);
         List<hera.com.orders.model.OrderItems> orderItemsList=new ArrayList<>();
+        //Toast.makeText(context, "there"+c,Toast.LENGTH_SHORT).show();
         while(c.moveToNext())
         {
             hera.com.orders.model.OrderItems orderItems=new hera.com.orders.model.OrderItems();

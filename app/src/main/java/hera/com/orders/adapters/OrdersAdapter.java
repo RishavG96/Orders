@@ -12,6 +12,7 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +94,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                                 switch (item.getItemId()) {
                                     case R.id.show:
                                         MainActivity.pos=getItem(position).orderId;
+                                        MainActivity.orderID= ordersList.get(position).orderId;
                                         Intent intent=new Intent(context, OrderDetailsActivity.class);
                                         context.startActivity(intent);
                                         break;
@@ -122,10 +124,11 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
             @Override
             protected void publishResults(CharSequence constraint,FilterResults results) {
                 orderId = (ArrayList)results.values; // has the filtered values
+                //Toast.makeText(context, "here"+orderId,Toast.LENGTH_SHORT).show();
                 partnerName=FilteredArrList1;
                 dates=FilteredArrList2;
                 List<hera.com.orders.model.Orders> ordersList1=new ArrayList<>();
-                for(int i=0;i<ordersList.size();i++)
+                for(int i=0;i<orderId.size();i++)
                 {
                     hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
                     orders.orderId=Integer.parseInt(orderId.get(i).toString());
@@ -162,7 +165,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                     FilteredArrList1=original_partnerName;
                     FilteredArrList2=original_dates;
                 } else {
-                    constraint = constraint.toString().toLowerCase();
+                    constraint = constraint.toString();
                     String[] temp=new String[1000];
                     int flag;
                     String filterString=constraint.toString();

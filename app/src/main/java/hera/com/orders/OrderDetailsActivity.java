@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,15 +51,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
         submitOrder=findViewById(R.id.submitorder);
         orders=new Orders();
         List<hera.com.orders.model.Orders> ordersList=new ArrayList<>();
-        ordersList=(List<hera.com.orders.model.Orders>)orders.showOrders(this);
-        MainActivity.orderID=ordersList.get(MainActivity.pos).orderId;
-        String pn=ordersList.get(MainActivity.pos).partnerName.toString();
-        total.setText("Total Order Price: "+Orders.calculateTotalPrice(MainActivity.orderID));
-        partnerName.setText("Partner Name: "+ pn);
+        String pn=orders.getPartnerName(this, MainActivity.orderID);
+        MainActivity.orderID=MainActivity.pos;
         List<OrderItems> orderItemsList=new ArrayList<>();
         orderItemsList=(List<OrderItems>) orders.showOrderItems(this, MainActivity.orderID);
         adapter=new OrderItemsAdapter(this, orderItemsList);
         lv.setAdapter(adapter);
+        total.setText("Total Order Price: "+Orders.calculateTotalPrice(MainActivity.orderID));
+        partnerName.setText("Partner Name: "+ pn);
         if(Orders.calculateTotalPrice(MainActivity.orderID)==0)
         {
             tv.setText("No Order Items added.");

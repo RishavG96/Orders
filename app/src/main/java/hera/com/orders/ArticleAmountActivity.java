@@ -200,7 +200,7 @@ public class ArticleAmountActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.mainmenu,menu);
+        inflater.inflate(R.menu.combined_activitymenu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 

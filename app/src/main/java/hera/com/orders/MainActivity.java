@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ordersList=adapter.ordersList;
-                pos=position;
+                pos=ordersList.get(position).orderId;
                 MainActivity.orderID= ordersList.get(position).orderId;
                 Intent intent=new Intent(getApplicationContext(), OrderDetailsActivity.class);
                 startActivity(intent);
