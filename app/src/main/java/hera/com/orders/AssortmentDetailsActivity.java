@@ -16,9 +16,11 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hera.com.orders.adapters.DetailsAdapter;
 import hera.com.orders.adapters.AssortmentListAdapter;
+import hera.com.orders.module.Article;
 import hera.com.orders.sqlite.Assortment;
 
 public class AssortmentDetailsActivity extends AppCompatActivity {
@@ -28,24 +30,28 @@ public class AssortmentDetailsActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    hera.com.orders.sqlite.Assortment sqlite_assort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assortment_details);
 
+        sqlite_assort=new hera.com.orders.sqlite.Assortment();
         lv=findViewById(R.id.listview10);
+        List<Article> articleList=new ArrayList<>();
+        articleList=(List<Article>)sqlite_assort.showAssortmentDetails(this, AssortmentListAdapter.pos);
 
-        String id= Assortment.id.get(AssortmentListAdapter.pos);
-        String code=Assortment.code.get(AssortmentListAdapter.pos);
-        String name=Assortment.name.get(AssortmentListAdapter.pos);
-        String shortName=Assortment.shortName.get(AssortmentListAdapter.pos);
-        String units=Assortment.units.get(AssortmentListAdapter.pos);
-        String packing=Assortment.packing.get(AssortmentListAdapter.pos);
-        String brutto=Assortment.brutto.get(AssortmentListAdapter.pos);
-        String netto=Assortment.netto.get(AssortmentListAdapter.pos);
-        String weight=Assortment.weight.get(AssortmentListAdapter.pos);
-        String price=Assortment.price.get(AssortmentListAdapter.pos);
+        String id= articleList.get(0).id.toString();
+        String code=articleList.get(0).code;
+        String name=articleList.get(0).name;
+        String shortName=articleList.get(0).shortName;
+        String units=articleList.get(0).units;
+        String packing=articleList.get(0).packing;
+        String brutto=articleList.get(0).brutto;
+        String netto=articleList.get(0).netto;
+        String weight=articleList.get(0).weight;
+        String price=articleList.get(0).price;
         ArrayList values=new ArrayList();
         ArrayList heading=new ArrayList();
         heading.add("Assortment ID");

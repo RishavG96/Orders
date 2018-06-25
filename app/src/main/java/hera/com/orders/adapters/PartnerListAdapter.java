@@ -31,7 +31,7 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
     ArrayList FilteredArrList3;
     ArrayList FilteredArrList4;
     ArrayList FilteredArrList5;
-    List<Partner> partners;
+    public List<Partner> partners;
 
     public PartnerListAdapter(Context context, List<Partner> partnerIterable)
     {

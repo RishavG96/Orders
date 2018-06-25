@@ -13,11 +13,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hera.com.orders.ArticleAmountActivity;
 import hera.com.orders.CombinedActivity;
 import hera.com.orders.MainActivity;
 import hera.com.orders.R;
 import hera.com.orders.adapters.AssortmentListAdapter;
+import hera.com.orders.module.Article;
+import hera.com.orders.module.Assortment;
 
 
 public class TwoFragment extends Fragment {
@@ -26,6 +31,7 @@ public class TwoFragment extends Fragment {
     TextView empty;
     hera.com.orders.sqlite.Assortment sqlite_assort;
     SearchView searchView;
+    List<Article> articleList;
     public TwoFragment() {
         // Required empty public constructor
     }
@@ -44,22 +50,23 @@ public class TwoFragment extends Fragment {
         lv=view.findViewById(R.id.listview4);
         empty=view.findViewById(R.id.empty);
         sqlite_assort=new hera.com.orders.sqlite.Assortment();
-        sqlite_assort.showAssortment(getContext(), MainActivity.partnerID);
-        adapter=new AssortmentListAdapter(getContext(), sqlite_assort.id,sqlite_assort.name, sqlite_assort.code,
-                sqlite_assort.price, sqlite_assort.units);
-        if(sqlite_assort.name.isEmpty())
+        articleList=new ArrayList<>();
+        articleList=(List<Article>) sqlite_assort.showAssortment(getContext(), MainActivity.partnerID);
+        adapter=new AssortmentListAdapter(getContext(), articleList);
+        if(articleList.isEmpty())
             empty.setText("No Assortments for the Partner");
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CombinedActivity.articleId=Integer.parseInt(sqlite_assort.articleId.get(position));
-                CombinedActivity.articleName=sqlite_assort.name.get(position);
-                CombinedActivity.articleUnits=sqlite_assort.units.get(position);
-                CombinedActivity.articlePacking=sqlite_assort.packing.get(position);
-                CombinedActivity.articleWeight=sqlite_assort.weight.get(position);
-                CombinedActivity.articlePrice=sqlite_assort.price.get(position);
-                CombinedActivity.articleCode=sqlite_assort.code.get(position);
+                articleList=adapter.articles;
+                CombinedActivity.articleId=articleList.get(position).id;
+                CombinedActivity.articleName=articleList.get(position).name;
+                CombinedActivity.articleUnits=articleList.get(position).units;
+                CombinedActivity.articlePacking=articleList.get(position).packing;
+                CombinedActivity.articleWeight=articleList.get(position).weight;
+                CombinedActivity.articlePrice=articleList.get(position).price;
+                CombinedActivity.articleCode=articleList.get(position).code;
                 int exit=0;
                 Intent intent=new Intent(getContext(), ArticleAmountActivity.class);
                 startActivityForResult(intent, exit);

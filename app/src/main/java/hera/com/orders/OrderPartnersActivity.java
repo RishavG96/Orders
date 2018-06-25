@@ -57,6 +57,7 @@ public class OrderPartnersActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                partnerList=adapter.partners;
                 MainActivity.partnerID=partnerList.get(position).id;
                 MainActivity.partnerName=partnerList.get(position).name;
                 int exit=2;

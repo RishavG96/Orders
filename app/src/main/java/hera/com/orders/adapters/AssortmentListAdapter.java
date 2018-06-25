@@ -14,9 +14,11 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hera.com.orders.AssortmentDetailsActivity;
 import hera.com.orders.R;
+import hera.com.orders.module.Article;
 import hera.com.orders.sqlite.Assortment;
 
 public class AssortmentListAdapter extends BaseAdapter implements Filterable {
@@ -28,35 +30,52 @@ public class AssortmentListAdapter extends BaseAdapter implements Filterable {
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
     ArrayList FilteredArrList4;
-    public AssortmentListAdapter(Context context, ArrayList id, ArrayList name, ArrayList code, ArrayList amount, ArrayList units)
+    public List<hera.com.orders.module.Article> articles;
+
+    public AssortmentListAdapter(Context context, List<Article> articles)
     {
         this.context=context;
-        this.id=id;
-        this.original_id=id;
-        this.name=name;
-        this.original_name=name;
-        this.code=code;
-        this.original_code=code;
-        this.amount=amount;
-        this.original_amount=amount;
-        this.units=units;
-        this.original_units=units;
+        this.articles=articles;
+
+        id=new ArrayList();
+        name=new ArrayList();
+        code=new ArrayList();
+        amount=new ArrayList();
+        units=new ArrayList();
+        original_id=new ArrayList();
+        original_name=new ArrayList();
+        original_code=new ArrayList();
+        original_amount=new ArrayList();
+        original_units=new ArrayList();
+
+        for(Article article: articles) {
+            id.add(article.id);
+            original_id.add(article.id);
+            name.add(article.name);
+            original_name.add(article.name);
+            code.add(article.code);
+            original_code.add(article.code);
+            amount.add(article.price);
+            original_amount.add(article.price);
+            units.add(article.units);
+            original_units.add(article.units);
+        }
         inflater=LayoutInflater.from(context);
 
     }
     @Override
     public int getCount() {
-        return name.size();
+        return articles.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public Article getItem(int position) {
+        return articles.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -83,7 +102,7 @@ public class AssortmentListAdapter extends BaseAdapter implements Filterable {
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.show:
-                                        pos=position;
+                                        pos=getItem(position).id;
                                         Intent intent=new Intent(context, AssortmentDetailsActivity.class);
                                         context.startActivity(intent);
                                         break;
@@ -96,10 +115,10 @@ public class AssortmentListAdapter extends BaseAdapter implements Filterable {
                 }
             }
         });
-        n.setText(name.get(position).toString());
-        co.setText("Code: "+code.get(position).toString());
-        pr.setText("Price: "+amount.get(position).toString()+"    ");
-        un.setText("Units: "+units.get(position).toString());
+        n.setText(getItem(position).name);
+        co.setText("Code: "+getItem(position).code);
+        pr.setText("Price: "+getItem(position).price+"    ");
+        un.setText("Units: "+getItem(position).units);
         return convertView;
     }
 
@@ -115,11 +134,18 @@ public class AssortmentListAdapter extends BaseAdapter implements Filterable {
                 amount=FilteredArrList2;
                 units=FilteredArrList3;
                 id=FilteredArrList4;
-                Assortment.name=name;
-                Assortment.code=code;
-                Assortment.price=amount;
-                Assortment.units=units;
-                Assortment.id=id;
+                List<Article> articleList=new ArrayList<>();
+                for(int i=0;i<name.size();i++)
+                {
+                    Article article=new Article();
+                    article.id=Integer.parseInt(id.get(i).toString());
+                    article.name=name.get(i).toString();
+                    article.code=code.get(i).toString();
+                    article.price=amount.get(i).toString();
+                    article.units=units.get(i).toString();
+                    articleList.add(article);
+                }
+                articles=articleList;
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
 

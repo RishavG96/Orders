@@ -62,14 +62,14 @@ public class Assortment {
                                 db.beginTransaction();
                                 for (int i = 0; i < response.length(); i++) {
                                     JSONObject ob = (JSONObject) response.opt(i);
-
-                                    String assortmentId = ob.optString("assortmentId");
-                                    String assortmentItemId = ob.optString("assortmentItemId");
-                                    String partnerId = ob.optString("partnerId");
+                                    hera.com.orders.module.Assortment assortment = new hera.com.orders.module.Assortment();
+                                    assortment.assortmentId = ob.optString("assortmentId");
+                                    assortment.assortmentItemId = ob.optString("assortmentItemId");
+                                    assortment.partnerId = ob.optString("partnerId");
 //                                    String validFrom = ob.optString("netto");
 //                                    String validTo = ob.optString("packing");
-                                    String articleId = ob.optString("articleId");
-                                    sqlite_assortment.addAssortment(context, assortmentId, assortmentItemId, partnerId, articleId);
+                                    assortment.articleId = ob.optString("articleId");
+                                    sqlite_assortment.addAssortment(context, assortment);
                                 }
                                 db.setTransactionSuccessful();
                                 db.endTransaction();

@@ -2,16 +2,12 @@ package hera.com.orders.module;
 
 public class Assortment {
 
-    public String AssortmentId;
+    public String assortmentId;
 
-    public String AssortmentItemId;
+    public String assortmentItemId;
 
-    public String PartnerId;
+    public String partnerId;
 
-    public String ValidFrom;
-
-    public String ValidTo;
-
-    public String ArticleId;
+    public String articleId;
 
 }

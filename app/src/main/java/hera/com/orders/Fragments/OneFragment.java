@@ -53,6 +53,7 @@ public class OneFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                articleList=adapter.articles;
                 CombinedActivity.articleId=articleList.get(position).id;
                 CombinedActivity.articleName=articleList.get(position).name;
                 CombinedActivity.articleUnits=articleList.get(position).units;

@@ -30,7 +30,7 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
     ArrayList FilteredArrList4;
-    List<hera.com.orders.module.Article> articles;
+    public List<hera.com.orders.module.Article> articles;
 
     public ArticleListAdapter(Context context, List<hera.com.orders.module.Article> articleIterable)
     {
