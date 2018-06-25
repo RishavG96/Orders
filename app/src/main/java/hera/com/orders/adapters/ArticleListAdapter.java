@@ -24,12 +24,15 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
 
     LayoutInflater inflater;
     Context context;
-    ArrayList id, original_id, name, code, amount, units, original_name, original_code, original_amount, original_units;
+    ArrayList id, original_id, name, code, amount, units, original_name, original_code, original_amount, original_units, packing,
+                original_packing, weight, original_weight;
     public static int pos;
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
     ArrayList FilteredArrList4;
+    ArrayList FilteredArrList5;
+    ArrayList FilteredArrList6;
     public List<hera.com.orders.module.Article> articles;
 
     public ArticleListAdapter(Context context, List<hera.com.orders.module.Article> articleIterable)
@@ -42,11 +45,15 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
         code=new ArrayList();
         amount=new ArrayList();
         units=new ArrayList();
+        packing=new ArrayList();
+        weight=new ArrayList();
         original_id=new ArrayList();
         original_name=new ArrayList();
         original_code=new ArrayList();
         original_amount=new ArrayList();
         original_units=new ArrayList();
+        original_packing=new ArrayList();
+        original_weight=new ArrayList();
         for(hera.com.orders.module.Article article: articleIterable)
         {
             id.add(article.id);
@@ -59,6 +66,10 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
             original_amount.add(article.price);
             units.add(article.units);
             original_units.add(article.units);
+            packing.add(article.packing);
+            original_packing.add(article.packing);
+            weight.add(article.weight);
+            original_weight.add(article.weight);
         }
 
         inflater=LayoutInflater.from(context);
@@ -135,6 +146,8 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                 amount=FilteredArrList2;
                 units=FilteredArrList3;
                 id=FilteredArrList4;
+                packing=FilteredArrList5;
+                weight=FilteredArrList6;
                 List<hera.com.orders.module.Article> articleList=new ArrayList<hera.com.orders.module.Article>();
                 for(int i=0;i<name.size();i++)
                 {
@@ -144,6 +157,8 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                     article.code=code.get(i).toString();
                     article.price=amount.get(i).toString();
                     article.units=units.get(i).toString();
+                    article.packing=packing.get(i).toString();
+                    article.weight=weight.get(i).toString();
                     articleList.add(article);
                 }
                 articles=articleList;
@@ -158,6 +173,8 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                 FilteredArrList2 = new ArrayList();
                 FilteredArrList3 = new ArrayList();
                 FilteredArrList4 = new ArrayList();
+                FilteredArrList5 = new ArrayList();
+                FilteredArrList6 = new ArrayList();
 
                 if (original_id == null) {
                     original_id = new ArrayList(id);
@@ -174,6 +191,12 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                 if (original_units == null) {
                     original_units = new ArrayList(units);
                 }
+                if (original_packing == null) {
+                    original_packing = new ArrayList(packing);
+                }
+                if (original_weight == null) {
+                    original_weight = new ArrayList(weight);
+                }
 
                 if (constraint == null || constraint.length() == 0) {
 
@@ -184,6 +207,8 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                     FilteredArrList2=original_amount;
                     FilteredArrList3=original_units;
                     FilteredArrList4=original_id;
+                    FilteredArrList5=original_packing;
+                    FilteredArrList6=original_weight;
                 } else {
                     constraint = constraint.toString().toLowerCase();
                     String[] temp=new String[1000];
@@ -207,6 +232,8 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                                 FilteredArrList2.add(original_amount.get(i));
                                 FilteredArrList3.add(original_units.get(i));
                                 FilteredArrList4.add(original_id.get(i));
+                                FilteredArrList5.add(original_packing.get(i));
+                                FilteredArrList6.add(original_weight.get(i));
                             }
                         }
                         else if(temp.length >1)
@@ -217,6 +244,8 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                                 FilteredArrList2.add(original_amount.get(i));
                                 FilteredArrList3.add(original_units.get(i));
                                 FilteredArrList4.add(original_id.get(i));
+                                FilteredArrList5.add(original_packing.get(i));
+                                FilteredArrList6.add(original_weight.get(i));
                             }
                         }
                     }
