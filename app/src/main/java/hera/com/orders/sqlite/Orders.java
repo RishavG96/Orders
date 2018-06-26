@@ -12,13 +12,13 @@ import hera.com.orders.MainActivity;
 public class Orders {
     public void addOrder(Context context, hera.com.orders.model.Orders orders)
     {
-        MainActivity.db.execSQL("create table if not exists orders(orderId integer, partnerId integer, partnerName varchar(1000)," +
-                "date varchar(1000), note varchar(1000))");
+        MainActivity.db.execSQL("create table if not exists orders1(orderId integer, partnerId integer, partnerName varchar(1000)," +
+                "date varchar(1000), note varchar(1000), sended varchar(1000))");
         int orderId = getNextOrderId();
         MainActivity.orderID=orderId;
         //Toast.makeText(context,"here",Toast.LENGTH_SHORT).show();
-        MainActivity.db.execSQL("insert into orders values("+orderId+","+orders.partnerId+",'"+orders.partnerName+"','"+orders.dates+"'," +
-                "'"+orders.note+"')");
+        MainActivity.db.execSQL("insert into orders1 values("+orderId+","+orders.partnerId+",'"+orders.partnerName+"','"+orders.dates+"'," +
+                "'"+orders.note+"','N')");
 
         //Toast.makeText(context,"Order Placed!",Toast.LENGTH_SHORT).show();
     }
@@ -39,23 +39,112 @@ public class Orders {
     }
     public Iterable<hera.com.orders.model.Orders> showOrders(Context context)
     {
-        Cursor c=MainActivity.db.rawQuery("select * from orders", null);
+        Cursor c=MainActivity.db.rawQuery("select * from orders1", null);
         List<hera.com.orders.model.Orders> ordersList=new ArrayList<>();
         while(c.moveToNext())
         {
             hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
+            Cursor c1=MainActivity.db.rawQuery("select * from orderdetails1 where orderId="+c.getInt(0),null);
+            List<hera.com.orders.model.OrderItems> orderItemsList=new ArrayList<>();
+            while(c1.moveToNext())
+            {
+                hera.com.orders.model.OrderItems orderItems=new hera.com.orders.model.OrderItems();
+                orderItems.articleId=c1.getInt(1);
+                orderItems.articleName=c1.getString(2);
+                orderItems.articleCode=c1.getString(3);
+                orderItems.articleUnits=c1.getString(4);
+                orderItems.articlePacking=c1.getString(5);
+                orderItems.articleWeight=c1.getString(6);
+                orderItems.quantity=c1.getString(7);
+                orderItems.packaging=c1.getString(8);
+                orderItems.price=c1.getString(9);
+                orderItemsList.add(orderItems);
+            }
+            Cursor c2= MainActivity.db.rawQuery("select * from partners where id="+c.getInt(1),null);
+            hera.com.orders.model.Partner partner=new hera.com.orders.model.Partner();
+            while(c2.moveToNext())
+            {
+                partner.id = c2.getInt(0);
+                partner.name=c2.getString(2);
+                partner.code=c2.getString(1);
+                partner.amount=c2.getString(5);
+                partner.address=c2.getString(3);
+                partner.city=c2.getString(4);
+                partner.type=c2.getString(6);
+                partner.discount=c2.getString(7);
+                partner.status=c2.getString(8);
+                partner.businessHours=c2.getString(9);
+                partner.timeOfReceipt=c2.getString(10);
+                partner.responsiblePerson=c2.getString(11);
+                partner.forMobile=c2.getString(12);
+            }
             orders.orderId=c.getInt(0);
             orders.partnerId=c.getInt(1);
             orders.partnerName=c.getString(2);
             orders.dates=c.getString(3);
             orders.note=c.getString(4);
+            orders.orderItemsList=orderItemsList;
+            orders.partner=partner;
+            orders.sended=c.getString(5);
             ordersList.add(orders);
         }
         return ordersList;
     }
+    public hera.com.orders.model.Orders showOrders(Context context, int id)
+    {
+        Cursor c=MainActivity.db.rawQuery("select * from orders1 where orderId="+id+"", null);
+        hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
+        while(c.moveToNext())
+        {
+
+            Cursor c1=MainActivity.db.rawQuery("select * from orderdetails1 where orderId="+c.getInt(0),null);
+            List<hera.com.orders.model.OrderItems> orderItemsList=new ArrayList<>();
+            while(c1.moveToNext())
+            {
+                hera.com.orders.model.OrderItems orderItems=new hera.com.orders.model.OrderItems();
+                orderItems.articleId=c1.getInt(1);
+                orderItems.articleName=c1.getString(2);
+                orderItems.articleCode=c1.getString(3);
+                orderItems.articleUnits=c1.getString(4);
+                orderItems.articlePacking=c1.getString(5);
+                orderItems.articleWeight=c1.getString(6);
+                orderItems.quantity=c1.getString(7);
+                orderItems.packaging=c1.getString(8);
+                orderItems.price=c1.getString(9);
+                orderItemsList.add(orderItems);
+            }
+            Cursor c2= MainActivity.db.rawQuery("select * from partners where id="+c.getInt(1),null);
+            hera.com.orders.model.Partner partner=new hera.com.orders.model.Partner();
+            while(c2.moveToNext())
+            {
+                partner.id = c2.getInt(0);
+                partner.name=c2.getString(2);
+                partner.code=c2.getString(1);
+                partner.amount=c2.getString(5);
+                partner.address=c2.getString(3);
+                partner.city=c2.getString(4);
+                partner.type=c2.getString(6);
+                partner.discount=c2.getString(7);
+                partner.status=c2.getString(8);
+                partner.businessHours=c2.getString(9);
+                partner.timeOfReceipt=c2.getString(10);
+                partner.responsiblePerson=c2.getString(11);
+                partner.forMobile=c2.getString(12);
+            }
+            orders.orderId=c.getInt(0);
+            orders.partnerId=c.getInt(1);
+            orders.partnerName=c.getString(2);
+            orders.dates=c.getString(3);
+            orders.note=c.getString(4);
+            orders.orderItemsList=orderItemsList;
+            orders.partner=partner;
+            orders.sended=c.getString(5);
+        }
+        return orders;
+    }
     public static String getPartnerName(Context context, int orderId)
     {
-        Cursor c=MainActivity.db.rawQuery("select * from orders where orderId="+orderId+"", null);
+        Cursor c=MainActivity.db.rawQuery("select * from orders1 where orderId="+orderId+"", null);
         while(c.moveToNext())
         {
             return c.getString(2);
@@ -108,7 +197,7 @@ public class Orders {
     }
     public int getNextOrderId()
     {
-        Cursor c=MainActivity.db.rawQuery("select * from orders", null);
+        Cursor c=MainActivity.db.rawQuery("select * from orders1", null);
         int count=0;
         while(c.moveToNext())
         {

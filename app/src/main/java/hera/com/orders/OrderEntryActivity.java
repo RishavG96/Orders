@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class OrderEntryActivity extends AppCompatActivity {
 
@@ -127,12 +128,14 @@ public class OrderEntryActivity extends AppCompatActivity {
                 });
     }
     private void updateLabel() {
-        String myFormat = "dd/MM/yy"; //In which you need put here
+        String myFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date c = Calendar.getInstance().getTime();
         todaysDate=sdf.format(c);
         et.setText(sdf.format(myCalendar.getTime()));
         MainActivity.dates=sdf.format(myCalendar.getTime());
+        Toast.makeText(getApplicationContext(),MainActivity.dates,Toast.LENGTH_SHORT).show();
     }
 
     @Override

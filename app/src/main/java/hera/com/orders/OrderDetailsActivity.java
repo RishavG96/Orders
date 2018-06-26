@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    hera.com.orders.service.Orders service_orders;
     Orders orders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         total=findViewById(R.id.textView32);
         editOrder=findViewById(R.id.editorder);
         submitOrder=findViewById(R.id.submitorder);
+        service_orders=new hera.com.orders.service.Orders();
         orders=new Orders();
         List<hera.com.orders.model.Orders> ordersList=new ArrayList<>();
         String pn=orders.getPartnerName(this, MainActivity.orderID);
@@ -72,6 +75,13 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 Intent intent=new Intent(getApplicationContext(), CombinedActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+        submitOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    service_orders.sendToServer(getApplicationContext(),MainActivity.orderID);
+
             }
         });
 

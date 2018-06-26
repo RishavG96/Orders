@@ -1,6 +1,9 @@
 package hera.com.orders.model;
 
-public class OrderItems {
+import java.io.Serializable;
+import com.google.gson.annotations.SerializedName;
+
+public class OrderItems implements Serializable{
 
     public int orderId;
 
@@ -16,8 +19,10 @@ public class OrderItems {
 
     public String articleWeight;
 
+    @SerializedName("quantaty")
     public String quantity;
 
+    @SerializedName("transQuantaty")
     public String packaging;
 
     public String price;
