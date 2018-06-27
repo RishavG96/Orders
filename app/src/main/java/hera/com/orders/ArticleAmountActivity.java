@@ -27,6 +27,7 @@ import java.util.List;
 import hera.com.orders.adapters.OrderItemsAdapter;
 import hera.com.orders.model.OrderItems;
 import hera.com.orders.sqlite.Article;
+import hera.com.orders.sqlite.Orders;
 
 public class ArticleAmountActivity extends AppCompatActivity {
 
@@ -127,33 +128,35 @@ public class ArticleAmountActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String amount1=et1.getText().toString();
-                String amount2=et2.getText().toString();
-                double price=(Double.parseDouble(amount2)/Double.parseDouble(articles.get(0).packing))*Double.parseDouble(articles.get(0).price);
-                String p=price+"";
-                if(amount1.equals("") || amount1.equals("0.0") || amount1.equals("0") ||
-                        amount2.equals("") || amount2.equals("0.0") || amount2.equals("0"))
-                {
-                    Toast.makeText(getApplicationContext(), "Enter some value please", Toast.LENGTH_SHORT).show();
+                if(!et1.getText().toString().isEmpty()) {
+                    String amount1 = et1.getText().toString();
+                    String amount2 = et2.getText().toString();
+                    double price = (Double.parseDouble(amount2) / Double.parseDouble(articles.get(0).packing)) * Double.parseDouble(articles.get(0).price);
+                    String p = price + "";
+                    if (amount1.equals("") || amount1.equals("0.0") || amount1.equals("0") ||
+                            amount2.equals("") || amount2.equals("0.0") || amount2.equals("0")) {
+                        Toast.makeText(getApplicationContext(), "Enter some value please", Toast.LENGTH_SHORT).show();
+                    } else {
+                        OrderItems orderItems2 = new OrderItems();
+                        orderItems2.articleId = articles.get(0).id;
+                        orderItems2.articleName = articles.get(0).name;
+                        orderItems2.articleCode = articles.get(0).code;
+                        orderItems2.articleUnits = articles.get(0).units;
+                        orderItems2.articlePacking = articles.get(0).packing;
+                        orderItems2.articleWeight = articles.get(0).weight;
+                        orderItems2.quantity = amount1;
+                        orderItems2.packaging = amount2;
+                        orderItems2.price = p;
+                        orderItems.addOrders(getApplicationContext(), orderItems2);
+                        Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
+                        intent.putExtra("fragToLoad", 2);
+                        startActivity(intent);
+                        setResult(1);
+                        finish();
+                    }
                 }
-                else
-                {
-                    OrderItems orderItems2=new OrderItems();
-                    orderItems2.articleId=articles.get(0).id;
-                    orderItems2.articleName= articles.get(0).name;
-                    orderItems2.articleCode=articles.get(0).code;
-                    orderItems2.articleUnits=articles.get(0).units;
-                    orderItems2.articlePacking= articles.get(0).packing;
-                    orderItems2.articleWeight= articles.get(0).weight;
-                    orderItems2.quantity=amount1;
-                    orderItems2.packaging=amount2;
-                    orderItems2.price=p;
-                    orderItems.addOrders(getApplicationContext(),orderItems2);
-                    Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
-                    intent.putExtra("fragToLoad", 2);
-                    startActivity(intent);
-                    setResult(1);
-                    finish();
+                else {
+                    Toast.makeText(getApplicationContext(), "Enter some value please", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -191,6 +194,16 @@ public class ArticleAmountActivity extends AppCompatActivity {
                                 startActivity(intent3);
                                 finish();
                                 break;
+                            case R.id.refresh:
+                                LoginActivity.assort=0;
+                                LoginActivity.art=0;
+                                LoginActivity.part=0;
+                                LoginActivity.part_week=0;
+                                Intent intent4 = new Intent(getApplicationContext(), MainActivity.class);
+                                intent4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent4);
+                                finish();
+                                break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER
                         return true;
@@ -210,7 +223,44 @@ public class ArticleAmountActivity extends AppCompatActivity {
             return true;
         }
         else {
+            Orders orders=new Orders();
             switch (item.getItemId()) {
+                case R.id.sendAll:
+                    boolean flag=orders.sendAllToServer();
+                    if(flag==true) {
+                        Toast.makeText(getApplicationContext(), "Order Sent!", Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+                        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent2);
+                        finish();
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(),"Enter Items First!",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.deleteAll:
+                    orders.deleteAll();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent3 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent3);
+                    finish();
+                    break;
+                case R.id.deleteSend:
+                    orders.deleteSend();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent4 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent4);
+                    finish();
+                    break;
+                case R.id.deleteUnsend:
+                    orders.deleteUnsend();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent5 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent5);
+                    finish();
+                    break;
                 case R.id.setup:
                     Intent intent = new Intent(this, UpdateURLActivity.class);
                     startActivity(intent);

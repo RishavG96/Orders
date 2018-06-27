@@ -40,14 +40,14 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     public static int Id;
     NavigationView navigationView;
-    ProgressDialog progressDialog;
     public static SQLiteDatabase db;
-    hera.com.orders.service.Partner service_partner;
+    hera.com.orders.sqlite.Orders orders;
     hera.com.orders.sqlite.Partner sqlite_partner;
+    hera.com.orders.service.Partner service_partner;
     hera.com.orders.service.Article service_article;
     hera.com.orders.service.Assortment service_assortment;
-    hera.com.orders.sqlite.Orders orders;
     hera.com.orders.service.PartnerByWeek service_partner_week;
+    ProgressDialog progressDialog;
     Handler handle;
     SearchView searchView;
     ListView lv;
@@ -66,11 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
         lv=findViewById(R.id.listview2);
         newOrder=findViewById(R.id.button3);
-        service_partner = new hera.com.orders.service.Partner();
+        orders = new hera.com.orders.sqlite.Orders();
         sqlite_partner = new hera.com.orders.sqlite.Partner();
+        service_partner = new hera.com.orders.service.Partner();
         service_article = new hera.com.orders.service.Article();
         service_assortment = new hera.com.orders.service.Assortment();
-        orders = new hera.com.orders.sqlite.Orders();
         service_partner_week = new hera.com.orders.service.PartnerByWeek();
         orderID=0;
         //Toast.makeText(getApplicationContext(),"here",Toast.LENGTH_SHORT).show();
@@ -79,9 +79,7 @@ public class MainActivity extends AppCompatActivity {
             db.execSQL("delete from orderitems");
         }
         catch (Exception e)
-        {
-
-        }
+        {}
         if(LoginActivity.part==0 || LoginActivity.art==0 || LoginActivity.assort==0 || LoginActivity.part_week==0)
         {
             service_partner.connect(getApplicationContext());
@@ -187,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                                 service_article.connect(getApplicationContext());
                                 service_assortment.connect(getApplicationContext());
                                 service_partner_week.connect(getApplicationContext());
-                                progressDialog = new ProgressDialog(MainActivity.this);
+                                progressDialog = new ProgressDialog(getApplicationContext());
                                 progressDialog.setMax(100);
                                 progressDialog.setMessage("Loading....");
                                 progressDialog.setTitle("Refreshing database");
@@ -261,13 +259,49 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             switch (item.getItemId()) {
-                case R.id.setup:
-                    Intent intent = new Intent(this, UpdateURLActivity.class);
+                case R.id.sendAll:
+                    boolean flag=orders.sendAllToServer();
+                    if(flag==true) {
+                        Toast.makeText(getApplicationContext(), "Order Sent!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(),"Enter Items First!",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.deleteAll:
+                    orders.deleteAll();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    finish();
+                    break;
+                case R.id.deleteSend:
+                    orders.deleteSend();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent1);
+                    finish();
+                    break;
+                case R.id.deleteUnsend:
+                    orders.deleteUnsend();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent2);
+                    finish();
+                    break;
+                case R.id.setup:
+                    Intent intent3 = new Intent(this, UpdateURLActivity.class);
+                    startActivity(intent3);
                     break;
                 case R.id.logout:
-                    Intent intent1 = new Intent(this, LoginActivity.class);
-                    startActivity(intent1);
+                    Intent intent4 = new Intent(this, LoginActivity.class);
+                    startActivity(intent4);
                     finish();
                     db.execSQL("delete from login");
                     break;

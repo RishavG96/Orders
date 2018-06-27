@@ -1,10 +1,13 @@
 package hera.com.orders;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -20,12 +23,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import hera.com.orders.adapters.ArticleListAdapter;
 import hera.com.orders.model.Article;
+import hera.com.orders.sqlite.Orders;
 
 public class ArticleActivity extends AppCompatActivity {
 
@@ -40,6 +45,11 @@ public class ArticleActivity extends AppCompatActivity {
     ListView listView;
     SearchView searchView;
     List<Article> articleList;
+    hera.com.orders.service.Partner service_partner;
+    hera.com.orders.service.Assortment service_assortment;
+    hera.com.orders.service.PartnerByWeek service_partner_week;
+    ProgressDialog progressDialog;
+    Handler handle;
     public static int pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +60,11 @@ public class ArticleActivity extends AppCompatActivity {
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
         service_article = new hera.com.orders.service.Article();
         sqlite_article = new hera.com.orders.sqlite.Article();
+
+        service_partner = new hera.com.orders.service.Partner();
+        service_article = new hera.com.orders.service.Article();
+        service_assortment = new hera.com.orders.service.Assortment();
+        service_partner_week = new hera.com.orders.service.PartnerByWeek();
 
         service_article.connect(this);
         articleList=new ArrayList<>();
@@ -74,6 +89,13 @@ public class ArticleActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        handle = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                progressDialog.incrementProgressBy(1);
+            }
+        };
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -97,6 +119,16 @@ public class ArticleActivity extends AppCompatActivity {
                             case R.id.partnerweek:
                                 Intent intent3=new Intent(getApplicationContext(), WeekDaysActivity.class);
                                 startActivity(intent3);
+                                finish();
+                                break;
+                            case R.id.refresh:
+                                LoginActivity.assort=0;
+                                LoginActivity.art=0;
+                                LoginActivity.part=0;
+                                LoginActivity.part_week=0;
+                                Intent intent4 = new Intent(getApplicationContext(), MainActivity.class);
+                                intent4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent4);
                                 finish();
                                 break;
                         }
@@ -138,7 +170,44 @@ public class ArticleActivity extends AppCompatActivity {
             return true;
         }
         else {
+            Orders orders=new Orders();
             switch (item.getItemId()) {
+                case R.id.sendAll:
+                    boolean flag=orders.sendAllToServer();
+                    if(flag==true) {
+                        Toast.makeText(getApplicationContext(), "Order Sent!", Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+                        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent2);
+                        finish();
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(),"Enter Items First!",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.deleteAll:
+                    orders.deleteAll();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent3 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent3);
+                    finish();
+                    break;
+                case R.id.deleteSend:
+                    orders.deleteSend();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent4 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent4);
+                    finish();
+                    break;
+                case R.id.deleteUnsend:
+                    orders.deleteUnsend();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent5 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent5);
+                    finish();
+                    break;
                 case R.id.setup:
                     Intent intent = new Intent(this, UpdateURLActivity.class);
                     startActivity(intent);

@@ -7,6 +7,18 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:icon="@android:drawable/ic_menu_search"
         android:title="search" />
+    <item android:id="@+id/sendAll"
+        android:title="Send All Orders"
+        />
+    <item android:id="@+id/deleteAll"
+        android:title="Delete All Orders"
+        />
+    <item android:id="@+id/deleteSend"
+        android:title="Delete Send Orders"
+        />
+    <item android:id="@+id/deleteUnsend"
+        android:title="Delete Not Send Orders"
+        />
     <item android:id="@+id/setup"
         android:title="Setup"
         />

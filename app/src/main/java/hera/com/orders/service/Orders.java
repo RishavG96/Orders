@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hera.com.orders.MainActivity;
+import hera.com.orders.SendOrdertask;
 
 import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
@@ -51,6 +52,8 @@ public class Orders  {
     URL url;
     String urlString="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/narudzba";
     public void sendToServer(final int orderId){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         sqlite_orders=new hera.com.orders.sqlite.Orders();
         model_orders=sqlite_orders.showOrders(orderId);
         Cursor c=MainActivity.db.rawQuery("select * from user1",null);

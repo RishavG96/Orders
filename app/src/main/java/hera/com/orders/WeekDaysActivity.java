@@ -17,6 +17,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import hera.com.orders.sqlite.Orders;
 
 public class WeekDaysActivity extends AppCompatActivity {
 
@@ -76,6 +79,16 @@ public class WeekDaysActivity extends AppCompatActivity {
                                 startActivity(intent3);
                                 finish();
                                 break;
+                            case R.id.refresh:
+                                LoginActivity.assort=0;
+                                LoginActivity.art=0;
+                                LoginActivity.part=0;
+                                LoginActivity.part_week=0;
+                                Intent intent4 = new Intent(getApplicationContext(), MainActivity.class);
+                                intent4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent4);
+                                finish();
+                                break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER
                         return true;
@@ -95,7 +108,44 @@ public class WeekDaysActivity extends AppCompatActivity {
             return true;
         }
         else {
+            Orders orders=new Orders();
             switch (item.getItemId()) {
+                case R.id.sendAll:
+                    boolean flag=orders.sendAllToServer();
+                    if(flag==true) {
+                        Toast.makeText(getApplicationContext(), "Order Sent!", Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+                        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent2);
+                        finish();
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(),"Enter Items First!",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.deleteAll:
+                    orders.deleteAll();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent3 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent3);
+                    finish();
+                    break;
+                case R.id.deleteSend:
+                    orders.deleteSend();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent4 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent4);
+                    finish();
+                    break;
+                case R.id.deleteUnsend:
+                    orders.deleteUnsend();
+                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent5 = new Intent(getApplicationContext(), MainActivity.class);
+                    intent5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent5);
+                    finish();
+                    break;
                 case R.id.setup:
                     Intent intent = new Intent(this, UpdateURLActivity.class);
                     startActivity(intent);

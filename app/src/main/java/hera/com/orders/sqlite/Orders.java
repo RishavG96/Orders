@@ -10,6 +10,7 @@ import java.util.List;
 import hera.com.orders.MainActivity;
 
 public class Orders {
+    hera.com.orders.service.Orders service_orders;
     public void addOrder(Context context, hera.com.orders.model.Orders orders)
     {
         MainActivity.db.execSQL("create table if not exists orders1(orderId integer, partnerId integer, partnerName varchar(1000)," +
@@ -228,5 +229,40 @@ public class Orders {
             MainActivity.db.delete("orderdetails1", "articleId" + "=" + articleId+" and orderId="+orderId, null);
         }catch (Exception e){}
 
+    }
+    public boolean sendAllToServer()
+    {
+        service_orders=new hera.com.orders.service.Orders();
+        Cursor c=MainActivity.db.rawQuery("select * from orders1", null);
+        boolean flag=true;
+        while(c.moveToNext())
+        {
+            Cursor c1 = MainActivity.db.rawQuery("select * from orderdetails1 where orderId=" + c.getInt(0) + "", null);
+            if(!c1.moveToNext()){
+                flag=false;
+                break;
+            }
+        }
+        if (flag!=false){
+            c=MainActivity.db.rawQuery("select * from orders1", null);
+            while(c.moveToNext())
+            {
+                service_orders.sendToServer(c.getInt(0));
+            }
+        }
+        return  flag;
+    }
+    public void deleteAll()
+    {
+        MainActivity.db.execSQL("delete from orders1");
+        MainActivity.db.execSQL("delete from orderdetails1");
+    }
+    public void deleteSend()
+    {
+        MainActivity.db.delete("orders1", "sended='Y'", null);
+    }
+    public void deleteUnsend()
+    {
+        MainActivity.db.delete("orders1", "sended='N'", null);
     }
 }
