@@ -73,16 +73,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
         editOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Orders.pushOrderItems(getApplicationContext(), MainActivity.orderID);
-                MainActivity.partnerName=Orders.getPartnerName(getApplicationContext(), MainActivity.orderID);
-                Intent intent=new Intent(getApplicationContext(), CombinedActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        submitOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 Cursor c=MainActivity.db.rawQuery("select * from orders1 where orderId="+MainActivity.orderID+"", null);
                 String sended="";
                 while(c.moveToNext())
@@ -90,13 +80,38 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     sended=c.getString(5);
                 }
                 if(sended.equals("N")) {
-                    sendOrdertask = new SendOrdertask();
-                    sendOrdertask.execute((Void) null);
-                    Toast.makeText(getApplicationContext(),"Order Send!",Toast.LENGTH_SHORT).show();
+                    Orders.pushOrderItems(getApplicationContext(), MainActivity.orderID);
+                    MainActivity.partnerName = Orders.getPartnerName(getApplicationContext(), MainActivity.orderID);
+                    Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 else if(sended.equals("Y"))
                 {
-                    Toast.makeText(getApplicationContext(),"Order already Sended!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Cannot edit, order already Sended!",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        submitOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cursor c1=MainActivity.db.rawQuery("select * from orderdetails1 where orderId="+MainActivity.orderID+"", null);
+                if(c1.moveToNext()) {
+                    Cursor c = MainActivity.db.rawQuery("select * from orders1 where orderId=" + MainActivity.orderID + "", null);
+                    String sended = "";
+                    while (c.moveToNext()) {
+                        sended = c.getString(5);
+                    }
+                    if (sended.equals("N")) {
+                        sendOrdertask = new SendOrdertask();
+                        sendOrdertask.execute((Void) null);
+                        Toast.makeText(getApplicationContext(), "Order Send!", Toast.LENGTH_SHORT).show();
+                    } else if (sended.equals("Y")) {
+                        Toast.makeText(getApplicationContext(), "Order already Sended!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Enter Articles first!",Toast.LENGTH_SHORT).show();
                 }
             }
         });

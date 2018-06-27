@@ -1,5 +1,6 @@
 package hera.com.orders.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -29,11 +30,12 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
+    Orders orders;
     public List<hera.com.orders.model.Orders> ordersList;
     public OrdersAdapter(Context context, List<hera.com.orders.model.Orders> ordersList)
     {
         this.context=context;
-
+        orders=new Orders();
         this.ordersList=ordersList;
 
         orderId=new ArrayList();
@@ -103,6 +105,12 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                                         context.startActivity(intent);
                                         break;
                                     case R.id.delete:
+                                        MainActivity.pos=getItem(position).orderId;
+                                        MainActivity.orderID= ordersList.get(position).orderId;
+                                        orders.deleteOrder(MainActivity.orderID);
+                                        Intent intent1=new Intent(context, MainActivity.class);
+                                        context.startActivity(intent1);
+                                        ((Activity)context).finish();
                                         break;
                                 }
                                 return true;
@@ -111,12 +119,12 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                 }
             }
         });
-        n.setText("Order ID: "+getItem(position).orderId);
-        co.setText("Partner Name: "+getItem(position).partnerName);
+        n.setText(getItem(position).partnerName);
+        co.setText("Sended: "+getItem(position).sended);
 //        q.setText("Quantity: "+quantity.get(position).toString()+"  "+unit.get(position).toString() );
         q.setText("");
         un.setText("Date: "+getItem(position).dates);
-        s.setText("Sended: "+getItem(position).sended);
+        s.setText("");
         return convertView;
     }
 
@@ -138,7 +146,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                     orders.orderId=Integer.parseInt(orderId.get(i).toString());
                     orders.partnerName=partnerName.get(i).toString();
                     orders.dates=dates.get(i).toString();
-                    orders.sended=dates.get(i).toString();
+                    orders.sended=sended.get(i).toString();
                     ordersList1.add(orders);
                 }
                 ordersList=ordersList1;

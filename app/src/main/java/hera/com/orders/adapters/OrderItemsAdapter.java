@@ -2,6 +2,7 @@ package hera.com.orders.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,14 +11,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import hera.com.orders.ArticleAmountActivity;
 import hera.com.orders.CombinedActivity;
+import hera.com.orders.MainActivity;
+import hera.com.orders.OrderDetailsActivity;
 import hera.com.orders.R;
 import hera.com.orders.sqlite.OrderItems;
+import hera.com.orders.sqlite.Orders;
 
 public class OrderItemsAdapter extends BaseAdapter{
     LayoutInflater inflater;
@@ -91,18 +96,49 @@ public class OrderItemsAdapter extends BaseAdapter{
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.edit:
-                                        pos=getItem(position).articleId;
-                                        Intent intent=new Intent(context, ArticleAmountActivity.class);
-                                        intent.putExtra("articleId",pos);
-                                        context.startActivity(intent);
+                                        Cursor c= MainActivity.db.rawQuery("select * from orders1 where orderId="+MainActivity.orderID+"", null);
+                                        String sended="";
+                                        while(c.moveToNext())
+                                        {
+                                            sended=c.getString(5);
+                                        }
+                                        if(sended.equals("N")) {
+                                            pos = getItem(position).articleId;
+                                            Intent intent = new Intent(context, ArticleAmountActivity.class);
+                                            intent.putExtra("articleId", pos);
+                                            context.startActivity(intent);
+                                        }
+                                        else if(sended.equals("Y"))
+                                        {
+                                            Toast.makeText(context,"Cannot edit, order already Sended!",Toast.LENGTH_SHORT).show();
+                                        }
                                         break;
                                     case R.id.remove:
-                                        pos=getItem(position).articleId;
-                                        OrderItems.deleteItem(orderItems.get(position).articleId);
-                                        Intent intent1=new Intent(context,CombinedActivity.class);
-                                        intent1.putExtra("fragToLoad", 2);
-                                        context.startActivity(intent1);
-                                        ((CombinedActivity)context).finish();
+                                        if(context.toString().contains("OrderDetailsActivity")) {
+                                            Cursor c1 = MainActivity.db.rawQuery("select * from orders1 where orderId=" + MainActivity.orderID + "", null);
+                                            String sended1 = "";
+                                            while (c1.moveToNext()) {
+                                                sended1 = c1.getString(5);
+                                            }
+                                            if (sended1.equals("N")) {
+                                                pos = getItem(position).articleId;
+                                                Orders.deleteItem(MainActivity.orderID,orderItems.get(position).articleId);
+                                                Intent intent1 = new Intent(context, OrderDetailsActivity.class);
+                                                context.startActivity(intent1);
+                                                ((OrderDetailsActivity) context).finish();
+                                                Toast.makeText(context, "" + context, Toast.LENGTH_SHORT).show();
+                                            } else if (sended1.equals("Y")) {
+                                                Toast.makeText(context, "Cannot edit, order already Sended!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                        else if(context.toString().contains("CombinedActivity")){
+                                            pos = getItem(position).articleId;
+                                            OrderItems.deleteItem(orderItems.get(position).articleId);
+                                            Intent intent1 = new Intent(context, CombinedActivity.class);
+                                            intent1.putExtra("fragToLoad", 2);
+                                            context.startActivity(intent1);
+                                            ((CombinedActivity) context).finish();
+                                        }
                                         break;
                                 }
                                 return true;

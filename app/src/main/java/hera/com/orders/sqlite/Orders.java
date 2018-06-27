@@ -217,4 +217,16 @@ public class Orders {
         }catch (Exception e){}
         return total;
     }
+    public void deleteOrder(int orderId)
+    {
+        MainActivity.db.delete("orders1", "orderId" + "=" + orderId, null);
+        MainActivity.db.delete("orderdetails1", "orderId" + "=" + orderId, null);
+    }
+    public static void deleteItem(int orderId, int articleId)
+    {
+        try {
+            MainActivity.db.delete("orderdetails1", "articleId" + "=" + articleId+" and orderId="+orderId, null);
+        }catch (Exception e){}
+
+    }
 }
