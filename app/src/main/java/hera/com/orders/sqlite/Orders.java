@@ -90,7 +90,7 @@ public class Orders {
         }
         return ordersList;
     }
-    public hera.com.orders.model.Orders showOrders(Context context, int id)
+    public hera.com.orders.model.Orders showOrders( int id)
     {
         Cursor c=MainActivity.db.rawQuery("select * from orders1 where orderId="+id+"", null);
         hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();

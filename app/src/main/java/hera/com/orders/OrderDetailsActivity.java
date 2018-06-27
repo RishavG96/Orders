@@ -2,6 +2,7 @@ package hera.com.orders;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -39,6 +40,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     hera.com.orders.service.Orders service_orders;
+    private SendOrdertask sendOrdertask=null;
     Orders orders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +82,9 @@ public class OrderDetailsActivity extends AppCompatActivity {
         submitOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    service_orders.sendToServer(getApplicationContext(),MainActivity.orderID);
-
+                    //service_orders.sendToServer(MainActivity.orderID);
+                        sendOrdertask=new SendOrdertask();
+                        sendOrdertask.execute((Void) null);
             }
         });
 
@@ -163,5 +166,16 @@ public class OrderDetailsActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+}
+
+class SendOrdertask extends AsyncTask<Void, Void, Boolean>
+{
+    hera.com.orders.service.Orders service_orders;
+    @Override
+    protected Boolean doInBackground(Void... voids) {
+        service_orders=new hera.com.orders.service.Orders();
+        service_orders.sendToServer(MainActivity.orderID);
+        return null;
     }
 }

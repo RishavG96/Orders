@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
+import android.provider.SyncStateContract;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import java.util.Map;
 
 import hera.com.orders.MainActivity;
 
+import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Orders  {
@@ -50,37 +52,59 @@ public class Orders  {
     Gson _gson;
     String toJson;
     URL url;
+    //String url="http://192.168.111.15:8081/Euro99NarudzeBack/resources/protected/narudzba";
     //String url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/narudzba";
     //String urlString="http://192.168.111.15:8081/Euro99NarudzeBack/resources/protected/artikli";
-    String urlString="http://192.168.111.15:8081/Euro99NarudzeBack/resources/protected/narudzba";
-    public void sendToServer(final Context context,final int orderId){
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+    String urlString="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/narudzba";
+    public void sendToServer(final int orderId){
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
 
 
-//        requestQueue = Volley.newRequestQueue(context); // This setups up a new request queue which we will need to make HTTP requests
+//        requestQueue = Volley.newRequestQueue(context);
 //        RequestQueue queue = Volley.newRequestQueue(context);
 //        sqlite_orders=new hera.com.orders.sqlite.Orders();
 //        model_orders=sqlite_orders.showOrders(context,orderId);
-//
 //        Gson gson = new Gson();
 //        String toJson=gson.toJson(model_orders);
 //        db=context.openOrCreateDatabase("order",MODE_PRIVATE, null);
-//        //Toast.makeText(context,"here="+jwtToken,Toast.LENGTH_SHORT).show();
-//
 //        try {
 //            parameters=new JSONObject(toJson);
-////            parameters.put("Content-Type","application/json");
-//////                headers.put("Accept","application/json");
-////            parameters.put("jwtToken", jwtToken);
-//            //parameters.put("jwtToken", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKT1NJUCIsImlzcyI6IkVVUk85OSIsImlhdCI6MTUyODE5NjM5NX0.bm_IzXl0-hLyHPwYYCInwTDBGD-NMz2PVfAQjDEqj5E");
-//            //Toast.makeText(context,"here="+toJson,Toast.LENGTH_SHORT).show();
+////            Toast.makeText(context,"here="+toJson,Toast.LENGTH_SHORT).show();
+//
 //            Log.d("json",parameters+"");
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
+
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,parameters,
+//        new Response.Listener<JSONObject>(){
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                Log.d(TAG,"User creation completed successfully");
+//                Toast.makeText(context,"DONE"+response,Toast.LENGTH_SHORT).show();
+//                // Go to next activity
+//            }
+//        },new Response.ErrorListener(){
 //
-//
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//                Toast.makeText(context,"not here="+error,Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//        {
+//            @Override
+//            public Map<String,String> getHeaders(){
+//                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Content-Type", "application/json; charset=utf-8");
+//                headers.put("jwtToken", jwtToken);
+//                return headers;
+//            }
+//        };
+//        queue.add(request);
+
+
 //
 //
 //        JsonObjectRequest strRequest = new JsonObjectRequest(Request.Method.POST, ""+url,toJson,
@@ -118,35 +142,36 @@ public class Orders  {
 //        ;
 //        queue.add(strRequest);
 
+
+
+
+
         sqlite_orders=new hera.com.orders.sqlite.Orders();
-        model_orders=sqlite_orders.showOrders(context,orderId);
+        model_orders=sqlite_orders.showOrders(orderId);
         _gson = new Gson();
 
-
-        toJson = _gson.toJson(model_orders);
-
-
         try {
-        url=new URL(urlString);
-        HttpURLConnection connection=(HttpURLConnection)url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setDoOutput(true);
-        connection.setRequestProperty("Accept","application/json");
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("jwtToken",jwtToken);
-        connection.setRequestProperty ("User-agent", "mozilla");
-        OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
-        osw.write(toJson);
-        Toast.makeText(context,toJson+"",Toast.LENGTH_SHORT).show();
-        osw.flush();
-        osw.close();
-        Log.d("response code",""+connection.getResponseCode());
+            toJson = _gson.toJson(model_orders);
+            url=new URL(urlString);
+            HttpURLConnection connection=(HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Accept","application/json");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("jwtToken",jwtToken);
+            OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+            osw.write(toJson);
+            //Toast.makeText(context,toJson+"",Toast.LENGTH_SHORT).show();
+            osw.flush();
+            osw.close();
+            Log.d("response code",""+connection.getResponseCode());
+            Log.d("JSON:",""+toJson);
 //                InputStreamReader x = new InputStreamReader(connection.getInputStream());
 //                String s= x.toString();
-        connection.disconnect();
+            connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context,e+"",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context,e+"",Toast.LENGTH_SHORT).show();
         }
     }
 }
