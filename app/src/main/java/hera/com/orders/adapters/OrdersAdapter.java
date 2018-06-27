@@ -181,38 +181,15 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                     FilteredArrList2=original_dates;
                     FilteredArrList3=original_sended;
                 } else {
-                    constraint = constraint.toString();
-                    String[] temp=new String[1000];
-                    int flag;
-                    String filterString=constraint.toString();
-                    if(filterString.contains(" ")) {
-                        temp = filterString.split(" ");
-                        flag=1;
-                    }
-                    else
-                    {
-                        flag=0;
-                    }
+                    constraint = constraint.toString().toLowerCase();
                     for (int i = 0; i < original_orderId.size(); i++) {
-                        String name_data = original_orderId.get(i).toString();
-                        String code_data = (String)original_partnerName.get(i);
-                        if(flag==0) {
+                        String name_data = original_partnerName.get(i).toString().toLowerCase();
                             if (name_data.contains(constraint.toString())) {
                                 FilteredArrList.add(original_orderId.get(i));
                                 FilteredArrList1.add(original_partnerName.get(i));
                                 FilteredArrList2.add(original_dates.get(i));
                                 FilteredArrList3.add(original_sended.get(i));
                             }
-                        }
-                        else if(temp.length >1)
-                        {
-                            if (name_data.contains(temp[0]) && code_data.toLowerCase().contains(temp[1])) {
-                                FilteredArrList.add(original_orderId.get(i));
-                                FilteredArrList1.add(original_partnerName.get(i));
-                                FilteredArrList2.add(original_dates.get(i));
-                                FilteredArrList3.add(original_sended.get(i));
-                            }
-                        }
                     }
 
                     // set the Filtered result to return

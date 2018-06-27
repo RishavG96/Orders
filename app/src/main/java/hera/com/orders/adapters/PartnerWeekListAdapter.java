@@ -93,35 +93,35 @@ public class PartnerWeekListAdapter extends BaseAdapter implements Filterable{
         TextView am=(TextView)convertView.findViewById(R.id.textView6);
         TextView ad=(TextView)convertView.findViewById(R.id.textView3);
         TextView ci=(TextView)convertView.findViewById(R.id.textView4);
-        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton);
-        imageButton.setTag(getItem(position));
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch(v.getId())
-                {
-                    case R.id.imageButton:
-                        final PopupMenu popup = new PopupMenu(context, v);
-                        popup.getMenuInflater().inflate(R.menu.listoption, popup.getMenu());
-                        popup.show();
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.show:
-                                        pos=getItem(position).id;
-                                        Intent intent=new Intent(context, PartnerWeekDetailsActivity.class);
-                                        context.startActivity(intent);
-                                        break;
-                                    case R.id.delete:
-                                        break;
-                                }
-                                return true;
-                            }
-                        });
-                }
-            }
-        });
+//        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton);
+//        imageButton.setTag(getItem(position));
+//        imageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                switch(v.getId())
+//                {
+//                    case R.id.imageButton:
+//                        final PopupMenu popup = new PopupMenu(context, v);
+//                        popup.getMenuInflater().inflate(R.menu.listoption, popup.getMenu());
+//                        popup.show();
+//                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                            @Override
+//                            public boolean onMenuItemClick(MenuItem item) {
+//                                switch (item.getItemId()) {
+//                                    case R.id.show:
+//                                        pos=getItem(position).id;
+//                                        Intent intent=new Intent(context, PartnerWeekDetailsActivity.class);
+//                                        context.startActivity(intent);
+//                                        break;
+//                                    case R.id.delete:
+//                                        break;
+//                                }
+//                                return true;
+//                            }
+//                        });
+//                }
+//            }
+//        });
         n.setText(name.get(position).toString());
         co.setText("Code: "+code.get(position).toString());
         am.setText("    Amount: "+amount.get(position).toString()+"     ");

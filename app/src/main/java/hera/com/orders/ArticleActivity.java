@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -37,6 +39,8 @@ public class ArticleActivity extends AppCompatActivity {
     SQLiteDatabase db;
     ListView listView;
     SearchView searchView;
+    List<Article> articleList;
+    public static int pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +52,19 @@ public class ArticleActivity extends AppCompatActivity {
         sqlite_article = new hera.com.orders.sqlite.Article();
 
         service_article.connect(this);
-        List<Article> articleList=new ArrayList<>();
+        articleList=new ArrayList<>();
         articleList=(List<Article>)sqlite_article.showArticle(this);
         adapter=new ArticleListAdapter(this,articleList);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                articleList=adapter.articles;
+                pos=articleList.get(position).id;
+                Intent intent=new Intent(getApplicationContext(), ArticleDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         navigationView=findViewById(R.id.nav_view2);
         Toolbar toolbar=findViewById(R.id.toolbar_main);

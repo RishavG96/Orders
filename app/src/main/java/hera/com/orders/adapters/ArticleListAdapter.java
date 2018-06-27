@@ -25,7 +25,6 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
     Context context;
     ArrayList id, original_id, name, code, amount, units, original_name, original_code, original_amount, original_units, packing,
                 original_packing, weight, original_weight;
-    public static int pos;
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
@@ -97,35 +96,35 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
         TextView un=(TextView)convertView.findViewById(R.id.textView11);
         TextView co=(TextView)convertView.findViewById(R.id.textView8);
         TextView no=(TextView)convertView.findViewById(R.id.textView9);
-        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton1);
-        imageButton.setTag(getItem(position));
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch(v.getId())
-                {
-                    case R.id.imageButton1:
-                        final PopupMenu popup = new PopupMenu(context, v);
-                        popup.getMenuInflater().inflate(R.menu.listoption, popup.getMenu());
-                        popup.show();
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.show:
-                                        pos=getItem(position).id;
-                                        Intent intent=new Intent(context, ArticleDetailsActivity.class);
-                                        context.startActivity(intent);
-                                        break;
-                                    case R.id.delete:
-                                        break;
-                                }
-                                return true;
-                            }
-                        });
-                }
-            }
-        });
+//        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton1);
+//        imageButton.setTag(getItem(position));
+//        imageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                switch(v.getId())
+//                {
+//                    case R.id.imageButton1:
+//                        final PopupMenu popup = new PopupMenu(context, v);
+//                        popup.getMenuInflater().inflate(R.menu.listoption, popup.getMenu());
+//                        popup.show();
+//                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                            @Override
+//                            public boolean onMenuItemClick(MenuItem item) {
+//                                switch (item.getItemId()) {
+//                                    case R.id.show:
+//                                        pos=getItem(position).id;
+//                                        Intent intent=new Intent(context, ArticleDetailsActivity.class);
+//                                        context.startActivity(intent);
+//                                        break;
+//                                    case R.id.delete:
+//                                        break;
+//                                }
+//                                return true;
+//                            }
+//                        });
+//                }
+//            }
+//        });
         n.setText(getItem(position).name);
         co.setText("Code: "+getItem(position).code);
         pr.setText("Price: "+getItem(position).price+"    ");

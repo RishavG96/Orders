@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -35,7 +37,9 @@ public class PartnersActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    List<Partner> partnerList;
     public static SQLiteDatabase db;
+    public static int pos;
     SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +52,19 @@ public class PartnersActivity extends AppCompatActivity {
         sqlite_partner=new hera.com.orders.sqlite.Partner();
 
         service_partner.connect(this);
-        List<Partner> partnerList=new ArrayList<>();
+        partnerList=new ArrayList<>();
         partnerList= (List<Partner>) sqlite_partner.showPartner(this);
         adapter=new PartnerListAdapter(this, partnerList );
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                partnerList=adapter.partners;
+                pos=partnerList.get(position).id;
+                Intent intent=new Intent(getApplicationContext(), PartnerDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         navigationView=findViewById(R.id.nav_view1);
         Toolbar toolbar=findViewById(R.id.toolbar_main);

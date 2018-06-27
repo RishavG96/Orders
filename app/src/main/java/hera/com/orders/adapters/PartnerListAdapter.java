@@ -24,7 +24,6 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
 
     LayoutInflater inflater;
     Context context;
-    public static int pos;
     ArrayList id, original_id, name, code, amount, address, city, original_name, original_code, original_amount, original_address, original_city;
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
@@ -91,35 +90,35 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
         TextView am=(TextView)convertView.findViewById(R.id.textView6);
         TextView ad=(TextView)convertView.findViewById(R.id.textView3);
         TextView ci=(TextView)convertView.findViewById(R.id.textView4);
-        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton);
-        imageButton.setTag(getItem(position));
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch(v.getId())
-                {
-                    case R.id.imageButton:
-                        final PopupMenu popup = new PopupMenu(context, v);
-                        popup.getMenuInflater().inflate(R.menu.listoption, popup.getMenu());
-                        popup.show();
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.show:
-                                        pos=getItem(position).id;
-                                        Intent intent=new Intent(context, PartnerDetailsActivity.class);
-                                        context.startActivity(intent);
-                                        break;
-                                    case R.id.delete:
-                                        break;
-                                }
-                                return true;
-                            }
-                        });
-                }
-            }
-        });
+//        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton);
+//        imageButton.setTag(getItem(position));
+//        imageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                switch(v.getId())
+//                {
+//                    case R.id.imageButton:
+//                        final PopupMenu popup = new PopupMenu(context, v);
+//                        popup.getMenuInflater().inflate(R.menu.listoption, popup.getMenu());
+//                        popup.show();
+//                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                            @Override
+//                            public boolean onMenuItemClick(MenuItem item) {
+//                                switch (item.getItemId()) {
+//                                    case R.id.show:
+//                                        pos=getItem(position).id;
+//                                        Intent intent=new Intent(context, PartnerDetailsActivity.class);
+//                                        context.startActivity(intent);
+//                                        break;
+//                                    case R.id.delete:
+//                                        break;
+//                                }
+//                                return true;
+//                            }
+//                        });
+//                }
+//            }
+//        });
         n.setText((getItem(position)).name);
         co.setText("Code: "+getItem(position).code);
         am.setText("    Amount: "+getItem(position).amount+"     ");
