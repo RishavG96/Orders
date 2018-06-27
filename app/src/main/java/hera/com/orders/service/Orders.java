@@ -43,111 +43,24 @@ import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Orders  {
-    String jwtToken="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKT1NJUCIsImlzcyI6IkVVUk85OSIsImlhdCI6MTUyODE5NjM5NX0.bm_IzXl0-hLyHPwYYCInwTDBGD-NMz2PVfAQjDEqj5E";
-    RequestQueue requestQueue;  // This is our requests queue to process our HTTP requests.
-    SQLiteDatabase db;
+    String jwtToken;
     hera.com.orders.sqlite.Orders sqlite_orders;
     hera.com.orders.model.Orders model_orders;
-    JSONObject parameters;
     Gson _gson;
     String toJson;
     URL url;
-    //String url="http://192.168.111.15:8081/Euro99NarudzeBack/resources/protected/narudzba";
-    //String url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/narudzba";
-    //String urlString="http://192.168.111.15:8081/Euro99NarudzeBack/resources/protected/artikli";
     String urlString="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/narudzba";
     public void sendToServer(final int orderId){
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//        StrictMode.setThreadPolicy(policy);
-
-
-//        requestQueue = Volley.newRequestQueue(context);
-//        RequestQueue queue = Volley.newRequestQueue(context);
-//        sqlite_orders=new hera.com.orders.sqlite.Orders();
-//        model_orders=sqlite_orders.showOrders(context,orderId);
-//        Gson gson = new Gson();
-//        String toJson=gson.toJson(model_orders);
-//        db=context.openOrCreateDatabase("order",MODE_PRIVATE, null);
-//        try {
-//            parameters=new JSONObject(toJson);
-////            Toast.makeText(context,"here="+toJson,Toast.LENGTH_SHORT).show();
-//
-//            Log.d("json",parameters+"");
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,parameters,
-//        new Response.Listener<JSONObject>(){
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                Log.d(TAG,"User creation completed successfully");
-//                Toast.makeText(context,"DONE"+response,Toast.LENGTH_SHORT).show();
-//                // Go to next activity
-//            }
-//        },new Response.ErrorListener(){
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//                Toast.makeText(context,"not here="+error,Toast.LENGTH_SHORT).show();
-//            }
-//        })
-//        {
-//            @Override
-//            public Map<String,String> getHeaders(){
-//                HashMap<String, String> headers = new HashMap<String, String>();
-//                headers.put("Content-Type", "application/json; charset=utf-8");
-//                headers.put("jwtToken", jwtToken);
-//                return headers;
-//            }
-//        };
-//        queue.add(request);
-
-
-//
-//
-//        JsonObjectRequest strRequest = new JsonObjectRequest(Request.Method.POST, ""+url,toJson,
-//                new Response.Listener<JSONObject>()
-//                {
-//                    @Override
-//                    public void onResponse(JSONObject response)
-//                    {
-//                        //ContentValues cv=new ContentValues();
-//                        //cv.put("sended", "Y");
-//                        //db.update("order",cv,"orderId="+orderId,null);
-//                        Toast.makeText(context,"Order Sent!",Toast.LENGTH_SHORT).show();
-//                    }
-//                },
-//                new Response.ErrorListener()
-//                {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error)
-//                    {
-//                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//                )
-//        {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                HashMap<String, String> headers = new HashMap<String, String>();
-//                //headers.put("Content-Type", "application/json");
-//                headers.put("Content-Type","application/json");
-//                headers.put("Accept","application/json");
-//                headers.put("jwtToken", jwtToken);
-//                return headers;
-//            }
-//        }
-//        ;
-//        queue.add(strRequest);
-
-
-
-
-
         sqlite_orders=new hera.com.orders.sqlite.Orders();
         model_orders=sqlite_orders.showOrders(orderId);
+        Cursor c=MainActivity.db.rawQuery("select * from user1",null);
+        while(c.moveToNext())
+        {
+            if(c.getInt(0)== MainActivity.Id)
+            {
+                jwtToken=c.getString(3);
+            }
+        }
         _gson = new Gson();
 
         try {
@@ -161,17 +74,20 @@ public class Orders  {
             connection.setRequestProperty("jwtToken",jwtToken);
             OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
             osw.write(toJson);
-            //Toast.makeText(context,toJson+"",Toast.LENGTH_SHORT).show();
             osw.flush();
             osw.close();
-            Log.d("response code",""+connection.getResponseCode());
+            int code=connection.getResponseCode();
+            if(code==200)
+            {
+                ContentValues cv=new ContentValues();
+                cv.put("sended", "Y");
+                MainActivity.db.update("orders1",cv,"orderId="+orderId,null);
+            }
+            Log.d("response code",""+code);
             Log.d("JSON:",""+toJson);
-//                InputStreamReader x = new InputStreamReader(connection.getInputStream());
-//                String s= x.toString();
             connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
-            //Toast.makeText(context,e+"",Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -135,7 +135,6 @@ public class OrderEntryActivity extends AppCompatActivity {
         todaysDate=sdf.format(c);
         et.setText(sdf.format(myCalendar.getTime()));
         MainActivity.dates=sdf.format(myCalendar.getTime());
-        Toast.makeText(getApplicationContext(),MainActivity.dates,Toast.LENGTH_SHORT).show();
     }
 
     @Override

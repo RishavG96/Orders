@@ -2,6 +2,7 @@ package hera.com.orders;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -82,9 +83,21 @@ public class OrderDetailsActivity extends AppCompatActivity {
         submitOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    //service_orders.sendToServer(MainActivity.orderID);
-                        sendOrdertask=new SendOrdertask();
-                        sendOrdertask.execute((Void) null);
+                Cursor c=MainActivity.db.rawQuery("select * from orders1 where orderId="+MainActivity.orderID+"", null);
+                String sended="";
+                while(c.moveToNext())
+                {
+                    sended=c.getString(5);
+                }
+                if(sended.equals("N")) {
+                    sendOrdertask = new SendOrdertask();
+                    sendOrdertask.execute((Void) null);
+                    Toast.makeText(getApplicationContext(),"Order Send!",Toast.LENGTH_SHORT).show();
+                }
+                else if(sended.equals("Y"))
+                {
+                    Toast.makeText(getApplicationContext(),"Order already Sended!",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

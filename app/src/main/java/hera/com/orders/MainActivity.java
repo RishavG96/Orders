@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }).start();
         }
-
         Cursor c=db.rawQuery("select * from user1",null);
         while(c.moveToNext())
         {
@@ -314,6 +313,13 @@ public class MainActivity extends AppCompatActivity {
             db.execSQL("delete from orderitems");
         }
         catch (Exception e){}
+        ordersList=new ArrayList<>();
+        try {
+            ordersList=(List<hera.com.orders.model.Orders>) orders.showOrders(this);
+        }
+        catch (Exception e){}
+        adapter=new OrdersAdapter(this,ordersList);
+        lv.setAdapter(adapter);
     }
 
     @Override

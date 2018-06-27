@@ -39,7 +39,7 @@ public class Orders {
     }
     public Iterable<hera.com.orders.model.Orders> showOrders(Context context)
     {
-        Cursor c=MainActivity.db.rawQuery("select * from orders1", null);
+        Cursor c=MainActivity.db.rawQuery("select * from orders1 order by orderId DESC", null);
         List<hera.com.orders.model.Orders> ordersList=new ArrayList<>();
         while(c.moveToNext())
         {
@@ -90,7 +90,7 @@ public class Orders {
         }
         return ordersList;
     }
-    public hera.com.orders.model.Orders showOrders( int id)
+    public hera.com.orders.model.Orders showOrders(int id)
     {
         Cursor c=MainActivity.db.rawQuery("select * from orders1 where orderId="+id+"", null);
         hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();

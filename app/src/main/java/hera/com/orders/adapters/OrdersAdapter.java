@@ -25,7 +25,7 @@ import hera.com.orders.sqlite.Orders;
 public class OrdersAdapter extends BaseAdapter implements Filterable {
     LayoutInflater inflater;
     Context context;
-    ArrayList orderId, original_orderId, partnerName, original_partnerName, dates, original_dates;
+    ArrayList orderId, original_orderId, partnerName, original_partnerName, dates, original_dates, sended, original_sended;
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
@@ -42,6 +42,8 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
         original_partnerName=new ArrayList();
         dates=new ArrayList();
         original_dates=new ArrayList();
+        sended=new ArrayList();
+        original_sended=new ArrayList();
         for(hera.com.orders.model.Orders orders: ordersList)
         {
             orderId.add(orders.orderId);
@@ -50,6 +52,8 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
             original_partnerName.add(orders.partnerName);
             dates.add(orders.dates);
             original_dates.add(orders.dates);
+            sended.add(orders.sended);
+            original_sended.add(orders.sended);
         }
 
         inflater=LayoutInflater.from(context);
@@ -73,7 +77,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
     public View getView(final int position, View convertView, ViewGroup parent) {
         convertView=inflater.inflate(R.layout.orders_layout,null);
         TextView n=(TextView)convertView.findViewById(R.id.textView26);
-        TextView pr=(TextView)convertView.findViewById(R.id.textView29);
+        TextView s=(TextView)convertView.findViewById(R.id.textView29);
         TextView un=(TextView)convertView.findViewById(R.id.textView30);
         TextView co=(TextView)convertView.findViewById(R.id.textView27);
         TextView q=(TextView)convertView.findViewById(R.id.textView28);
@@ -111,8 +115,8 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
         co.setText("Partner Name: "+getItem(position).partnerName);
 //        q.setText("Quantity: "+quantity.get(position).toString()+"  "+unit.get(position).toString() );
         q.setText("");
-        pr.setText("Date: "+getItem(position).dates);
-        un.setText("");
+        un.setText("Date: "+getItem(position).dates);
+        s.setText("Sended: "+getItem(position).sended);
         return convertView;
     }
 
@@ -126,6 +130,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                 orderId = (ArrayList)results.values; // has the filtered values
                 partnerName=FilteredArrList1;
                 dates=FilteredArrList2;
+                sended=FilteredArrList3;
                 List<hera.com.orders.model.Orders> ordersList1=new ArrayList<>();
                 for(int i=0;i<orderId.size();i++)
                 {
@@ -133,6 +138,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                     orders.orderId=Integer.parseInt(orderId.get(i).toString());
                     orders.partnerName=partnerName.get(i).toString();
                     orders.dates=dates.get(i).toString();
+                    orders.sended=dates.get(i).toString();
                     ordersList1.add(orders);
                 }
                 ordersList=ordersList1;
@@ -145,6 +151,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                 ArrayList FilteredArrList = new ArrayList();
                 FilteredArrList1 = new ArrayList();
                 FilteredArrList2 = new ArrayList();
+                FilteredArrList3 = new ArrayList();
                 if (original_orderId == null) {
                     original_orderId = new ArrayList(orderId);
                 }
@@ -154,7 +161,9 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                 if (original_dates == null) {
                     original_dates = new ArrayList(dates);
                 }
-
+                if (original_sended == null) {
+                    original_sended = new ArrayList(sended);
+                }
                 if (constraint == null || constraint.length() == 0) {
 
                     // set the Original result to return
@@ -162,6 +171,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                     results.values = original_orderId;
                     FilteredArrList1=original_partnerName;
                     FilteredArrList2=original_dates;
+                    FilteredArrList3=original_sended;
                 } else {
                     constraint = constraint.toString();
                     String[] temp=new String[1000];
@@ -183,6 +193,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                                 FilteredArrList.add(original_orderId.get(i));
                                 FilteredArrList1.add(original_partnerName.get(i));
                                 FilteredArrList2.add(original_dates.get(i));
+                                FilteredArrList3.add(original_sended.get(i));
                             }
                         }
                         else if(temp.length >1)
@@ -191,6 +202,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                                 FilteredArrList.add(original_orderId.get(i));
                                 FilteredArrList1.add(original_partnerName.get(i));
                                 FilteredArrList2.add(original_dates.get(i));
+                                FilteredArrList3.add(original_sended.get(i));
                             }
                         }
                     }
