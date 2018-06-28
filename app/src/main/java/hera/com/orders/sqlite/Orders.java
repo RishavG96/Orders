@@ -13,12 +13,12 @@ public class Orders {
     hera.com.orders.service.Orders service_orders;
     public void addOrder(Context context, hera.com.orders.model.Orders orders)
     {
-        MainActivity.db.execSQL("create table if not exists orders1(orderId integer, partnerId integer, partnerName varchar(1000)," +
+        MainActivity.db.execSQL("create table if not exists orders1(orderId integer, partnerId integer, " +
                 "date varchar(1000), note varchar(1000), sended varchar(1000))");
         int orderId = getNextOrderId();
         MainActivity.orderID=orderId;
         //Toast.makeText(context,"here",Toast.LENGTH_SHORT).show();
-        MainActivity.db.execSQL("insert into orders1 values("+orderId+","+orders.partnerId+",'"+orders.partnerName+"','"+orders.dates+"'," +
+        MainActivity.db.execSQL("insert into orders1 values("+orderId+","+orders.partnerId+",'"+orders.dates+"'," +
                 "'"+orders.note+"','N')");
 
         //Toast.makeText(context,"Order Placed!",Toast.LENGTH_SHORT).show();
@@ -81,12 +81,11 @@ public class Orders {
             }
             orders.orderId=c.getInt(0);
             orders.partnerId=c.getInt(1);
-            orders.partnerName=c.getString(2);
-            orders.dates=c.getString(3);
-            orders.note=c.getString(4);
+            orders.dates=c.getString(2);
+            orders.note=c.getString(3);
             orders.orderItemsList=orderItemsList;
             orders.partner=partner;
-            orders.sended=c.getString(5);
+            orders.sended=c.getString(4);
             ordersList.add(orders);
         }
         return ordersList;
@@ -134,23 +133,26 @@ public class Orders {
             }
             orders.orderId=c.getInt(0);
             orders.partnerId=c.getInt(1);
-            orders.partnerName=c.getString(2);
-            orders.dates=c.getString(3);
-            orders.note=c.getString(4);
+            orders.dates=c.getString(2);
+            orders.note=c.getString(3);
             orders.orderItemsList=orderItemsList;
             orders.partner=partner;
-            orders.sended=c.getString(5);
+            orders.sended=c.getString(4);
         }
         return orders;
     }
     public static String getPartnerName(Context context, int orderId)
     {
-        Cursor c=MainActivity.db.rawQuery("select * from orders1 where orderId="+orderId+"", null);
-        while(c.moveToNext())
-        {
-            return c.getString(2);
-        }
-        return "null";
+        hera.com.orders.model.Orders o;
+        Orders orders=new Orders();
+        o=orders.showOrders(orderId);
+        return o.partner.name;
+//        Cursor c=MainActivity.db.rawQuery("select * from orders1 where orderId="+orderId+"", null);
+//        while(c.moveToNext())
+//        {
+//            return c.getString(2);
+//        }
+//        return "null";
     }
     public static Iterable<hera.com.orders.model.OrderItems> showOrderItems(Context context, int orderId)
     {

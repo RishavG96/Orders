@@ -50,8 +50,8 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
         {
             orderId.add(orders.orderId);
             original_orderId.add(orders.orderId);
-            partnerName.add(orders.partnerName);
-            original_partnerName.add(orders.partnerName);
+            partnerName.add(orders.partner.name);
+            original_partnerName.add(orders.partner.name);
             dates.add(orders.dates);
             original_dates.add(orders.dates);
             sended.add(orders.sended);
@@ -119,7 +119,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                 }
             }
         });
-        n.setText(getItem(position).partnerName);
+        n.setText(getItem(position).partner.name);
         co.setText("Sended: "+getItem(position).sended);
 //        q.setText("Quantity: "+quantity.get(position).toString()+"  "+unit.get(position).toString() );
         q.setText("");
@@ -145,7 +145,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                 {
                     hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
                     orders.orderId=Integer.parseInt(orderId.get(i).toString());
-                    orders.partnerName=partnerName.get(i).toString();
+                    //orders.partner.name=partnerName.get(i).toString();
                     orders.dates=dates.get(i).toString();
                     orders.sended=sended.get(i).toString();
                     ordersList1.add(orders);

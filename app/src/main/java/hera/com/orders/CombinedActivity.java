@@ -48,7 +48,7 @@ public class CombinedActivity extends AppCompatActivity {
         if(MainActivity.orderID==0) {
             Orders orders2=new Orders();
             orders2.partnerId=MainActivity.partnerID;
-            orders2.partnerName=MainActivity.partnerName;
+            //orders2.partner.name=MainActivity.partnerName;
             orders2.dates=MainActivity.dates;
             orders2.note=MainActivity.notes;
             orders.addOrder(this, orders2);

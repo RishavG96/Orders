@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 ordersList=adapter.ordersList;
                 pos=ordersList.get(position).orderId;
                 MainActivity.orderID= ordersList.get(position).orderId;
+                MainActivity.partnerID=ordersList.get(position).partnerId;
                 Intent intent=new Intent(getApplicationContext(), OrderDetailsActivity.class);
                 startActivity(intent);
             }

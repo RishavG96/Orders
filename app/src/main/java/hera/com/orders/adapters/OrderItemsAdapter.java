@@ -100,7 +100,7 @@ public class OrderItemsAdapter extends BaseAdapter{
                                         String sended="";
                                         while(c.moveToNext())
                                         {
-                                            sended=c.getString(5);
+                                            sended=c.getString(4);
                                         }
                                         if(sended.equals("N")) {
                                             pos = getItem(position).articleId;
@@ -118,7 +118,7 @@ public class OrderItemsAdapter extends BaseAdapter{
                                             Cursor c1 = MainActivity.db.rawQuery("select * from orders1 where orderId=" + MainActivity.orderID + "", null);
                                             String sended1 = "";
                                             while (c1.moveToNext()) {
-                                                sended1 = c1.getString(5);
+                                                sended1 = c1.getString(4);
                                             }
                                             if (sended1.equals("N")) {
                                                 pos = getItem(position).articleId;

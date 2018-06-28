@@ -199,46 +199,93 @@ public class PartnerWeekListAdapter extends BaseAdapter implements Filterable{
                     FilteredArrList4=original_city;
                     FilteredArrList5=original_id;
                 } else {
+//                    constraint = constraint.toString().toLowerCase();
+//                    String[] temp=new String[1000];
+//                    int flag;
+//                    String filterString=constraint.toString();
+//                    if(filterString.contains(" ")) {
+//                        temp = filterString.split(" ");
+//                        flag=1;
+//                    }
+//                    else
+//                    {
+//                        flag=0;
+//                    }
+//                    for (int i = 0; i < original_name.size(); i++) {
+//                        String name_data = (String)original_name.get(i);
+//                        String address_data = (String)original_address.get(i);
+//                        if(flag==0) {
+//                            if (name_data.toLowerCase().contains(constraint.toString())) {
+//                                FilteredArrList.add(original_name.get(i));
+//                                FilteredArrList1.add(original_code.get(i));
+//                                FilteredArrList2.add(original_amount.get(i));
+//                                FilteredArrList3.add(original_address.get(i));
+//                                FilteredArrList4.add(original_city.get(i));
+//                                FilteredArrList5.add(original_id.get(i));
+//                            }
+//                        }
+//                        else if(temp.length >1)
+//                        {
+//                            if (name_data.toLowerCase().contains(temp[0]) && address_data.toLowerCase().contains(temp[1])) {
+//                                FilteredArrList.add(original_name.get(i));
+//                                FilteredArrList1.add(original_code.get(i));
+//                                FilteredArrList2.add(original_amount.get(i));
+//                                FilteredArrList3.add(original_address.get(i));
+//                                FilteredArrList4.add(original_city.get(i));
+//                                FilteredArrList5.add(original_id.get(i));
+//                            }
+//                        }
+//                    }
+//                    // set the Filtered result to return
+//                    results.count = FilteredArrList.size();
+//                    results.values = FilteredArrList;
+
+
                     constraint = constraint.toString().toLowerCase();
-                    String[] temp=new String[1000];
-                    int flag;
-                    String filterString=constraint.toString();
-                    if(filterString.contains(" ")) {
-                        temp = filterString.split(" ");
-                        flag=1;
-                    }
-                    else
+                    String temp[];
+                    temp=constraint.toString().split(" ");
+                    for(int i=0;i<name.size();i++)
                     {
-                        flag=0;
-                    }
-                    for (int i = 0; i < original_name.size(); i++) {
-                        String name_data = (String)original_name.get(i);
-                        String address_data = (String)original_address.get(i);
-                        if(flag==0) {
-                            if (name_data.toLowerCase().contains(constraint.toString())) {
-                                FilteredArrList.add(original_name.get(i));
-                                FilteredArrList1.add(original_code.get(i));
-                                FilteredArrList2.add(original_amount.get(i));
-                                FilteredArrList3.add(original_address.get(i));
-                                FilteredArrList4.add(original_city.get(i));
-                                FilteredArrList5.add(original_id.get(i));
-                            }
-                        }
-                        else if(temp.length >1)
+                        String t[];
+                        String n=name.get(i).toString();
+                        String c=address.get(i).toString();
+                        String concat=n+" "+c;
+                        t=concat.split(" ");
+                        int flag[]=new int[temp.length+1];
+                        for(int j=0;j<temp.length;j++)
+                            flag[j]=0;
+                        int count=0;
+                        for(String str:temp)
                         {
-                            if (name_data.toLowerCase().contains(temp[0]) && address_data.toLowerCase().contains(temp[1])) {
-                                FilteredArrList.add(original_name.get(i));
-                                FilteredArrList1.add(original_code.get(i));
-                                FilteredArrList2.add(original_amount.get(i));
-                                FilteredArrList3.add(original_address.get(i));
-                                FilteredArrList4.add(original_city.get(i));
-                                FilteredArrList5.add(original_id.get(i));
+                            for(String s:t)
+                            {
+                                if(s.toLowerCase().contains(str.toLowerCase()))
+                                {
+                                    flag[count]=1;
+                                }
+                            }
+                            count++;
+                        }
+                        int f=0;
+                        for(int j=0;j<temp.length;j++) {
+                            if (flag[j] == 0) {
+                                f=1;
+                                break;
                             }
                         }
+                        if(f==0)
+                        {
+                            FilteredArrList.add(name.get(i));
+                            FilteredArrList1.add(code.get(i));
+                            FilteredArrList2.add(amount.get(i));
+                            FilteredArrList3.add(address.get(i));
+                            FilteredArrList4.add(city.get(i));
+                            FilteredArrList5.add(id.get(i));
+                        }
                     }
-                    // set the Filtered result to return
                     results.count = FilteredArrList.size();
                     results.values = FilteredArrList;
+
                 }
                 return results;
             }

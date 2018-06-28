@@ -77,7 +77,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 String sended="";
                 while(c.moveToNext())
                 {
-                    sended=c.getString(5);
+                    sended=c.getString(4);
                 }
                 if(sended.equals("N")) {
                     Orders.pushOrderItems(getApplicationContext(), MainActivity.orderID);
@@ -100,7 +100,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     Cursor c = MainActivity.db.rawQuery("select * from orders1 where orderId=" + MainActivity.orderID + "", null);
                     String sended = "";
                     while (c.moveToNext()) {
-                        sended = c.getString(5);
+                        sended = c.getString(4);
                     }
                     if (sended.equals("N")) {
                         sendOrdertask = new SendOrdertask();

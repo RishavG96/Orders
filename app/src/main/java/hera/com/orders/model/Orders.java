@@ -16,9 +16,6 @@ public class Orders implements Serializable{
     @SerializedName("partnerId")
     public int partnerId;
 
-    @SerializedName("partnerName")
-    public String partnerName;
-
     @SerializedName("datum")
     public String dates;
 

@@ -182,51 +182,6 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                     FilteredArrList5=original_packing;
                     FilteredArrList6=original_weight;
                 } else {
-//                    constraint = constraint.toString().toLowerCase();
-//                    String[] temp=new String[1000];
-//                    int flag;
-//                    String filterString=constraint.toString();
-//                    if(filterString.contains(" ")) {
-//                        temp = filterString.split(" ");
-//                        flag=1;
-//                    }
-//                    else
-//                    {
-//                        flag=0;
-//                    }
-//                    for (int i = 0; i < original_name.size(); i++) {
-//                        String name_data = (String)original_name.get(i);
-//                        String code_data= (String)original_code.get(i);
-//                        if(flag==0) {
-//                            if (name_data.toLowerCase().contains(constraint.toString())) {
-//                                FilteredArrList.add(original_name.get(i));
-//                                FilteredArrList1.add(original_code.get(i));
-//                                FilteredArrList2.add(original_amount.get(i));
-//                                FilteredArrList3.add(original_units.get(i));
-//                                FilteredArrList4.add(original_id.get(i));
-//                                FilteredArrList5.add(original_packing.get(i));
-//                                FilteredArrList6.add(original_weight.get(i));
-//                            }
-//                        }
-//                        else if(temp.length >1)
-//                        {
-//                            if (name_data.toLowerCase().contains(temp[0]) && code_data.toLowerCase().contains(temp[1])) {
-//                                FilteredArrList.add(original_name.get(i));
-//                                FilteredArrList1.add(original_code.get(i));
-//                                FilteredArrList2.add(original_amount.get(i));
-//                                FilteredArrList3.add(original_units.get(i));
-//                                FilteredArrList4.add(original_id.get(i));
-//                                FilteredArrList5.add(original_packing.get(i));
-//                                FilteredArrList6.add(original_weight.get(i));
-//                            }
-//                        }
-//                    }
-//                    // set the Filtered result to return
-//                    results.count = FilteredArrList.size();
-//                    results.values = FilteredArrList;
-
-
-
                     //Log.d("constraint: ",constraint+"");
                     constraint = constraint.toString().toLowerCase();
                     String temp[];
@@ -262,7 +217,6 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                         }
                         if(f==0)
                         {
-                            Log.d("constraint: ",constraint+"");
                             FilteredArrList.add(name.get(i));
                             FilteredArrList1.add(code.get(i));
                             FilteredArrList2.add(amount.get(i));
