@@ -2,6 +2,7 @@ package hera.com.orders.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
     Context context;
     ArrayList id, original_id, name, code, amount, units, original_name, original_code, original_amount, original_units, packing,
                 original_packing, weight, original_weight;
+    ArrayList FilteredArrList;
     ArrayList FilteredArrList1;
     ArrayList FilteredArrList2;
     ArrayList FilteredArrList3;
@@ -118,7 +121,7 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                 packing=FilteredArrList5;
                 weight=FilteredArrList6;
                 List<hera.com.orders.model.Article> articleList=new ArrayList<hera.com.orders.model.Article>();
-                for(int i=0;i<name.size();i++)
+                for(int i=0;i<id.size();i++)
                 {
                     hera.com.orders.model.Article article=new hera.com.orders.model.Article();
                     article.id=Integer.parseInt(id.get(i).toString());
@@ -137,6 +140,7 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
+
                 ArrayList FilteredArrList = new ArrayList();
                 FilteredArrList1 = new ArrayList();
                 FilteredArrList2 = new ArrayList();
@@ -168,7 +172,6 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                 }
 
                 if (constraint == null || constraint.length() == 0) {
-
                     // set the Original result to return
                     results.count =original_name.size();
                     results.values = original_name;
@@ -179,48 +182,101 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                     FilteredArrList5=original_packing;
                     FilteredArrList6=original_weight;
                 } else {
+//                    constraint = constraint.toString().toLowerCase();
+//                    String[] temp=new String[1000];
+//                    int flag;
+//                    String filterString=constraint.toString();
+//                    if(filterString.contains(" ")) {
+//                        temp = filterString.split(" ");
+//                        flag=1;
+//                    }
+//                    else
+//                    {
+//                        flag=0;
+//                    }
+//                    for (int i = 0; i < original_name.size(); i++) {
+//                        String name_data = (String)original_name.get(i);
+//                        String code_data= (String)original_code.get(i);
+//                        if(flag==0) {
+//                            if (name_data.toLowerCase().contains(constraint.toString())) {
+//                                FilteredArrList.add(original_name.get(i));
+//                                FilteredArrList1.add(original_code.get(i));
+//                                FilteredArrList2.add(original_amount.get(i));
+//                                FilteredArrList3.add(original_units.get(i));
+//                                FilteredArrList4.add(original_id.get(i));
+//                                FilteredArrList5.add(original_packing.get(i));
+//                                FilteredArrList6.add(original_weight.get(i));
+//                            }
+//                        }
+//                        else if(temp.length >1)
+//                        {
+//                            if (name_data.toLowerCase().contains(temp[0]) && code_data.toLowerCase().contains(temp[1])) {
+//                                FilteredArrList.add(original_name.get(i));
+//                                FilteredArrList1.add(original_code.get(i));
+//                                FilteredArrList2.add(original_amount.get(i));
+//                                FilteredArrList3.add(original_units.get(i));
+//                                FilteredArrList4.add(original_id.get(i));
+//                                FilteredArrList5.add(original_packing.get(i));
+//                                FilteredArrList6.add(original_weight.get(i));
+//                            }
+//                        }
+//                    }
+//                    // set the Filtered result to return
+//                    results.count = FilteredArrList.size();
+//                    results.values = FilteredArrList;
+
+
+
+                    //Log.d("constraint: ",constraint+"");
                     constraint = constraint.toString().toLowerCase();
-                    String[] temp=new String[1000];
-                    int flag;
-                    String filterString=constraint.toString();
-                    if(filterString.contains(" ")) {
-                        temp = filterString.split(" ");
-                        flag=1;
-                    }
-                    else
+                    String temp[];
+                    temp=constraint.toString().split(" ");
+                    for(int i=0;i<name.size();i++)
                     {
-                        flag=0;
-                    }
-                    for (int i = 0; i < original_name.size(); i++) {
-                        String name_data = (String)original_name.get(i);
-                        String code_data= (String)original_code.get(i);
-                        if(flag==0) {
-                            if (name_data.toLowerCase().contains(constraint.toString())) {
-                                FilteredArrList.add(original_name.get(i));
-                                FilteredArrList1.add(original_code.get(i));
-                                FilteredArrList2.add(original_amount.get(i));
-                                FilteredArrList3.add(original_units.get(i));
-                                FilteredArrList4.add(original_id.get(i));
-                                FilteredArrList5.add(original_packing.get(i));
-                                FilteredArrList6.add(original_weight.get(i));
-                            }
-                        }
-                        else if(temp.length >1)
+                        String t[];
+                        String n=name.get(i).toString();
+                        String c=code.get(i).toString();
+                        String concat=n+" "+c;
+                        t=concat.split(" ");
+                        int flag[]=new int[temp.length+1];
+                        for(int j=0;j<temp.length;j++)
+                            flag[j]=0;
+                        int count=0;
+                        for(String str:temp)
                         {
-                            if (name_data.toLowerCase().contains(temp[0]) && code_data.toLowerCase().contains(temp[1])) {
-                                FilteredArrList.add(original_name.get(i));
-                                FilteredArrList1.add(original_code.get(i));
-                                FilteredArrList2.add(original_amount.get(i));
-                                FilteredArrList3.add(original_units.get(i));
-                                FilteredArrList4.add(original_id.get(i));
-                                FilteredArrList5.add(original_packing.get(i));
-                                FilteredArrList6.add(original_weight.get(i));
+                            for(String s:t)
+                            {
+                                if(s.toLowerCase().contains(str.toLowerCase()))
+                                {
+                                    flag[count]=1;
+                                }
+                            }
+                            count++;
+                        }
+                        int f=0;
+                        for(int j=0;j<temp.length;j++) {
+                            if (flag[j] == 0) {
+                                f=1;
+                                break;
                             }
                         }
+                        if(f==0)
+                        {
+                            Log.d("constraint: ",constraint+"");
+                            FilteredArrList.add(name.get(i));
+                            FilteredArrList1.add(code.get(i));
+                            FilteredArrList2.add(amount.get(i));
+                            FilteredArrList3.add(units.get(i));
+                            FilteredArrList4.add(id.get(i));
+                            FilteredArrList5.add(packing.get(i));
+                            FilteredArrList6.add(weight.get(i));
+                        }
                     }
-                    // set the Filtered result to return
                     results.count = FilteredArrList.size();
                     results.values = FilteredArrList;
+
+
+
                 }
                 return results;
             }

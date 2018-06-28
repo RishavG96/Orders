@@ -41,6 +41,7 @@ public class Article {
             article.price=c.getString(9);
             articleList.add(article);
         }
+        db.close();
         return articleList;
     }
     public Iterable<hera.com.orders.model.Article> showArticle(Context context, int id) {
@@ -61,6 +62,7 @@ public class Article {
             article.price=c.getString(9);
             articleList.add(article);
         }
+        db.close();
         return articleList;
     }
 }
