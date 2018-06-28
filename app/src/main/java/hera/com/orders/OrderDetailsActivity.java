@@ -73,7 +73,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         editOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor c=MainActivity.db.rawQuery("select * from orders1 where orderId="+MainActivity.orderID+"", null);
+                Cursor c=MainActivity.db.rawQuery("select * from orders2 where orderId="+MainActivity.orderID+"", null);
                 String sended="";
                 while(c.moveToNext())
                 {
@@ -97,7 +97,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Cursor c1=MainActivity.db.rawQuery("select * from orderdetails1 where orderId="+MainActivity.orderID+"", null);
                 if(c1.moveToNext()) {
-                    Cursor c = MainActivity.db.rawQuery("select * from orders1 where orderId=" + MainActivity.orderID + "", null);
+                    Cursor c = MainActivity.db.rawQuery("select * from orders2 where orderId=" + MainActivity.orderID + "", null);
                     String sended = "";
                     while (c.moveToNext()) {
                         sended = c.getString(4);

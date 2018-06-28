@@ -13,12 +13,12 @@ public class Orders {
     hera.com.orders.service.Orders service_orders;
     public void addOrder(Context context, hera.com.orders.model.Orders orders)
     {
-        MainActivity.db.execSQL("create table if not exists orders1(orderId integer, partnerId integer, " +
+        MainActivity.db.execSQL("create table if not exists orders2(orderId integer, partnerId integer, " +
                 "date varchar(1000), note varchar(1000), sended varchar(1000))");
         int orderId = getNextOrderId();
         MainActivity.orderID=orderId;
         //Toast.makeText(context,"here",Toast.LENGTH_SHORT).show();
-        MainActivity.db.execSQL("insert into orders1 values("+orderId+","+orders.partnerId+",'"+orders.dates+"'," +
+        MainActivity.db.execSQL("insert into orders2 values("+orderId+","+orders.partnerId+",'"+orders.dates+"'," +
                 "'"+orders.note+"','N')");
 
         //Toast.makeText(context,"Order Placed!",Toast.LENGTH_SHORT).show();
@@ -30,17 +30,19 @@ public class Orders {
                 "articleWeight varchar(1000), quantity varchar(1000), packaging varchar(1000)," +
                 "price varchar(1000))");
         MainActivity.db.execSQL("delete from orderdetails1 where orderId="+MainActivity.orderID+"");
-        Cursor cursor=MainActivity.db.rawQuery("select * from orderitems",null);
-        while(cursor.moveToNext()) {
-            MainActivity.db.execSQL("insert into orderdetails1 values(" + MainActivity.orderID + ","+cursor.getInt(0)+"," +
-                    "'"+cursor.getString(1)+"','"+cursor.getString(2)+"','"+cursor.getString(3)+"'," +
-                    "'"+cursor.getString(4)+"','"+cursor.getString(5)+"','"+cursor.getString(6)+"'," +
-                    "'"+cursor.getString(7)+"','"+cursor.getString(8)+"')");
-        }
+        try {
+            Cursor cursor = MainActivity.db.rawQuery("select * from orderitems", null);
+            while (cursor.moveToNext()) {
+                MainActivity.db.execSQL("insert into orderdetails1 values(" + MainActivity.orderID + "," + cursor.getInt(0) + "," +
+                        "'" + cursor.getString(1) + "','" + cursor.getString(2) + "','" + cursor.getString(3) + "'," +
+                        "'" + cursor.getString(4) + "','" + cursor.getString(5) + "','" + cursor.getString(6) + "'," +
+                        "'" + cursor.getString(7) + "','" + cursor.getString(8) + "')");
+            }
+        }catch (Exception e){}
     }
     public Iterable<hera.com.orders.model.Orders> showOrders(Context context)
     {
-        Cursor c=MainActivity.db.rawQuery("select * from orders1 order by orderId DESC", null);
+        Cursor c=MainActivity.db.rawQuery("select * from orders2 order by orderId DESC", null);
         List<hera.com.orders.model.Orders> ordersList=new ArrayList<>();
         while(c.moveToNext())
         {
@@ -92,7 +94,7 @@ public class Orders {
     }
     public hera.com.orders.model.Orders showOrders(int id)
     {
-        Cursor c=MainActivity.db.rawQuery("select * from orders1 where orderId="+id+"", null);
+        Cursor c=MainActivity.db.rawQuery("select * from orders2 where orderId="+id+"", null);
         hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
         while(c.moveToNext())
         {
@@ -147,7 +149,7 @@ public class Orders {
         Orders orders=new Orders();
         o=orders.showOrders(orderId);
         return o.partner.name;
-//        Cursor c=MainActivity.db.rawQuery("select * from orders1 where orderId="+orderId+"", null);
+//        Cursor c=MainActivity.db.rawQuery("select * from orders2 where orderId="+orderId+"", null);
 //        while(c.moveToNext())
 //        {
 //            return c.getString(2);
@@ -200,7 +202,7 @@ public class Orders {
     }
     public int getNextOrderId()
     {
-        Cursor c=MainActivity.db.rawQuery("select * from orders1", null);
+        Cursor c=MainActivity.db.rawQuery("select * from orders2", null);
         int count=0;
         while(c.moveToNext())
         {
@@ -222,7 +224,7 @@ public class Orders {
     }
     public void deleteOrder(int orderId)
     {
-        MainActivity.db.delete("orders1", "orderId" + "=" + orderId, null);
+        MainActivity.db.delete("orders2", "orderId" + "=" + orderId, null);
         MainActivity.db.delete("orderdetails1", "orderId" + "=" + orderId, null);
     }
     public static void deleteItem(int orderId, int articleId)
@@ -235,7 +237,7 @@ public class Orders {
     public boolean sendAllToServer()
     {
         service_orders=new hera.com.orders.service.Orders();
-        Cursor c=MainActivity.db.rawQuery("select * from orders1", null);
+        Cursor c=MainActivity.db.rawQuery("select * from orders2", null);
         boolean flag=true;
         while(c.moveToNext())
         {
@@ -246,7 +248,7 @@ public class Orders {
             }
         }
         if (flag!=false){
-            c=MainActivity.db.rawQuery("select * from orders1", null);
+            c=MainActivity.db.rawQuery("select * from orders2", null);
             while(c.moveToNext())
             {
                 service_orders.sendToServer(c.getInt(0));
@@ -256,15 +258,15 @@ public class Orders {
     }
     public void deleteAll()
     {
-        MainActivity.db.execSQL("delete from orders1");
+        MainActivity.db.execSQL("delete from orders2");
         MainActivity.db.execSQL("delete from orderdetails1");
     }
     public void deleteSend()
     {
-        MainActivity.db.delete("orders1", "sended='Y'", null);
+        MainActivity.db.delete("orders2", "sended='Y'", null);
     }
     public void deleteUnsend()
     {
-        MainActivity.db.delete("orders1", "sended='N'", null);
+        MainActivity.db.delete("orders2", "sended='N'", null);
     }
 }

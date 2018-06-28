@@ -84,7 +84,7 @@ public class Orders  {
             {
                 ContentValues cv=new ContentValues();
                 cv.put("sended", "Y");
-                MainActivity.db.update("orders1",cv,"orderId="+orderId,null);
+                MainActivity.db.update("orders2",cv,"orderId="+orderId,null);
             }
             Log.d("response code",""+code);
             Log.d("JSON:",""+toJson);

@@ -53,15 +53,19 @@ public class ThreeFragment extends Fragment {
             orderItemsList=(List<hera.com.orders.model.OrderItems>) orderItems.showOrders(getContext());
         }catch (Exception e){}
         total.setText("The Total price is: "+orderItems.calculateTotalPrice());
-        adapter=new OrderItemsAdapter(getContext(), orderItemsList);
-        lv.setAdapter(adapter);
+        if(orderItemsList!=null) {
+            adapter = new OrderItemsAdapter(getContext(), orderItemsList);
+            lv.setAdapter(adapter);
+        }
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    orderItemsList=adapter.orderItems;
-                    orderItems.showOrders(getContext());
+//                    orderItemsList=adapter.orderItems;
+                    //orderItems.showOrders(getContext());
                     orders.addToOrderDetails(getContext());
-                    MainActivity.db.execSQL("delete from orderitems");
+                    try {
+                        MainActivity.db.execSQL("delete from orderitems");
+                    }catch (Exception e){}
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     startActivity(intent);
                     getActivity().setResult(3);

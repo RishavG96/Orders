@@ -43,25 +43,29 @@ public class OrderItems {
     }
     public Iterable<hera.com.orders.model.OrderItems> showOrders(Context context)
     {
-        Cursor c = MainActivity.db.rawQuery("select * from orderitems", null);
-        item_count=0;
-        List<hera.com.orders.model.OrderItems> orderItemsList=new ArrayList<>();
-        while(c.moveToNext())
-        {
-            hera.com.orders.model.OrderItems orderItems=new hera.com.orders.model.OrderItems();
-            orderItems.articleId=c.getInt(0);
-            orderItems.articleName=c.getString(1);
-            orderItems.articleCode=c.getString(2);
-            orderItems.articleUnits=c.getString(3);
-            orderItems.articlePacking=c.getString(4);
-            orderItems.articleWeight=c.getString(5);
-            orderItems.quantity=c.getString(6);
-            orderItems.packaging=c.getString(7);
-            orderItems.price=c.getString(8);
-            orderItemsList.add(orderItems);
-            item_count++;
-        }
-        return orderItemsList;
+        try {
+            Cursor c=null;
+            try {
+                c = MainActivity.db.rawQuery("select * from orderitems", null);
+            }catch (Exception e){}
+            item_count = 0;
+            List<hera.com.orders.model.OrderItems> orderItemsList = new ArrayList<>();
+            while (c.moveToNext()) {
+                hera.com.orders.model.OrderItems orderItems = new hera.com.orders.model.OrderItems();
+                orderItems.articleId = c.getInt(0);
+                orderItems.articleName = c.getString(1);
+                orderItems.articleCode = c.getString(2);
+                orderItems.articleUnits = c.getString(3);
+                orderItems.articlePacking = c.getString(4);
+                orderItems.articleWeight = c.getString(5);
+                orderItems.quantity = c.getString(6);
+                orderItems.packaging = c.getString(7);
+                orderItems.price = c.getString(8);
+                orderItemsList.add(orderItems);
+                item_count++;
+            }
+            return orderItemsList;
+        }catch (Exception e){return null;}
     }
     public Iterable<hera.com.orders.model.OrderItems> showOrders(Context context, int id)
     {

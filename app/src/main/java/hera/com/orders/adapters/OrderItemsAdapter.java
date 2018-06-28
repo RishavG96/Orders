@@ -36,23 +36,24 @@ public class OrderItemsAdapter extends BaseAdapter{
         this.context=context;
 
         this.orderItems=orderItems;
-        for(hera.com.orders.model.OrderItems orderItems1: orderItems)
-        {
-            id=new ArrayList();
-            name=new ArrayList();
-            code=new ArrayList();
-            unit=new ArrayList();
-            quantity=new ArrayList();
-            packaging=new ArrayList();
-            price=new ArrayList();
-            id.add(orderItems1.articleId);
-            name.add(orderItems1.articleName);
-            code.add(orderItems1.articleCode);
-            quantity.add(orderItems1.quantity);
-            unit.add(orderItems1.articleUnits);
-            packaging.add(orderItems1.articlePacking);
-            price.add(orderItems1.price);
-        }
+        try {
+            for (hera.com.orders.model.OrderItems orderItems1 : orderItems) {
+                id = new ArrayList();
+                name = new ArrayList();
+                code = new ArrayList();
+                unit = new ArrayList();
+                quantity = new ArrayList();
+                packaging = new ArrayList();
+                price = new ArrayList();
+                id.add(orderItems1.articleId);
+                name.add(orderItems1.articleName);
+                code.add(orderItems1.articleCode);
+                quantity.add(orderItems1.quantity);
+                unit.add(orderItems1.articleUnits);
+                packaging.add(orderItems1.articlePacking);
+                price.add(orderItems1.price);
+            }
+        }catch (Exception e){}
 
         inflater=LayoutInflater.from(context);
     }
@@ -96,7 +97,7 @@ public class OrderItemsAdapter extends BaseAdapter{
                             public boolean onMenuItemClick(MenuItem item) {
                                 switch (item.getItemId()) {
                                     case R.id.edit:
-                                        Cursor c= MainActivity.db.rawQuery("select * from orders1 where orderId="+MainActivity.orderID+"", null);
+                                        Cursor c= MainActivity.db.rawQuery("select * from orders2 where orderId="+MainActivity.orderID+"", null);
                                         String sended="";
                                         while(c.moveToNext())
                                         {
@@ -115,7 +116,7 @@ public class OrderItemsAdapter extends BaseAdapter{
                                         break;
                                     case R.id.remove:
                                         if(context.toString().contains("OrderDetailsActivity")) {
-                                            Cursor c1 = MainActivity.db.rawQuery("select * from orders1 where orderId=" + MainActivity.orderID + "", null);
+                                            Cursor c1 = MainActivity.db.rawQuery("select * from orders2 where orderId=" + MainActivity.orderID + "", null);
                                             String sended1 = "";
                                             while (c1.moveToNext()) {
                                                 sended1 = c1.getString(4);
