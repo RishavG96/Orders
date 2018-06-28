@@ -145,7 +145,7 @@ public class OrderEntryActivity extends AppCompatActivity {
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date c = Calendar.getInstance().getTime();
         todaysDate=sdf.format(c);
-        et.setText(sdf.format(myCalendar.getTime()));
+        et.setText(sdf.format(myCalendar.getTime()).substring(0,10));
         MainActivity.dates=sdf.format(myCalendar.getTime());
     }
 

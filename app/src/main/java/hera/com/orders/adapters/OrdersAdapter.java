@@ -123,7 +123,8 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
         co.setText("Sended: "+getItem(position).sended);
 //        q.setText("Quantity: "+quantity.get(position).toString()+"  "+unit.get(position).toString() );
         q.setText("");
-        un.setText("Date: "+getItem(position).dates);
+        String d=getItem(position).dates.substring(0,10);
+        un.setText("Date: "+d);
         s.setText("");
         return convertView;
     }
