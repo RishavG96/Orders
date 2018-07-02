@@ -54,7 +54,6 @@ public class PartnerByWeek {
         {
             url=cursor.getString(0);
         }
-        Toast.makeText(context,"here+"+url,Toast.LENGTH_SHORT).show();
         JsonArrayRequest strRequest = new JsonArrayRequest(Request.Method.GET, url+"protected/planovi", (String) null,
                 new Response.Listener<JSONArray>()
                 {

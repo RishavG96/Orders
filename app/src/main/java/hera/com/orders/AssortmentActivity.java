@@ -90,16 +90,6 @@ public class AssortmentActivity extends AppCompatActivity {
                     startActivity(intent5);
                     finish();
                     break;
-                case R.id.setup:
-                    Intent intent = new Intent(this, UpdateURLActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.logout:
-                    Intent intent1 = new Intent(this, LoginActivity.class);
-                    startActivity(intent1);
-                    finish();
-                    db.execSQL("delete from login");
-                    break;
             }
         }
         return super.onOptionsItemSelected(item);

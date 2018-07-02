@@ -19,10 +19,5 @@
     <item android:id="@+id/deleteUnsend"
         android:title="Delete Not Send Orders"
         />
-    <item android:id="@+id/setup"
-        android:title="Setup"
-        />
-    <item android:title="Logout"
-        android:id="@+id/logout"/>
 
 </menu>

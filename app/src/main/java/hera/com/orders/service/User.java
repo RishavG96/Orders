@@ -49,7 +49,6 @@ public class User {
         {
             url=cursor.getString(0);
         }
-        Toast.makeText(context, url, Toast.LENGTH_SHORT).show();
         JsonObjectRequest strRequest = new JsonObjectRequest(Request.Method.POST,url+"login",parameters,
                 new Response.Listener<JSONObject>()
                 {
@@ -80,7 +79,7 @@ public class User {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Please enter correct credentials", Toast.LENGTH_SHORT).show();
                     }
                 });
         queue.add(strRequest);

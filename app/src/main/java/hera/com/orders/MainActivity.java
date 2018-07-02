@@ -187,6 +187,16 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent4);
                                 finish();
                                 break;
+                            case R.id.setup:
+                                Intent intent5 = new Intent(getApplicationContext(), UpdateURLActivity.class);
+                                startActivity(intent5);
+                                break;
+                            case R.id.logout:
+                                Intent intent6 = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intent6);
+                                finish();
+                                db.execSQL("delete from login");
+                                break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER
                         return true;

@@ -112,6 +112,16 @@ public class UpdateURLActivity extends AppCompatActivity {
                                 startActivity(intent4);
                                 finish();
                                 break;
+                            case R.id.setup:
+                                Intent intent5 = new Intent(getApplicationContext(), UpdateURLActivity.class);
+                                startActivity(intent5);
+                                break;
+                            case R.id.logout:
+                                Intent intent6 = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intent6);
+                                finish();
+                                MainActivity.db.execSQL("delete from login");
+                                break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER
                         return true;
@@ -168,16 +178,6 @@ public class UpdateURLActivity extends AppCompatActivity {
                     intent5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent5);
                     finish();
-                    break;
-                case R.id.setup:
-                    Intent intent = new Intent(this, UpdateURLActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.logout:
-                    Intent intent1 = new Intent(this, LoginActivity.class);
-                    startActivity(intent1);
-                    finish();
-                    db.execSQL("delete from login");
                     break;
             }
         }

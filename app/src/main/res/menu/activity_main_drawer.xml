@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group>
+    <group
+        android:id="@+id/groupone">
         <item android:id="@+id/orders"
             android:title="Orders" />
         <item android:id="@+id/partner"
@@ -12,10 +13,16 @@
     </group>
 
 
-    <item android:title="Operations">
-        <menu>
-            <item android:id="@+id/refresh"
-                android:title="Refresh" />
-        </menu>
-    </item>
+    <group
+        android:id="@+id/grouptwo">
+        <item android:id="@+id/setup"
+            android:title="Setup" />
+        <item android:id="@+id/refresh"
+            android:title="Refresh data" />
+    </group>
+    <group
+        android:id="@+id/groupthree">
+        <item android:id="@+id/logout"
+            android:title="Log out" />
+    </group>
 </menu>
