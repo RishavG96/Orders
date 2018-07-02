@@ -34,7 +34,6 @@ import hera.com.orders.sqlite.Orders;
 
 public class ArticleActivity extends AppCompatActivity {
 
-    public static String article_url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/artikli";
     hera.com.orders.service.Article service_article;
     hera.com.orders.sqlite.Article sqlite_article;
     DrawerLayout drawerLayout;

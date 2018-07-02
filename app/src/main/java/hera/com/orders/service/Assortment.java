@@ -31,6 +31,7 @@ public class Assortment {
     hera.com.orders.sqlite.Assortment sqlite_assortment;
     Context context;
     public static SQLiteDatabase db;
+    String url;
     public void connect(Context con)
     {
         context=con;
@@ -47,7 +48,12 @@ public class Assortment {
                 jwtToken=c.getString(3);
             }
         }
-        JsonArrayRequest strRequest = new JsonArrayRequest(Request.Method.GET, AssortmentActivity.assortment_url, (String) null,
+        Cursor cursor=db.rawQuery("select * from url",null);
+        if(cursor.moveToNext())
+        {
+            url=cursor.getString(0);
+        }
+        JsonArrayRequest strRequest = new JsonArrayRequest(Request.Method.GET, url+"protected/asortiman", (String) null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override

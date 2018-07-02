@@ -32,6 +32,7 @@ public class PartnerByWeek {
     hera.com.orders.sqlite.PartnerByWeek partnerByWeek;
     Context context;
     public static SQLiteDatabase db;
+    String url;
     public void connect(Context con)
     {
         context=con;
@@ -48,7 +49,13 @@ public class PartnerByWeek {
                 jwtToken=c.getString(3);
             }
         }
-        JsonArrayRequest strRequest = new JsonArrayRequest(Request.Method.GET, ShowPartnersByWeekActivity.partner_week, (String) null,
+        Cursor cursor=db.rawQuery("select * from url",null);
+        if(cursor.moveToNext())
+        {
+            url=cursor.getString(0);
+        }
+        Toast.makeText(context,"here+"+url,Toast.LENGTH_SHORT).show();
+        JsonArrayRequest strRequest = new JsonArrayRequest(Request.Method.GET, url+"protected/planovi", (String) null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override

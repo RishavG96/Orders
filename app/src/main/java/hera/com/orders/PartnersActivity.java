@@ -33,7 +33,6 @@ public class PartnersActivity extends AppCompatActivity {
 
     hera.com.orders.service.Partner service_partner;
     hera.com.orders.sqlite.Partner sqlite_partner;
-    public static String partner_url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/partneri";
     ListView lv;
     PartnerListAdapter adapter;
     DrawerLayout drawerLayout;

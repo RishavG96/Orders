@@ -1,6 +1,7 @@
 package hera.com.orders;
 
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     hera.com.orders.model.User classes_user;
     hera.com.orders.service.User service_user;
     SQLiteDatabase db;
-    public static String url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/login"; // This will hold the full URL which will include the username entered in the id.
+    public static String url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/"; // This will hold the full URL which will include the username entered in the id.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +39,6 @@ public class LoginActivity extends AppCompatActivity {
         this.submit = (Button) findViewById(R.id.send);
         newurl=findViewById(R.id.editText2);
         newurl.setText(url);
-
 
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
         db.execSQL("create table if not exists url(url varchar(1000))");
@@ -83,6 +83,9 @@ public class LoginActivity extends AppCompatActivity {
                 if(!url.equals(newurl.getText().toString()))
                 {
                     url=newurl.getText().toString();
+                    ContentValues cv=new ContentValues();
+                    cv.put("url",url);
+                    db.update("url",cv,null,null);
                     Toast.makeText(getApplicationContext(),"URL Changed",Toast.LENGTH_SHORT).show();
                 }
                 classes_user.Url=url;

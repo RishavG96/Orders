@@ -3,6 +3,7 @@ package hera.com.orders.service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ public class User {
     SQLiteDatabase db;
     hera.com.orders.sqlite.User sqlite_user;
     hera.com.orders.model.User user1;
+    String url;
     public void login(final Context context, hera.com.orders.model.User user)
     {
         user1=user;
@@ -42,7 +44,13 @@ public class User {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest strRequest = new JsonObjectRequest(Request.Method.POST, LoginActivity.url,parameters,
+        Cursor cursor=db.rawQuery("select * from url",null);
+        if(cursor.moveToNext())
+        {
+            url=cursor.getString(0);
+        }
+        Toast.makeText(context, url, Toast.LENGTH_SHORT).show();
+        JsonObjectRequest strRequest = new JsonObjectRequest(Request.Method.POST,url+"login",parameters,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
@@ -55,7 +63,7 @@ public class User {
                             MainActivity.Id=Integer.parseInt(id);
                             user1.Id=Integer.parseInt(id);
                             user1.Token=jwt;
-                            user1.Url=LoginActivity.url;
+                            user1.Url=url;
                             sqlite_user.addUser(context,user1);
                             Intent intent=new Intent(context,MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

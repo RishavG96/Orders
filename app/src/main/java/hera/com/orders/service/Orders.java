@@ -50,7 +50,8 @@ public class Orders  {
     Gson _gson;
     String toJson;
     URL url;
-    String urlString="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/narudzba";
+    String urlString;
+    //String urlString="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/narudzba";
     public void sendToServer(final int orderId){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -66,6 +67,11 @@ public class Orders  {
         }
         _gson = new Gson();
 
+        Cursor cursor=MainActivity.db.rawQuery("select * from url",null);
+        if(cursor.moveToNext())
+        {
+            urlString=cursor.getString(0)+"protected/narudzba";
+        }
         try {
             toJson = _gson.toJson(model_orders);
             url=new URL(urlString);

@@ -33,6 +33,7 @@ public class Partner {
     hera.com.orders.sqlite.Partner partner;
     Context context;
     public static SQLiteDatabase db;
+    String url;
     public void connect(Context con)
     {
         context=con;
@@ -49,7 +50,12 @@ public class Partner {
                 jwtToken=c.getString(3);
             }
         }
-        JsonArrayRequest strRequest = new JsonArrayRequest(Request.Method.GET, PartnersActivity.partner_url, (String) null,
+        Cursor cursor=db.rawQuery("select * from url",null);
+        if(cursor.moveToNext())
+        {
+            url=cursor.getString(0);
+        }
+        JsonArrayRequest strRequest = new JsonArrayRequest(Request.Method.GET, url+"protected/partneri", (String) null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override

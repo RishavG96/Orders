@@ -10,6 +10,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class User {
     SQLiteDatabase db;
+    String sb;
     public void addUser(Context context, hera.com.orders.model.User user)
     {
         db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
@@ -30,9 +31,8 @@ public class User {
         //db.execSQL("delete from "+ "url");
         db.execSQL("create table if not exists url(url varchar(1000))");
         Cursor c=db.rawQuery("select * from url",null);
-        StringBuffer sb=new StringBuffer();
         while(c.moveToNext()) {
-            sb.append(c.getString(0));
+            sb=c.getString(0);
         }
         if(!sb.equals(user.Url)) {
             ContentValues cv = new ContentValues();

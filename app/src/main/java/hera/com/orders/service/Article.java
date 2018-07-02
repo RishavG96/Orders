@@ -31,6 +31,7 @@ public class Article {
     String jwtToken;
     hera.com.orders.sqlite.Article sqlite_article;
     Context context;
+    String url;
     public void connect(Context con)
     {
         context=con;
@@ -47,7 +48,12 @@ public class Article {
                 jwtToken=c.getString(3);
             }
         }
-        JsonArrayRequest strRequest = new JsonArrayRequest(Request.Method.GET, ArticleActivity.article_url, (String) null,
+        Cursor cursor=db.rawQuery("select * from url",null);
+        if(cursor.moveToNext())
+        {
+            url=cursor.getString(0);
+        }
+        JsonArrayRequest strRequest = new JsonArrayRequest(Request.Method.GET, url+"protected/artikli", (String) null,
                 new Response.Listener<JSONArray>()
                 {
                     @Override

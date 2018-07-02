@@ -19,7 +19,6 @@ import hera.com.orders.sqlite.Orders;
 
 public class AssortmentActivity extends AppCompatActivity {
 
-    public static String assortment_url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/asortiman";
     hera.com.orders.service.Assortment service_assortment;
     hera.com.orders.sqlite.Assortment sqlite_assortment;
     DrawerLayout drawerLayout;

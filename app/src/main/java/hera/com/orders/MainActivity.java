@@ -182,34 +182,10 @@ public class MainActivity extends AppCompatActivity {
                                 LoginActivity.art=0;
                                 LoginActivity.part=0;
                                 LoginActivity.part_week=0;
-                                service_partner.connect(getApplicationContext());
-                                service_article.connect(getApplicationContext());
-                                service_assortment.connect(getApplicationContext());
-                                service_partner_week.connect(getApplicationContext());
-                                progressDialog = new ProgressDialog(getApplicationContext());
-                                progressDialog.setMax(100);
-                                progressDialog.setMessage("Loading....");
-                                progressDialog.setTitle("Refreshing database");
-                                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                                progressDialog.show();
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            while (progressDialog.getProgress() <= progressDialog
-                                                    .getMax()) {
-                                                Thread.sleep(60);
-                                                handle.sendMessage(handle.obtainMessage());
-                                                if (progressDialog.getProgress() == progressDialog
-                                                        .getMax()) {
-                                                    progressDialog.dismiss();
-                                                }
-                                            }
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }).start();
+                                Intent intent4 = new Intent(getApplicationContext(), MainActivity.class);
+                                intent4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent4);
+                                finish();
                                 break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER

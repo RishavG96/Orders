@@ -37,7 +37,6 @@ public class ShowPartnersByWeekActivity extends AppCompatActivity {
     NavigationView navigationView;
     ListView lv;
     List<Partner> partnerList;
-    public static String partner_week="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/protected/planovi";
     hera.com.orders.service.PartnerByWeek service_partner_week;
     hera.com.orders.sqlite.PartnerByWeek sqlite_partner_week;
     SearchView searchView;
