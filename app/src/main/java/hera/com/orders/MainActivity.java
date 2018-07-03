@@ -24,7 +24,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     Handler handle;
     SearchView searchView;
     ListView lv;
+    ImageView iv;
+    TextView tv;
     Button newOrder;
     OrdersAdapter adapter;
     public static int pos;
@@ -65,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         lv=findViewById(R.id.listview2);
+        iv=findViewById(R.id.imageView3);
+        tv=findViewById(R.id.textView43);
         newOrder=findViewById(R.id.button3);
         orders = new hera.com.orders.sqlite.Orders();
         sqlite_partner = new hera.com.orders.sqlite.Partner();
@@ -123,6 +129,13 @@ public class MainActivity extends AppCompatActivity {
             ordersList=(List<hera.com.orders.model.Orders>) orders.showOrders(this);
         }
         catch (Exception e){}
+        Toast.makeText(this,""+ordersList.get(0).partner.name,Toast.LENGTH_SHORT).show();
+        if(ordersList.isEmpty())
+        {
+            lv.setVisibility(View.GONE);
+            iv.setVisibility(View.VISIBLE);
+            tv.setVisibility(View.VISIBLE);
+        }
         adapter=new OrdersAdapter(this,ordersList);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

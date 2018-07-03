@@ -8,6 +8,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/drawer_layout"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+android:background="#CECECE"
 tools:openDrawer="start">
 
     <RelativeLayout
@@ -15,14 +16,31 @@ tools:openDrawer="start">
         android:layout_width="match_parent"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:srcCompat="@drawable/empty" />
+        <TextView
+            android:id="@+id/textView43"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:textSize="14dp"
+            android:text="List of orders is empty"
+            android:fontFamily="sans-serif"
+            android:textColor="#323643"
+            android:layout_below="@+id/imageView3"
+            android:visibility="gone"
+            android:gravity="center"/>
         <ListView
             android:id="@+id/listview2"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="57dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
              />
-
-
             <Button
                 android:id="@+id/button3"
                 android:layout_width="279dp"

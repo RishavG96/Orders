@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class ArticleAmountActivity extends AppCompatActivity {
     TextView tv1, tv2;
     EditText et1,et2;
     Button submit;
+    ImageButton del;
     hera.com.orders.sqlite.Article articleItems;
     hera.com.orders.sqlite.OrderItems orderItems;
     List<hera.com.orders.model.Article> articles;
@@ -46,17 +48,24 @@ public class ArticleAmountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_article_amount);
 
         tv1=findViewById(R.id.textView18);
-        tv2=findViewById(R.id.textView19);
+        //tv2=findViewById(R.id.textView19);
         et1=findViewById(R.id.editText5);
         et2=findViewById(R.id.editText6);
         submit=findViewById(R.id.button4);
+        del=findViewById(R.id.button5);
         articleItems = new hera.com.orders.sqlite.Article();
         orderItems=new hera.com.orders.sqlite.OrderItems();
         articles=new ArrayList<>();
         int id=getIntent().getIntExtra("articleId",0);
         articles=(List<hera.com.orders.model.Article>)articleItems.showArticle(this, id);
         tv1.setText(articles.get(0).name);
-        tv2.setText(articles.get(0).units);
+        et1.setHint(articles.get(0).units);
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         et1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

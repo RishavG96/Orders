@@ -144,7 +144,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
                 {
                     hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
                     orders.orderId=Integer.parseInt(orderId.get(i).toString());
-                    //orders.partner.name=partnerName.get(i).toString();
+                    orders.partner.name=partnerName.get(i).toString();
                     orders.dates=dates.get(i).toString();
                     orders.sended=sended.get(i).toString();
                     ordersList1.add(orders);
