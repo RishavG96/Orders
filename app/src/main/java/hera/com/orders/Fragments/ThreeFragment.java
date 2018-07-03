@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,8 @@ public class ThreeFragment extends Fragment {
     hera.com.orders.sqlite.OrderItems orderItems;
     hera.com.orders.sqlite.Orders orders;
     ListView lv;
-    TextView total,partnerName;
+    TextView total,partnerName, tv, tv1, tv2;
+    ImageView iv;
     Button submit;
     OrderItemsAdapter adapter;
     List<hera.com.orders.model.OrderItems> orderItemsList;
@@ -44,18 +46,31 @@ public class ThreeFragment extends Fragment {
         orderItems = new hera.com.orders.sqlite.OrderItems();
         orders = new hera.com.orders.sqlite.Orders();
         lv=view.findViewById(R.id.listview6);
+        tv=view.findViewById(R.id.textView40);
+        tv1=view.findViewById(R.id.textView41);
+        tv2=view.findViewById(R.id.textView42);
+        iv=view.findViewById(R.id.imageView2);
         total=view.findViewById(R.id.totalprice);
         partnerName=view.findViewById(R.id.partnername);
         submit=view.findViewById(R.id.placeorder);
         orderItemsList=new ArrayList<>();
-        partnerName.setText("Partner Name: "+MainActivity.partnerName);
+        partnerName.setText(""+MainActivity.partnerName);
         try {
             orderItemsList=(List<hera.com.orders.model.OrderItems>) orderItems.showOrders(getContext());
         }catch (Exception e){}
-        total.setText("The Total price is: "+orderItems.calculateTotalPrice());
+        total.setText(""+orderItems.calculateTotalPrice()+" KM");
         if(orderItemsList!=null) {
             adapter = new OrderItemsAdapter(getContext(), orderItemsList);
             lv.setAdapter(adapter);
+        }
+        if(orderItems.calculateTotalPrice()==0.0)
+        {
+            tv.setVisibility(View.GONE);
+            iv.setVisibility(View.VISIBLE);
+            tv1.setVisibility(View.VISIBLE);
+            tv2.setVisibility(View.GONE);
+            total.setVisibility(View.GONE);
+            lv.setVisibility(View.GONE);
         }
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
