@@ -78,7 +78,6 @@ public class OrderItemsAdapter extends BaseAdapter{
         convertView=inflater.inflate(R.layout.order_items_layout,null);
         TextView n=(TextView)convertView.findViewById(R.id.textView21);
         TextView pr=(TextView)convertView.findViewById(R.id.textView24);
-        TextView un=(TextView)convertView.findViewById(R.id.textView25);
         TextView co=(TextView)convertView.findViewById(R.id.textView22);
         TextView q=(TextView)convertView.findViewById(R.id.textView23);
         ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton3);
@@ -149,10 +148,9 @@ public class OrderItemsAdapter extends BaseAdapter{
             }
         });
         n.setText(getItem(position).articleName);
-        co.setText("Code: "+getItem(position).articleCode+"     ");
-        q.setText("Quantity: "+getItem(position).quantity+"  "+getItem(position).articleUnits );
-        pr.setText("Price: "+getItem(position).price+"    ");
-        un.setText("");
+        co.setText(""+getItem(position).articleCode+"     ");
+        q.setText(""+getItem(position).quantity+"  "+getItem(position).articleUnits );
+        pr.setText(""+getItem(position).price+" KM");
         return convertView;
     }
 }

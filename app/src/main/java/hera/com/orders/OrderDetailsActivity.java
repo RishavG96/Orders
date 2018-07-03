@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +34,9 @@ import hera.com.orders.sqlite.Orders;
 public class OrderDetailsActivity extends AppCompatActivity {
 
     ListView lv;
-    TextView tv;
-    Button editOrder, submitOrder;
+    TextView tv,tv1,tv2;
+    ImageView imageView;
+    Button editOrder, submitOrder, addItem;
     TextView partnerName,total;
     OrderItemsAdapter adapter;
     DrawerLayout drawerLayout;
@@ -49,11 +51,15 @@ public class OrderDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_details);
         lv=findViewById(R.id.listview7);
         tv=findViewById(R.id.textView35);
+        tv1=findViewById(R.id.textView39);
+        tv2=findViewById(R.id.textView38);
+        imageView=findViewById(R.id.imageView1);
         partnerName=findViewById(R.id.textView31);
         partnerName.setMovementMethod(new ScrollingMovementMethod());
         total=findViewById(R.id.textView32);
         editOrder=findViewById(R.id.editorder);
         submitOrder=findViewById(R.id.submitorder);
+        addItem=findViewById(R.id.additem);
         service_orders=new hera.com.orders.service.Orders();
         orders=new Orders();
         List<hera.com.orders.model.Orders> ordersList=new ArrayList<>();
@@ -63,14 +69,45 @@ public class OrderDetailsActivity extends AppCompatActivity {
         orderItemsList=(List<OrderItems>) orders.showOrderItems(this, MainActivity.orderID);
         adapter=new OrderItemsAdapter(this, orderItemsList);
         lv.setAdapter(adapter);
-        total.setText("Total Order Price: "+Orders.calculateTotalPrice(MainActivity.orderID));
-        partnerName.setText("Partner Name: "+ pn);
+        total.setText(""+Orders.calculateTotalPrice(MainActivity.orderID));
+        partnerName.setText(pn);
         if(Orders.calculateTotalPrice(MainActivity.orderID)==0)
         {
+            tv.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.VISIBLE);
+            addItem.setVisibility(View.VISIBLE);
+            lv.setVisibility(View.GONE);
+            editOrder.setVisibility(View.GONE);
+            submitOrder.setVisibility(View.GONE);
+            total.setVisibility(View.GONE);
+            tv1.setVisibility(View.GONE);
+            tv2.setVisibility(View.GONE);
             tv.setText("No Order Items added.");
         }
 
         editOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cursor c=MainActivity.db.rawQuery("select * from orders2 where orderId="+MainActivity.orderID+"", null);
+                String sended="";
+                while(c.moveToNext())
+                {
+                    sended=c.getString(4);
+                }
+                if(sended.equals("N")) {
+                    Orders.pushOrderItems(getApplicationContext(), MainActivity.orderID);
+                    MainActivity.partnerName = Orders.getPartnerName(getApplicationContext(), MainActivity.orderID);
+                    Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if(sended.equals("Y"))
+                {
+                    Toast.makeText(getApplicationContext(),"Cannot edit, order already Sended!",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Cursor c=MainActivity.db.rawQuery("select * from orders2 where orderId="+MainActivity.orderID+"", null);

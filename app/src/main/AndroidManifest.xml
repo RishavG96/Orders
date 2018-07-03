@@ -8,7 +8,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Orders"
+        android:label="Order"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
@@ -36,7 +36,7 @@
             android:label="Assortment" />
         <activity
             android:name=".OrderEntryActivity"
-            android:label="Order Entry" />
+            android:label="New Order" />
         <activity android:name=".CombinedActivity" />
         <activity
             android:name=".OrderPartnersActivity"

@@ -7,6 +7,7 @@
     android:id="@+id/drawer_layout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CECECE"
     tools:openDrawer="start">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,29 +21,48 @@
 
         <TextView
             android:id="@+id/textView12"
-            android:layout_marginTop="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginTop="75dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textColor="#FF4500"
+            android:layout_height="18dp"
+            android:textSize="16dp"
+            android:textColor="#323643"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
             android:text="TextView" />
+        <TextView
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:textSize="14dp"
+            android:textColor="#323643"
+            android:textStyle="normal"
+            android:fontFamily="sans-serif"
+            android:text="New order" />
 
         <EditText
             android:id="@+id/editText3"
-            android:layout_margin="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:paddingLeft="13dp"
+            android:hint="Select date"
             android:ems="10"
             android:inputType="date"
-            android:hint="Enter date"/>
-
+            android:background="@drawable/edittext" />
         <EditText
             android:id="@+id/editText4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:paddingLeft="13dp"
+            android:background="@drawable/edittext"
             android:ems="10"
             android:inputType="textPersonName"
             android:hint="Enter a note" />
@@ -51,7 +71,13 @@
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save and continue" />
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:fontFamily="sans-serif"
+            android:background="@drawable/button"
+            android:text="Save and continue"
+            android:textColor="#FFFFFF"/>
 
 
     </LinearLayout>

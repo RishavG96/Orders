@@ -96,40 +96,10 @@ public class AssortmentListAdapter extends BaseAdapter implements Filterable {
         TextView pr=(TextView)convertView.findViewById(R.id.textView16);
         TextView un=(TextView)convertView.findViewById(R.id.textView17);
         TextView co=(TextView)convertView.findViewById(R.id.textView14);
-        TextView no=(TextView)convertView.findViewById(R.id.textView15);
-        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton2);
-        imageButton.setTag(getItem(position));
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch(v.getId())
-                {
-                    case R.id.imageButton2:
-                        final PopupMenu popup = new PopupMenu(context, v);
-                        popup.getMenuInflater().inflate(R.menu.listoption, popup.getMenu());
-                        popup.show();
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.show:
-                                        pos=getItem(position).id;
-                                        Intent intent=new Intent(context, AssortmentDetailsActivity.class);
-                                        context.startActivity(intent);
-                                        break;
-                                    case R.id.delete:
-                                        break;
-                                }
-                                return true;
-                            }
-                        });
-                }
-            }
-        });
         n.setText(getItem(position).name);
-        co.setText("Code: "+getItem(position).code);
-        pr.setText("Price: "+getItem(position).price+"    ");
-        un.setText("Units: "+getItem(position).units);
+        co.setText(""+getItem(position).code);
+        pr.setText(""+getItem(position).price+"    ");
+        un.setText(""+getItem(position).units);
         return convertView;
     }
 
