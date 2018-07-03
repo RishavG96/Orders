@@ -120,12 +120,11 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
             }
         });
         n.setText(getItem(position).partner.name);
-        co.setText("Sended: "+getItem(position).sended);
+        un.setText(""+getItem(position).sended);
 //        q.setText("Quantity: "+quantity.get(position).toString()+"  "+unit.get(position).toString() );
-        q.setText("");
         String d=getItem(position).dates.substring(0,10);
-        un.setText("Date: "+d);
-        s.setText("");
+        q.setText(""+d);
+        co.setText("Date: ");
         return convertView;
     }
 

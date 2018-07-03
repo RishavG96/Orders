@@ -25,7 +25,9 @@ public class Article {
     }
     public Iterable<hera.com.orders.model.Article> showArticle(Context context) {
         db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
+
         Cursor c = db.rawQuery("select * from articles order by name asc", null);
+
         List<hera.com.orders.model.Article> articleList=new ArrayList<>();
         while (c.moveToNext()) {
             hera.com.orders.model.Article article=new hera.com.orders.model.Article();

@@ -22,30 +22,31 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".UpdateURLActivity"
-            android:label="UPDATE URL" />
+            android:label="Update URL" />
         <activity
             android:name=".PartnersActivity"
-            android:label="PARTNER"
+            android:label="Partners"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".PartnerDetailsActivity" />
         <activity
             android:name=".ArticleActivity"
-            android:label="ARTICLE" />
+            android:label="Articles" />
         <activity
             android:name=".AssortmentActivity"
-            android:label="ASSORTMENT" />
+            android:label="Assortment" />
         <activity
             android:name=".OrderEntryActivity"
-            android:label="ORDER ENTRY" />
+            android:label="Order Entry" />
         <activity android:name=".CombinedActivity" />
         <activity
             android:name=".OrderPartnersActivity"
-            android:label="PARTNERS" />
+            android:label="Partners" />
         <activity android:name=".ArticleAmountActivity" />
         <activity android:name=".OrderDetailsActivity" />
         <activity android:name=".ArticleDetailsActivity" />
         <activity android:name=".AssortmentDetailsActivity" />
-        <activity android:name=".WeekDaysActivity" />
+        <activity android:name=".WeekDaysActivity"
+            android:label="Routes"/>
         <activity android:name=".ShowPartnersByWeekActivity" />
         <activity android:name=".PartnerWeekDetailsActivity"></activity>
     </application>

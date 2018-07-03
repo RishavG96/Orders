@@ -66,6 +66,7 @@ public class ArticleActivity extends AppCompatActivity {
         service_partner_week = new hera.com.orders.service.PartnerByWeek();
 
         service_article.connect(this);
+
         articleList=new ArrayList<>();
         articleList=(List<Article>)sqlite_article.showArticle(this);
         adapter=new ArticleListAdapter(this,articleList);

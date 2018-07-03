@@ -32,7 +32,7 @@ public class Article {
     hera.com.orders.sqlite.Article sqlite_article;
     Context context;
     String url;
-    public void connect(Context con)
+    public void connect(final Context con)
     {
         context=con;
         db=context.openOrCreateDatabase("order",MODE_PRIVATE,null);
@@ -59,6 +59,7 @@ public class Article {
                     @Override
                     public void onResponse(JSONArray response)
                     {
+                        //Toast.makeText(context,""+response,Toast.LENGTH_SHORT).show();
                         try {
                             if(LoginActivity.art==0) {
                                 try {

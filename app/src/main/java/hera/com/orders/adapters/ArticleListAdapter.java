@@ -98,11 +98,10 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
         TextView pr=(TextView)convertView.findViewById(R.id.textView10);
         TextView un=(TextView)convertView.findViewById(R.id.textView11);
         TextView co=(TextView)convertView.findViewById(R.id.textView8);
-        TextView no=(TextView)convertView.findViewById(R.id.textView9);
         n.setText(getItem(position).name);
-        co.setText("Code: "+getItem(position).code);
-        pr.setText("Price: "+getItem(position).price+"    ");
-        un.setText("Units: "+getItem(position).units);
+        co.setText(""+getItem(position).code);
+        pr.setText(""+getItem(position).price+"    ");
+        un.setText(""+getItem(position).units);
         return convertView;
     }
 

@@ -86,10 +86,10 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
     public View getView(final int position, View convertView, ViewGroup parent) {
         convertView=inflater.inflate(R.layout.partner_layout,null);
         TextView n=(TextView)convertView.findViewById(R.id.textView2);
-        TextView co=(TextView)convertView.findViewById(R.id.textView5);
-        TextView am=(TextView)convertView.findViewById(R.id.textView6);
-        TextView ad=(TextView)convertView.findViewById(R.id.textView3);
-        TextView ci=(TextView)convertView.findViewById(R.id.textView4);
+        TextView ad=(TextView)convertView.findViewById(R.id.textView5);
+        TextView ci=(TextView)convertView.findViewById(R.id.textView6);
+        TextView co=(TextView)convertView.findViewById(R.id.textView3);
+        TextView am=(TextView)convertView.findViewById(R.id.textView4);
 //        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton);
 //        imageButton.setTag(getItem(position));
 //        imageButton.setOnClickListener(new View.OnClickListener() {
@@ -120,10 +120,10 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
 //            }
 //        });
         n.setText((getItem(position)).name);
-        co.setText("Code: "+getItem(position).code);
-        am.setText("    Amount: "+getItem(position).amount+"     ");
-        ad.setText("Address: "+getItem(position).address);
-        ci.setText("    City: "+getItem(position).city);
+        co.setText(""+getItem(position).code);
+        am.setText(""+getItem(position).amount+"     ");
+        ad.setText(""+getItem(position).address);
+        ci.setText(""+getItem(position).city);
         return convertView;
     }
 
