@@ -60,6 +60,19 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
 
         inflater=LayoutInflater.from(context);
     }
+    public void remove(int position) {
+        ordersList.remove(position);
+        notifyDataSetChanged();
+    }
+    @Override
+    public int getViewTypeCount() {
+        return getCount();
+    }
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
     @Override
     public int getCount() {
         return ordersList.size();

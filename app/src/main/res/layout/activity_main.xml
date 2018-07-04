@@ -44,7 +44,7 @@ tools:openDrawer="start">
             <Button
                 android:id="@+id/button3"
                 android:layout_width="279dp"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="9dp"
@@ -54,8 +54,7 @@ tools:openDrawer="start">
                 android:fontFamily="sans-serif"
                 android:text="+Create New Order"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="14dp" />
 
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/material_design_android_floating_action_menu"
@@ -89,7 +88,7 @@ tools:openDrawer="start">
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:src="@drawable/menu"
-                fab:fab_label="Menu Item 1"
+                fab:fab_label="Send all orders"
                 fab:fab_size="mini" />
 
             <com.github.clans.fab.FloatingActionButton
@@ -97,7 +96,7 @@ tools:openDrawer="start">
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/menu"
-                fab:fab_label="Menu Item 2"
+                fab:fab_label="Delete all orders"
                 fab:fab_size="mini" />
 
             <com.github.clans.fab.FloatingActionButton
@@ -105,7 +104,7 @@ tools:openDrawer="start">
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/menu"
-                fab:fab_label="Menu Item 3"
+                fab:fab_label="Delete sent orders"
                 fab:fab_size="mini" />
 
             <com.github.clans.fab.FloatingActionButton
@@ -113,7 +112,7 @@ tools:openDrawer="start">
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/menu"
-                fab:fab_label="Menu Item 4"
+                fab:fab_label="Delete unsent orders"
                 fab:fab_size="mini" />
         </com.github.clans.fab.FloatingActionMenu>
     </RelativeLayout>

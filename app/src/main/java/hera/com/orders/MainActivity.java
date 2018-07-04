@@ -18,16 +18,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+import com.hudomju.swipe.SwipeToDismissTouchListener;
+import com.hudomju.swipe.adapter.ListViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     hera.com.orders.service.Article service_article;
     hera.com.orders.service.Assortment service_assortment;
     hera.com.orders.service.PartnerByWeek service_partner_week;
+    FloatingActionMenu materialDesignFAM;
+    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3, floatingActionButton4;
     ProgressDialog progressDialog;
     Handler handle;
     SearchView searchView;
@@ -67,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         lv=findViewById(R.id.listview2);
         iv=findViewById(R.id.imageView3);
         tv=findViewById(R.id.textView43);
@@ -78,6 +86,12 @@ public class MainActivity extends AppCompatActivity {
         service_article = new hera.com.orders.service.Article();
         service_assortment = new hera.com.orders.service.Assortment();
         service_partner_week = new hera.com.orders.service.PartnerByWeek();
+        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
+        floatingActionButton1 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item1);
+        floatingActionButton2 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item2);
+        floatingActionButton3 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item3);
+        floatingActionButton4 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item4);
+
         orderID=0;
         //Toast.makeText(getApplicationContext(),"here",Toast.LENGTH_SHORT).show();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
@@ -129,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
             ordersList=(List<hera.com.orders.model.Orders>) orders.showOrders(this);
         }
         catch (Exception e){}
-        Toast.makeText(this,""+ordersList.get(0).partner.name,Toast.LENGTH_SHORT).show();
         if(ordersList.isEmpty())
         {
             lv.setVisibility(View.GONE);
@@ -147,6 +160,54 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.partnerID=ordersList.get(position).partnerId;
                 Intent intent=new Intent(getApplicationContext(), OrderDetailsActivity.class);
                 startActivity(intent);
+            }
+        });
+        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                boolean flag=orders.sendAllToServer();
+                if(flag==true) {
+                    Toast.makeText(getApplicationContext(), "Order Sent!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+                else
+                    Toast.makeText(getApplicationContext(),"Enter Items First!",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                orders.deleteAll();
+                Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                orders.deleteSend();
+                Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent1);
+                finish();
+
+            }
+        });
+        floatingActionButton4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                orders.deleteUnsend();
+                Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent2);
+                finish();
+
             }
         });
         navigationView=findViewById(R.id.nav_view);
@@ -257,57 +318,6 @@ public class MainActivity extends AppCompatActivity {
         if(actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        else {
-            switch (item.getItemId()) {
-                case R.id.sendAll:
-                    boolean flag=orders.sendAllToServer();
-                    if(flag==true) {
-                        Toast.makeText(getApplicationContext(), "Order Sent!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else
-                        Toast.makeText(getApplicationContext(),"Enter Items First!",Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.deleteAll:
-                    orders.deleteAll();
-                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                    break;
-                case R.id.deleteSend:
-                    orders.deleteSend();
-                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent1);
-                    finish();
-                    break;
-                case R.id.deleteUnsend:
-                    orders.deleteUnsend();
-                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
-                    Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
-                    intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent2);
-                    finish();
-                    break;
-                case R.id.setup:
-                    Intent intent3 = new Intent(this, UpdateURLActivity.class);
-                    startActivity(intent3);
-                    break;
-                case R.id.logout:
-                    Intent intent4 = new Intent(this, LoginActivity.class);
-                    startActivity(intent4);
-                    finish();
-                    db.execSQL("delete from login");
-                    break;
-            }
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

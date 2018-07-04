@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -60,6 +61,8 @@ public class ArticleAmountActivity extends AppCompatActivity {
         articles=(List<hera.com.orders.model.Article>)articleItems.showArticle(this, id);
         tv1.setText(articles.get(0).name);
         et1.setHint(articles.get(0).units);
+        et2.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,47 +243,6 @@ public class ArticleAmountActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
-        }
-        else {
-            Orders orders=new Orders();
-            switch (item.getItemId()) {
-                case R.id.sendAll:
-                    boolean flag=orders.sendAllToServer();
-                    if(flag==true) {
-                        Toast.makeText(getApplicationContext(), "Order Sent!", Toast.LENGTH_SHORT).show();
-                        Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
-                        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent2);
-                        finish();
-                    }
-                    else
-                        Toast.makeText(getApplicationContext(),"Enter Items First!",Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.deleteAll:
-                    orders.deleteAll();
-                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
-                    Intent intent3 = new Intent(getApplicationContext(), MainActivity.class);
-                    intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent3);
-                    finish();
-                    break;
-                case R.id.deleteSend:
-                    orders.deleteSend();
-                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
-                    Intent intent4 = new Intent(getApplicationContext(), MainActivity.class);
-                    intent4.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent4);
-                    finish();
-                    break;
-                case R.id.deleteUnsend:
-                    orders.deleteUnsend();
-                    Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
-                    Intent intent5 = new Intent(getApplicationContext(), MainActivity.class);
-                    intent5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent5);
-                    finish();
-                    break;
-            }
         }
         return super.onOptionsItemSelected(item);
     }
