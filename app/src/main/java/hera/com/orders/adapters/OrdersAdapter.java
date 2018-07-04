@@ -116,7 +116,7 @@ public class OrdersAdapter extends BaseSwipeAdapter implements Filterable {
                 Intent intent1=new Intent(context, MainActivity.class);
                 context.startActivity(intent1);
                 ((Activity)context).finish();
-                Toast.makeText(context, "click delete"+position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "click delete"+position, Toast.LENGTH_SHORT).show();
             }
         });
         return v;
@@ -129,42 +129,6 @@ public class OrdersAdapter extends BaseSwipeAdapter implements Filterable {
         TextView un=(TextView)convertView.findViewById(R.id.textView30);
         TextView co=(TextView)convertView.findViewById(R.id.textView27);
         TextView q=(TextView)convertView.findViewById(R.id.textView28);
-        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton4);
-        imageButton.setTag(getItem(position));
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch(v.getId())
-                {
-                    case R.id.imageButton4:
-                        final PopupMenu popup = new PopupMenu(context, v);
-                        popup.getMenuInflater().inflate(R.menu.listoption, popup.getMenu());
-                        popup.show();
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.show:
-                                        MainActivity.pos=getItem(position).orderId;
-                                        MainActivity.orderID= ordersList.get(position).orderId;
-                                        Intent intent=new Intent(context, OrderDetailsActivity.class);
-                                        context.startActivity(intent);
-                                        break;
-                                    case R.id.delete:
-                                        MainActivity.pos=getItem(position).orderId;
-                                        MainActivity.orderID= ordersList.get(position).orderId;
-                                        orders.deleteOrder(MainActivity.orderID);
-                                        Intent intent1=new Intent(context, MainActivity.class);
-                                        context.startActivity(intent1);
-                                        ((Activity)context).finish();
-                                        break;
-                                }
-                                return true;
-                            }
-                        });
-                }
-            }
-        });
         n.setText(getItem(position).partner.name);
         un.setText(""+getItem(position).sended);
 //        q.setText("Quantity: "+quantity.get(position).toString()+"  "+unit.get(position).toString() );
