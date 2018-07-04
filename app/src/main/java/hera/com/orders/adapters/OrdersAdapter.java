@@ -15,6 +15,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +27,7 @@ import hera.com.orders.OrderDetailsActivity;
 import hera.com.orders.R;
 import hera.com.orders.sqlite.Orders;
 
-public class OrdersAdapter extends BaseAdapter implements Filterable {
+public class OrdersAdapter extends BaseSwipeAdapter implements Filterable {
     LayoutInflater inflater;
     Context context;
     ArrayList orderId, original_orderId, partnerName, original_partnerName, dates, original_dates, sended, original_sended;
@@ -66,7 +70,7 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
     }
     @Override
     public int getViewTypeCount() {
-        return getCount();
+        return 1;
     }
     @Override
     public int getItemViewType(int position) {
@@ -89,8 +93,37 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        convertView=inflater.inflate(R.layout.orders_layout,null);
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe;
+    }
+
+    @Override
+    public View generateView(final int position, final ViewGroup parent) {
+        View v =inflater.inflate(R.layout.orders_layout,null);
+        SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                //YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.trash));
+            }
+        });
+        v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.pos=getItem(position).orderId;
+                MainActivity.orderID= ordersList.get(position).orderId;
+                orders.deleteOrder(MainActivity.orderID);
+                Intent intent1=new Intent(context, MainActivity.class);
+                context.startActivity(intent1);
+                ((Activity)context).finish();
+                Toast.makeText(context, "click delete"+position, Toast.LENGTH_SHORT).show();
+            }
+        });
+        return v;
+    }
+
+    @Override
+    public void fillValues(final int position, View convertView) {
         TextView n=(TextView)convertView.findViewById(R.id.textView26);
         TextView s=(TextView)convertView.findViewById(R.id.textView29);
         TextView un=(TextView)convertView.findViewById(R.id.textView30);
@@ -138,8 +171,8 @@ public class OrdersAdapter extends BaseAdapter implements Filterable {
         String d=getItem(position).dates.substring(0,10);
         q.setText(""+d);
         co.setText("Date: ");
-        return convertView;
     }
+
 
     @Override
     public Filter getFilter() {

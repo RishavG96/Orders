@@ -31,6 +31,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.util.Attributes;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.hudomju.swipe.SwipeToDismissTouchListener;
@@ -151,15 +153,17 @@ public class MainActivity extends AppCompatActivity {
         }
         adapter=new OrdersAdapter(this,ordersList);
         lv.setAdapter(adapter);
+        adapter.setMode(Attributes.Mode.Single);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ordersList=adapter.ordersList;
-                pos=ordersList.get(position).orderId;
-                MainActivity.orderID= ordersList.get(position).orderId;
-                MainActivity.partnerID=ordersList.get(position).partnerId;
-                Intent intent=new Intent(getApplicationContext(), OrderDetailsActivity.class);
-                startActivity(intent);
+//                ordersList=adapter.ordersList;
+//                pos=ordersList.get(position).orderId;
+//                MainActivity.orderID= ordersList.get(position).orderId;
+//                MainActivity.partnerID=ordersList.get(position).partnerId;
+//                Intent intent=new Intent(getApplicationContext(), OrderDetailsActivity.class);
+//                startActivity(intent);
+                ((SwipeLayout)(lv.getChildAt(position - lv.getFirstVisiblePosition()))).open(true);
             }
         });
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
