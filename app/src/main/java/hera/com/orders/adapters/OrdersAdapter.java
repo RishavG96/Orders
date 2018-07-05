@@ -3,6 +3,8 @@ package hera.com.orders.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -129,8 +132,13 @@ public class OrdersAdapter extends BaseSwipeAdapter implements Filterable {
         TextView un=(TextView)convertView.findViewById(R.id.textView30);
         TextView co=(TextView)convertView.findViewById(R.id.textView27);
         TextView q=(TextView)convertView.findViewById(R.id.textView28);
+        ImageView iv=convertView.findViewById(R.id.sendedicon);
         n.setText(getItem(position).partner.name);
-        un.setText(""+getItem(position).sended);
+        String sended=getItem(position).sended;
+        un.setText(sended);
+        if(sended.equals("Y")) {
+            iv.setImageResource(R.drawable.icon);
+        }
 //        q.setText("Quantity: "+quantity.get(position).toString()+"  "+unit.get(position).toString() );
         String d=getItem(position).dates.substring(0,10);
         q.setText(""+d);
@@ -154,9 +162,11 @@ public class OrdersAdapter extends BaseSwipeAdapter implements Filterable {
                 {
                     hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
                     orders.orderId=Integer.parseInt(orderId.get(i).toString());
-                    orders.partner.name=partnerName.get(i).toString();
                     orders.dates=dates.get(i).toString();
                     orders.sended=sended.get(i).toString();
+                    hera.com.orders.model.Partner partner=new hera.com.orders.model.Partner();
+                    partner.name=partnerName.get(i).toString();
+                    orders.partner=partner;
                     ordersList1.add(orders);
                 }
                 ordersList=ordersList1;

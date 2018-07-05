@@ -100,6 +100,7 @@
         <ImageView
             android:layout_width="13dp"
             android:layout_height="18dp"
+            android:id="@+id/sendedicon"
             android:src="@drawable/icon_send_non"
             android:layout_marginRight="6dp" />
         <TextView

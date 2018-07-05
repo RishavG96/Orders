@@ -2,6 +2,7 @@ package hera.com.orders.sqlite;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class Orders {
         hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
         while(c.moveToNext())
         {
-
+            Log.e("partner:","here");
             Cursor c1=MainActivity.db.rawQuery("select * from orderdetails1 where orderId="+c.getInt(0),null);
             List<hera.com.orders.model.OrderItems> orderItemsList=new ArrayList<>();
             while(c1.moveToNext())
@@ -203,35 +204,43 @@ public class Orders {
     public int getNextOrderId()
     {
         Cursor c=MainActivity.db.rawQuery("select * from orders2", null);
-        int count=0;
+        int count=1;
         while(c.moveToNext())
         {
-            count++;
+            if(count<=c.getInt(0))
+                count=c.getInt(0)+1;
         }
-        return ++count;
+        return count;
     }
     public static double calculateTotalPrice(int orderId)
     {
         double total=0.0;
+        double d=0.0;
         try {
             Cursor c = MainActivity.db.rawQuery("select * from orderdetails1 where orderId=" + orderId + "", null);
 
             while (c.moveToNext()) {
                 total += Double.parseDouble(c.getString(9));
             }
+            d = total;
+            String str = String.format("%1.2f", d);
+            d = Double.valueOf(str);
         }catch (Exception e){}
-        return total;
+        return d;
     }
     public void deleteOrder(int orderId)
     {
         MainActivity.db.delete("orders2", "orderId" + "=" + orderId, null);
         MainActivity.db.delete("orderdetails1", "orderId" + "=" + orderId, null);
     }
-    public static void deleteItem(int orderId, int articleId)
+    public static boolean deleteItem(int orderId, int articleId)
     {
         try {
             MainActivity.db.delete("orderdetails1", "articleId" + "=" + articleId+" and orderId="+orderId, null);
-        }catch (Exception e){}
+            return true;
+        }catch (Exception e){
+            return false;
+        }
 
     }
     public boolean sendAllToServer()

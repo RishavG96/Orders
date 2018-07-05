@@ -92,16 +92,20 @@ public class OrderItems {
     public double calculateTotalPrice()
     {
         double total=0.0;
+        double d=0.0;
         try {
             Cursor c = MainActivity.db.rawQuery("select * from orderitems", null);
             while(c.moveToNext())
             {
                 total+=Double.parseDouble(c.getString(8));
             }
+            d = total;
+            String str = String.format("%1.2f", d);
+            d = Double.valueOf(str);
         }catch (Exception e){}
 
 
-        return total;
+        return d;
     }
     public static void deleteItem(int articleId)
     {

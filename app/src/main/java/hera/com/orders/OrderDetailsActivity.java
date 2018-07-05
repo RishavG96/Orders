@@ -23,6 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.swipe.util.Attributes;
+
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,13 +65,14 @@ public class OrderDetailsActivity extends AppCompatActivity {
         service_orders=new hera.com.orders.service.Orders();
         orders=new Orders();
         List<hera.com.orders.model.Orders> ordersList=new ArrayList<>();
-        String pn=orders.getPartnerName(this, MainActivity.orderID);
         MainActivity.orderID=MainActivity.pos;
+        String pn=orders.getPartnerName(this, MainActivity.orderID);
         List<OrderItems> orderItemsList=new ArrayList<>();
         orderItemsList=(List<OrderItems>) orders.showOrderItems(this, MainActivity.orderID);
         adapter=new OrderItemsAdapter(this, orderItemsList);
         lv.setAdapter(adapter);
-        total.setText(""+Orders.calculateTotalPrice(MainActivity.orderID));
+        adapter.setMode(Attributes.Mode.Single);
+        total.setText(""+Orders.calculateTotalPrice(MainActivity.orderID)+" KM");
         partnerName.setText(pn);
         if(Orders.calculateTotalPrice(MainActivity.orderID)==0)
         {
@@ -215,7 +218,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.mainmenu,menu);
+        inflater.inflate(R.menu.combined_activitymenu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 

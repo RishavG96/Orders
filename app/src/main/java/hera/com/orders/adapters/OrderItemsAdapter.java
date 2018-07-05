@@ -1,5 +1,6 @@
 package hera.com.orders.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,6 +14,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,17 +29,18 @@ import hera.com.orders.R;
 import hera.com.orders.sqlite.OrderItems;
 import hera.com.orders.sqlite.Orders;
 
-public class OrderItemsAdapter extends BaseAdapter{
+public class OrderItemsAdapter extends BaseSwipeAdapter {
     LayoutInflater inflater;
     Context context;
     ArrayList id, name, code, unit,quantity, packaging, price;
     public static int pos;
     public List<hera.com.orders.model.OrderItems> orderItems;
+    Orders order;
 
     public OrderItemsAdapter(Context context, List<hera.com.orders.model.OrderItems> orderItems)
     {
         this.context=context;
-
+        order=new Orders();
         this.orderItems=orderItems;
         try {
             for (hera.com.orders.model.OrderItems orderItems1 : orderItems) {
@@ -57,7 +63,19 @@ public class OrderItemsAdapter extends BaseAdapter{
 
         inflater=LayoutInflater.from(context);
     }
+    public void remove(int position) {
+        //orderItems.remove(position);
+        //notifyDataSetChanged();
+    }
+    @Override
+    public int getViewTypeCount() {
+        return 1;
+    }
+    @Override
+    public int getItemViewType(int position) {
 
+        return position;
+    }
     @Override
     public int getCount() {
         return orderItems.size();
@@ -74,83 +92,77 @@ public class OrderItemsAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        convertView=inflater.inflate(R.layout.order_items_layout,null);
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe1;
+    }
+
+    @Override
+    public View generateView(final int position, ViewGroup parent) {
+        View v =inflater.inflate(R.layout.order_items_layout,null);
+        SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                //YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.trash));
+            }
+        });
+        v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                int articleId=orderItems.get(position).articleId;
+//                boolean flag= order.deleteItem(MainActivity.orderID,articleId);
+//                if(flag==false){
+//                    OrderItems orderItems=new OrderItems();
+//                    orderItems.deleteItem(articleId);
+//                }
+//                else {
+//                    Intent intent1 = new Intent(context, OrderDetailsActivity.class);
+//                    context.startActivity(intent1);
+//                    ((Activity) context).finish();
+//                }
+                //Toast.makeText(context, "click delete"+position, Toast.LENGTH_SHORT).show();
+                if(context.toString().contains("OrderDetailsActivity")) {
+                    Cursor c1 = MainActivity.db.rawQuery("select * from orders2 where orderId=" + MainActivity.orderID + "", null);
+                    String sended1 = "";
+                    while (c1.moveToNext()) {
+                        sended1 = c1.getString(4);
+                    }
+                    if (sended1.equals("N")) {
+                        pos = getItem(position).articleId;
+                        Orders.deleteItem(MainActivity.orderID,orderItems.get(position).articleId);
+                        Intent intent1 = new Intent(context, OrderDetailsActivity.class);
+                        context.startActivity(intent1);
+                        ((OrderDetailsActivity) context).finish();
+                        Toast.makeText(context, "" + context, Toast.LENGTH_SHORT).show();
+                    } else if (sended1.equals("Y")) {
+                        Toast.makeText(context, "Cannot edit, order already Sended!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else if(context.toString().contains("CombinedActivity")){
+                    pos = getItem(position).articleId;
+                    OrderItems.deleteItem(orderItems.get(position).articleId);
+                    Intent intent1 = new Intent(context, CombinedActivity.class);
+                    intent1.putExtra("fragToLoad", 2);
+                    context.startActivity(intent1);
+                    ((CombinedActivity) context).finish();
+                }
+            }
+        });
+        return v;
+    }
+
+    @Override
+    public void fillValues(int position, View convertView) {
         TextView n=(TextView)convertView.findViewById(R.id.textView21);
         TextView pr=(TextView)convertView.findViewById(R.id.textView24);
         TextView co=(TextView)convertView.findViewById(R.id.textView22);
         TextView q=(TextView)convertView.findViewById(R.id.textView23);
-        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton3);
-        imageButton.setTag(getItem(position));
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch(v.getId())
-                {
-                    case R.id.imageButton3:
-                        final PopupMenu popup = new PopupMenu(context, v);
-                        popup.getMenuInflater().inflate(R.menu.orderedit, popup.getMenu());
-                        popup.show();
-                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.edit:
-                                        Cursor c= MainActivity.db.rawQuery("select * from orders2 where orderId="+MainActivity.orderID+"", null);
-                                        String sended="";
-                                        while(c.moveToNext())
-                                        {
-                                            sended=c.getString(4);
-                                        }
-                                        if(sended.equals("N")) {
-                                            pos = getItem(position).articleId;
-                                            Intent intent = new Intent(context, ArticleAmountActivity.class);
-                                            intent.putExtra("articleId", pos);
-                                            context.startActivity(intent);
-                                        }
-                                        else if(sended.equals("Y"))
-                                        {
-                                            Toast.makeText(context,"Cannot edit, order already Sended!",Toast.LENGTH_SHORT).show();
-                                        }
-                                        break;
-                                    case R.id.remove:
-                                        if(context.toString().contains("OrderDetailsActivity")) {
-                                            Cursor c1 = MainActivity.db.rawQuery("select * from orders2 where orderId=" + MainActivity.orderID + "", null);
-                                            String sended1 = "";
-                                            while (c1.moveToNext()) {
-                                                sended1 = c1.getString(4);
-                                            }
-                                            if (sended1.equals("N")) {
-                                                pos = getItem(position).articleId;
-                                                Orders.deleteItem(MainActivity.orderID,orderItems.get(position).articleId);
-                                                Intent intent1 = new Intent(context, OrderDetailsActivity.class);
-                                                context.startActivity(intent1);
-                                                ((OrderDetailsActivity) context).finish();
-                                                Toast.makeText(context, "" + context, Toast.LENGTH_SHORT).show();
-                                            } else if (sended1.equals("Y")) {
-                                                Toast.makeText(context, "Cannot edit, order already Sended!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                        else if(context.toString().contains("CombinedActivity")){
-                                            pos = getItem(position).articleId;
-                                            OrderItems.deleteItem(orderItems.get(position).articleId);
-                                            Intent intent1 = new Intent(context, CombinedActivity.class);
-                                            intent1.putExtra("fragToLoad", 2);
-                                            context.startActivity(intent1);
-                                            ((CombinedActivity) context).finish();
-                                        }
-                                        break;
-                                }
-                                return true;
-                            }
-                        });
-                }
-            }
-        });
         n.setText(getItem(position).articleName);
         co.setText(""+getItem(position).articleCode+"     ");
         q.setText(""+getItem(position).quantity+"  "+getItem(position).articleUnits );
-        pr.setText(""+getItem(position).price+" KM");
-        return convertView;
+        double d = Double.parseDouble(getItem(position).price);
+        String str = String.format("%1.2f", d);
+        d = Double.valueOf(str);
+        pr.setText(""+d+" KM");
     }
 }

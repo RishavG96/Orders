@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.daimajia.swipe.SwipeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="74dp"
     android:background="#FFFFFF"
-    android:orientation="vertical"
+    android:id="@+id/swipe1"
     android:descendantFocusability="blocksDescendants">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF5534"
+        android:gravity="center"
+        android:tag="Bottom3"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/trash"
+            android:layout_width="27dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/trash" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Delete Item?"
+            android:textColor="#fff"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="4"
+            android:background="#FFFFFF"
+            android:text="Yes,Delete"
+            android:textColor="#FF5534" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,15 +59,6 @@
         android:text="TextView"
         android:textColor="#323643"
         android:textSize="13dp" />
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="28dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="3dp"
-        android:adjustViewBounds="true"
-        android:background="@android:color/transparent"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/menus" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -104,5 +131,5 @@
         android:textSize="12dp" />
 
     </LinearLayout>
-
-</LinearLayout>
+    </LinearLayout>
+</com.daimajia.swipe.SwipeLayout>
