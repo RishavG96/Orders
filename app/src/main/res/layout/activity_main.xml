@@ -87,7 +87,7 @@ tools:openDrawer="start">
                 android:id="@+id/material_design_floating_action_menu_item1"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:src="@drawable/menu"
+                android:src="@drawable/send"
                 fab:fab_label="Send all orders"
                 fab:fab_size="mini" />
 
@@ -95,7 +95,7 @@ tools:openDrawer="start">
                 android:id="@+id/material_design_floating_action_menu_item2"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/menu"
+                android:src="@drawable/delete"
                 fab:fab_label="Delete all orders"
                 fab:fab_size="mini" />
 
@@ -103,7 +103,7 @@ tools:openDrawer="start">
                 android:id="@+id/material_design_floating_action_menu_item3"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/menu"
+                android:src="@drawable/delete"
                 fab:fab_label="Delete sent orders"
                 fab:fab_size="mini" />
 
@@ -111,7 +111,7 @@ tools:openDrawer="start">
                 android:id="@+id/material_design_floating_action_menu_item4"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/menu"
+                android:src="@drawable/delete"
                 fab:fab_label="Delete unsent orders"
                 fab:fab_size="mini" />
         </com.github.clans.fab.FloatingActionMenu>

@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,6 +44,8 @@ public class UpdateURLActivity extends AppCompatActivity {
         editText=findViewById(R.id.editText);
         update=findViewById(R.id.button);
         oldurl=findViewById(R.id.textView);
+        editText.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         db=openOrCreateDatabase("order",MODE_PRIVATE,null);
         Cursor c=db.rawQuery("select * from url",null);
         StringBuffer sb=new StringBuffer();

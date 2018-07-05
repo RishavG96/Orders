@@ -76,8 +76,8 @@
         android:layout_marginRight="5dp"
         android:fontFamily="sans-serif"
         android:background="@drawable/button"
-        android:text="Submit"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#FFFFFF"
+        android:text="Submit" />
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">

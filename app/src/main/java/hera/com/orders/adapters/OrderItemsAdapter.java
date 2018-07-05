@@ -109,18 +109,6 @@ public class OrderItemsAdapter extends BaseSwipeAdapter {
         v.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                int articleId=orderItems.get(position).articleId;
-//                boolean flag= order.deleteItem(MainActivity.orderID,articleId);
-//                if(flag==false){
-//                    OrderItems orderItems=new OrderItems();
-//                    orderItems.deleteItem(articleId);
-//                }
-//                else {
-//                    Intent intent1 = new Intent(context, OrderDetailsActivity.class);
-//                    context.startActivity(intent1);
-//                    ((Activity) context).finish();
-//                }
-                //Toast.makeText(context, "click delete"+position, Toast.LENGTH_SHORT).show();
                 if(context.toString().contains("OrderDetailsActivity")) {
                     Cursor c1 = MainActivity.db.rawQuery("select * from orders2 where orderId=" + MainActivity.orderID + "", null);
                     String sended1 = "";
