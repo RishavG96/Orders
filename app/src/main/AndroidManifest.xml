@@ -27,10 +27,11 @@
             android:name=".PartnersActivity"
             android:label="Partners"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".PartnerDetailsActivity" />
+        <activity android:name=".PartnerDetailsActivity"
+            android:label="Partners"/>
         <activity
             android:name=".ArticleActivity"
-            android:label="Articles" />
+            android:label="Products" />
         <activity
             android:name=".AssortmentActivity"
             android:label="Assortment" />
@@ -43,11 +44,13 @@
             android:label="Partners" />
         <activity android:name=".ArticleAmountActivity" />
         <activity android:name=".OrderDetailsActivity" />
-        <activity android:name=".ArticleDetailsActivity" />
+        <activity android:name=".ArticleDetailsActivity"
+            android:label="Products"/>
         <activity android:name=".AssortmentDetailsActivity" />
         <activity android:name=".WeekDaysActivity"
             android:label="Routes"/>
-        <activity android:name=".ShowPartnersByWeekActivity" />
+        <activity android:name=".ShowPartnersByWeekActivity"
+            android:label="Partners"/>
         <activity android:name=".PartnerWeekDetailsActivity"></activity>
     </application>
 

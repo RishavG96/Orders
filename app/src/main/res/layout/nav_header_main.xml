@@ -21,7 +21,7 @@
         android:textColor="#FFFFFF"
         android:paddingTop="20dp"
         android:text="Eurocompany 99"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
     <TextView
         android:id="@+id/nav_header_textView1"
         android:layout_width="match_parent"
@@ -29,5 +29,5 @@
         android:textSize="16dp"
         android:textColor="#FC897F"
         android:text="Username"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 </LinearLayout>

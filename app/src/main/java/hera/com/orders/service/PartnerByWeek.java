@@ -93,7 +93,7 @@ public class PartnerByWeek {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(context,"Error= "+ error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"PartnerByWeek not updated, Please try again!", Toast.LENGTH_SHORT).show();
                     }
                 })
         {

@@ -80,6 +80,9 @@ public class UpdateURLActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        View headerView = navigationView.getHeaderView(0);
+        TextView username=headerView.findViewById(R.id.nav_header_textView1);
+        username.setText(MainActivity.user);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override

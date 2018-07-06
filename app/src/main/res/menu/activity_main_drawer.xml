@@ -7,7 +7,7 @@
         <item android:id="@+id/partner"
             android:title="Partner" />
         <item android:id="@+id/article"
-            android:title="Article" />
+            android:title="Products" />
         <item android:id="@+id/partnerweek"
             android:title="Route" />
     </group>

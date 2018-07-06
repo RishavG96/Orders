@@ -9,9 +9,11 @@ android:id="@+id/drawer_layout"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="#CECECE"
+android:descendantFocusability="blocksDescendants"
 tools:openDrawer="start">
 
     <RelativeLayout
+        android:id="@+id/main"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical">
@@ -70,7 +72,6 @@ tools:openDrawer="start">
             fab:menu_fab_size="normal"
             fab:menu_icon="@drawable/menu"
             fab:menu_labels_colorNormal="#ffffff"
-
             fab:menu_labels_colorPressed="#444"
             fab:menu_labels_colorRipple="#66efecec"
 

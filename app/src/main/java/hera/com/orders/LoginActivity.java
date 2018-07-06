@@ -48,8 +48,10 @@ public class LoginActivity extends AppCompatActivity {
         while(c.moveToNext()) {
             flag=1;
         }
-        if(flag==0)
-            db.execSQL("insert into url values('"+url+"')");
+        if(flag==0) {
+            db.execSQL("delete from url");
+            db.execSQL("insert into url values('" + url + "')");
+        }
         Cursor c1=db.rawQuery("select * from login",null);
         int flag1=0;
         while(c1.moveToNext()) {

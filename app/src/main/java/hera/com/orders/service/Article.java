@@ -98,7 +98,7 @@ public class Article {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(context,"Error= "+ error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Products not updated, Please try again!", Toast.LENGTH_SHORT).show();
                     }
                 })
         {

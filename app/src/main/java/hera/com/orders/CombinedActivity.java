@@ -20,6 +20,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -51,6 +53,7 @@ public class CombinedActivity extends AppCompatActivity {
             orders2.partnerId=MainActivity.partnerID;
             //orders2.partner.name=MainActivity.partnerName;
             orders2.dates=MainActivity.dates;
+            //Toast.makeText(this, ""+MainActivity.dates,Toast.LENGTH_SHORT).show();
             orders2.note=MainActivity.notes;
             orders.addOrder(this, orders2);
         }
@@ -80,6 +83,9 @@ public class CombinedActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        View headerView = navigationView.getHeaderView(0);
+        TextView username=headerView.findViewById(R.id.nav_header_textView1);
+        username.setText(MainActivity.user);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -133,7 +139,7 @@ public class CombinedActivity extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "Article");
+        adapter.addFragment(new OneFragment(), "Products");
         adapter.addFragment(new TwoFragment(), "Assortment");
         adapter.addFragment(new ThreeFragment(), "Cart");
         viewPager.setAdapter(adapter);

@@ -16,20 +16,17 @@ public class Orders {
     {
         MainActivity.db.execSQL("create table if not exists orders2(orderId integer, partnerId integer, " +
                 "date varchar(1000), note varchar(1000), sended varchar(1000))");
-        int orderId = getNextOrderId();
-        MainActivity.orderID=orderId;
-        //Toast.makeText(context,"here",Toast.LENGTH_SHORT).show();
-        MainActivity.db.execSQL("insert into orders2 values("+orderId+","+orders.partnerId+",'"+orders.dates+"'," +
-                "'"+orders.note+"','N')");
-
-        //Toast.makeText(context,"Order Placed!",Toast.LENGTH_SHORT).show();
-    }
-    public void addToOrderDetails(Context context)
-    {
         MainActivity.db.execSQL("create table if not exists orderdetails1(orderId integer, articleId integer, articleName varchar(1000)," +
                 "articleCode varchar(1000), articleUnits varchar(1000), articlePacking varchar(1000)," +
                 "articleWeight varchar(1000), quantity varchar(1000), packaging varchar(1000)," +
                 "price varchar(1000))");
+        int orderId = getNextOrderId();
+        MainActivity.orderID=orderId;
+        MainActivity.db.execSQL("insert into orders2 values("+orderId+","+orders.partnerId+",'"+orders.dates+"'," +
+                "'"+orders.note+"','N')");
+    }
+    public void addToOrderDetails(Context context)
+    {
         MainActivity.db.execSQL("delete from orderdetails1 where orderId="+MainActivity.orderID+"");
         try {
             Cursor cursor = MainActivity.db.rawQuery("select * from orderitems", null);
@@ -99,7 +96,7 @@ public class Orders {
         hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
         while(c.moveToNext())
         {
-            Log.e("partner:","here");
+            //Log.e("partner:","here");
             Cursor c1=MainActivity.db.rawQuery("select * from orderdetails1 where orderId="+c.getInt(0),null);
             List<hera.com.orders.model.OrderItems> orderItemsList=new ArrayList<>();
             while(c1.moveToNext())
@@ -203,7 +200,10 @@ public class Orders {
     }
     public int getNextOrderId()
     {
-        Cursor c=MainActivity.db.rawQuery("select * from orders2", null);
+        Cursor c=null;
+        try {
+            c = MainActivity.db.rawQuery("select * from orders2", null);
+        }catch (Exception e){}
         int count=1;
         while(c.moveToNext())
         {

@@ -25,8 +25,10 @@ public class User {
                 flag=1;
             }
         }
-        if(flag==0)
-            db.execSQL("insert into user1 values("+user.Id+",'"+user.Username+"','"+user.Password+"','"+user.Token+"')");
+        if(flag==0) {
+            db.execSQL("delete from user1");
+            db.execSQL("insert into user1 values(" + user.Id + ",'" + user.Username + "','" + user.Password + "','" + user.Token + "')");
+        }
         //db.execSQL("delete from "+ "user1");
         //db.execSQL("delete from "+ "url");
         db.execSQL("create table if not exists url(url varchar(1000))");

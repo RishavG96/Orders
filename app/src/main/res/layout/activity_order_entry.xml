@@ -51,8 +51,6 @@
             android:layout_marginRight="8dp"
             android:paddingLeft="13dp"
             android:hint="Select date"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:ems="10"
             android:inputType="date"
             android:background="@drawable/edittext" />

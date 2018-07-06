@@ -28,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     public static int Id;
     NavigationView navigationView;
+    RelativeLayout relativeLayout;
     public static SQLiteDatabase db;
     hera.com.orders.sqlite.Orders orders;
     hera.com.orders.sqlite.Partner sqlite_partner;
@@ -65,10 +67,11 @@ public class MainActivity extends AppCompatActivity {
     SearchView searchView;
     ListView lv;
     ImageView iv;
-    TextView tv;
+    TextView tv, username;
     Button newOrder;
     OrdersAdapter adapter;
     public static int pos;
+    public static String user="";
     public static String notes="",dates="";
     public static int partnerID;
     public static String partnerName;
@@ -78,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        relativeLayout=findViewById(R.id.main);
         lv=findViewById(R.id.listview2);
         iv=findViewById(R.id.imageView3);
         tv=findViewById(R.id.textView43);
@@ -89,11 +93,11 @@ public class MainActivity extends AppCompatActivity {
         service_assortment = new hera.com.orders.service.Assortment();
         service_partner_week = new hera.com.orders.service.PartnerByWeek();
         materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
+        materialDesignFAM.setClosedOnTouchOutside(true);
         floatingActionButton1 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item1);
         floatingActionButton2 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item2);
         floatingActionButton3 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item3);
         floatingActionButton4 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item4);
-
         orderID=0;
         //Toast.makeText(getApplicationContext(),"here",Toast.LENGTH_SHORT).show();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
@@ -144,7 +148,9 @@ public class MainActivity extends AppCompatActivity {
         try {
             ordersList=(List<hera.com.orders.model.Orders>) orders.showOrders(this);
         }
-        catch (Exception e){}
+        catch (Exception e){
+            //Toast.makeText(this,e+"",Toast.LENGTH_SHORT).show();
+        }
         if(ordersList.isEmpty())
         {
             lv.setVisibility(View.GONE);
@@ -221,6 +227,14 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        View headerView = navigationView.getHeaderView(0);
+        username=headerView.findViewById(R.id.nav_header_textView1);
+        Cursor c1=db.rawQuery("select * from user1",null);
+        if(c1.moveToNext())
+        {
+            user=c1.getString(1);
+            username.setText(user);
+        }
 
         handle = new Handler() {
             @Override

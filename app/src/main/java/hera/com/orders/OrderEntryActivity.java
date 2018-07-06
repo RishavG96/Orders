@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.text.format.Time;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,8 +54,14 @@ public class OrderEntryActivity extends AppCompatActivity {
         myCalendar= Calendar.getInstance();
 
         name.setText(MainActivity.partnerName);
-        et.requestFocus();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        et.setInputType(InputType.TYPE_NULL);
+        String myFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date c = Calendar.getInstance().getTime();
+        todaysDate=sdf.format(c);
+        et.setText("Date: "+todaysDate.substring(0,10));
+        MainActivity.dates=todaysDate;
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -100,6 +107,9 @@ public class OrderEntryActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        View headerView = navigationView.getHeaderView(0);
+        TextView username=headerView.findViewById(R.id.nav_header_textView1);
+        username.setText(MainActivity.user);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -157,7 +167,7 @@ public class OrderEntryActivity extends AppCompatActivity {
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date c = Calendar.getInstance().getTime();
         todaysDate=sdf.format(c);
-        et.setText(sdf.format(myCalendar.getTime()).substring(0,10));
+        et.setText("Date: "+sdf.format(myCalendar.getTime()).substring(0,10));
         MainActivity.dates=sdf.format(myCalendar.getTime());
     }
 
