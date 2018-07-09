@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class TwoFragment extends Fragment {
     ListView lv;
     AssortmentListAdapter adapter;
     TextView empty;
+    ImageView imageView;
     hera.com.orders.sqlite.Assortment sqlite_assort;
     SearchView searchView;
     List<Article> articleList;
@@ -48,12 +50,17 @@ public class TwoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_two, container, false);
         lv=view.findViewById(R.id.listview4);
         empty=view.findViewById(R.id.empty);
+        imageView=view.findViewById(R.id.imageView4);
         sqlite_assort=new hera.com.orders.sqlite.Assortment();
         articleList=new ArrayList<>();
         articleList=(List<Article>) sqlite_assort.showAssortment(getContext(), MainActivity.partnerID);
         adapter=new AssortmentListAdapter(getContext(), articleList);
-        if(articleList.isEmpty())
+        if(articleList.isEmpty()) {
             empty.setText("No Assortments for the Partner");
+            imageView.setVisibility(View.VISIBLE);
+            empty.setVisibility(View.VISIBLE);
+            lv.setVisibility(View.GONE);
+        }
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,6 +69,7 @@ public class TwoFragment extends Fragment {
                 int exit=0;
                 Intent intent=new Intent(getContext(), ArticleAmountActivity.class);
                 intent.putExtra("articleId", articleList.get(position).id);
+                intent.putExtra("page", "fragtwo");
                 startActivityForResult(intent, exit);
             }
         });

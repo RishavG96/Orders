@@ -1,11 +1,13 @@
 package hera.com.orders.Fragments;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import hera.com.orders.ArticleAmountActivity;
 import hera.com.orders.MainActivity;
 import hera.com.orders.R;
 import hera.com.orders.adapters.OrderItemsAdapter;
@@ -30,6 +33,7 @@ public class ThreeFragment extends Fragment {
     Button submit;
     OrderItemsAdapter adapter;
     List<hera.com.orders.model.OrderItems> orderItemsList;
+    public static int pos;
     public ThreeFragment() {
         // Required empty public constructor
     }
@@ -72,6 +76,29 @@ public class ThreeFragment extends Fragment {
             total.setVisibility(View.GONE);
             lv.setVisibility(View.GONE);
         }
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                orderItemsList=adapter.orderItems;
+                pos=orderItemsList.get(position).articleId;
+                Cursor c= MainActivity.db.rawQuery("select * from orders2 where orderId="+MainActivity.orderID+"", null);
+                String sended="";
+                while(c.moveToNext())
+                {
+                    sended=c.getString(4);
+                }
+                if(sended.equals("N")) {
+                    Intent intent = new Intent(getContext(), ArticleAmountActivity.class);
+                    intent.putExtra("articleId", pos);
+                    intent.putExtra("page", "fragthree");
+                    startActivity(intent);
+                }
+                else if(sended.equals("Y"))
+                {
+                    Toast.makeText(getContext(),"Cannot edit, order already Sended!",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

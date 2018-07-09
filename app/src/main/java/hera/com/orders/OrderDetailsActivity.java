@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -47,6 +48,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
     hera.com.orders.service.Orders service_orders;
     private SendOrdertask sendOrdertask=null;
     Orders orders;
+    List<OrderItems> orderItemsList;
+    public static int pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +70,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
         List<hera.com.orders.model.Orders> ordersList=new ArrayList<>();
         MainActivity.orderID=MainActivity.pos;
         String pn=orders.getPartnerName(this, MainActivity.orderID);
-        List<OrderItems> orderItemsList=new ArrayList<>();
         orderItemsList=(List<OrderItems>) orders.showOrderItems(this, MainActivity.orderID);
         adapter=new OrderItemsAdapter(this, orderItemsList);
         lv.setAdapter(adapter);
@@ -87,6 +89,31 @@ public class OrderDetailsActivity extends AppCompatActivity {
             tv2.setVisibility(View.GONE);
             tv.setText("No Order Items added.");
         }
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                orderItemsList=adapter.orderItems;
+                pos=orderItemsList.get(position).articleId;
+                Cursor c= MainActivity.db.rawQuery("select * from orders2 where orderId="+MainActivity.orderID+"", null);
+                String sended="";
+                while(c.moveToNext())
+                {
+                    sended=c.getString(4);
+                }
+                if(sended.equals("N")) {
+                    Orders.pushOrderItems(getApplicationContext(), MainActivity.orderID);
+                    MainActivity.partnerName = Orders.getPartnerName(getApplicationContext(), MainActivity.orderID);
+                    Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
+                    intent.putExtra("fragToLoad", 2);
+                    startActivity(intent);
+                }
+                else if(sended.equals("Y"))
+                {
+                    Toast.makeText(getApplicationContext(),"Cannot edit, order already Sended!",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         editOrder.setOnClickListener(new View.OnClickListener() {
             @Override

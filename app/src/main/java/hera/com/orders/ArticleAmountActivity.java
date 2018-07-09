@@ -40,6 +40,7 @@ public class ArticleAmountActivity extends AppCompatActivity {
     EditText et1,et2;
     Button submit;
     ImageButton del;
+    String page;
     hera.com.orders.sqlite.Article articleItems;
     hera.com.orders.sqlite.OrderItems orderItems;
     List<hera.com.orders.model.Article> articles;
@@ -58,6 +59,7 @@ public class ArticleAmountActivity extends AppCompatActivity {
         orderItems=new hera.com.orders.sqlite.OrderItems();
         articles=new ArrayList<>();
         int id=getIntent().getIntExtra("articleId",0);
+        page=getIntent().getStringExtra("page");
         articles=(List<hera.com.orders.model.Article>)articleItems.showArticle(this, id);
         tv1.setText(articles.get(0).name);
         et1.setHint(articles.get(0).units);
@@ -160,11 +162,19 @@ public class ArticleAmountActivity extends AppCompatActivity {
                         orderItems2.packaging = amount2;
                         orderItems2.price = p;
                         orderItems.addOrders(getApplicationContext(), orderItems2);
-                        Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
-                        intent.putExtra("fragToLoad", 2);
-                        startActivity(intent);
-                        setResult(1);
-                        finish();
+                        if(page.equals("OrderDetails")){
+                            Intent intent = new Intent(getApplicationContext(), OrderDetailsActivity.class);
+                            startActivity(intent);
+                            setResult(1);
+                            finish();
+                        }
+                        else {
+                            Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);
+                            intent.putExtra("fragToLoad", 2);
+                            startActivity(intent);
+                            setResult(1);
+                            finish();
+                        }
                     }
                 }
                 else {

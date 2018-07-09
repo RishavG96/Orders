@@ -125,7 +125,7 @@
                 android:fontFamily="sans-serif"
                 android:background="@drawable/button"
                 android:textColor="#FFFFFF"
-                android:text="+Create Order"/>
+                android:text="+Save Order"/>
         </LinearLayout>
 
     </LinearLayout>

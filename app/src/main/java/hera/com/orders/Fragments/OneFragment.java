@@ -58,6 +58,7 @@ public class OneFragment extends Fragment {
                 int exit=0;
                 Intent intent=new Intent(getContext(), ArticleAmountActivity.class);
                 intent.putExtra("articleId", articleList.get(position).id);
+                intent.putExtra("page", "fragone");
                 startActivityForResult(intent, exit);
             }
         });
