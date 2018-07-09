@@ -90,38 +90,16 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
         TextView ci=(TextView)convertView.findViewById(R.id.textView6);
         TextView co=(TextView)convertView.findViewById(R.id.textView3);
         TextView am=(TextView)convertView.findViewById(R.id.textView4);
-//        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton);
-//        imageButton.setTag(getItem(position));
-//        imageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                switch(v.getId())
-//                {
-//                    case R.id.imageButton:
-//                        final PopupMenu popup = new PopupMenu(context, v);
-//                        popup.getMenuInflater().inflate(R.menu.listoption, popup.getMenu());
-//                        popup.show();
-//                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                            @Override
-//                            public boolean onMenuItemClick(MenuItem item) {
-//                                switch (item.getItemId()) {
-//                                    case R.id.show:
-//                                        pos=getItem(position).id;
-//                                        Intent intent=new Intent(context, PartnerDetailsActivity.class);
-//                                        context.startActivity(intent);
-//                                        break;
-//                                    case R.id.delete:
-//                                        break;
-//                                }
-//                                return true;
-//                            }
-//                        });
-//                }
-//            }
-//        });
+        TextView amount=(TextView)convertView.findViewById(R.id.amount);
         n.setText((getItem(position)).name);
         co.setText(""+getItem(position).code);
-        am.setText(""+getItem(position).amount+"     ");
+        if(getItem(position).amount.equals(" ")) {
+            amount.setText("");
+            am.setText("");
+        }
+        else {
+            am.setText("" + getItem(position).amount + "     ");
+        }
         ad.setText(""+getItem(position).address);
         ci.setText(""+getItem(position).city);
         return convertView;
@@ -198,47 +176,6 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
                     FilteredArrList4=original_city;
                     FilteredArrList5=original_id;
                 } else {
-//                    constraint = constraint.toString().toLowerCase();
-//                    String[] temp=new String[1000];
-//                    int flag;
-//                    String filterString=constraint.toString();
-//                    if(filterString.contains(" ")) {
-//                        temp = filterString.split(" ");
-//                        flag=1;
-//                    }
-//                    else
-//                    {
-//                        flag=0;
-//                    }
-//                    for (int i = 0; i < original_name.size(); i++) {
-//                        String name_data = (String)original_name.get(i);
-//                        String address_data = (String)original_address.get(i);
-//                        if(flag==0) {
-//                            if (name_data.toLowerCase().contains(constraint.toString())) {
-//                                FilteredArrList.add(original_name.get(i));
-//                                FilteredArrList1.add(original_code.get(i));
-//                                FilteredArrList2.add(original_amount.get(i));
-//                                FilteredArrList3.add(original_address.get(i));
-//                                FilteredArrList4.add(original_city.get(i));
-//                                FilteredArrList5.add(original_id.get(i));
-//                            }
-//                        }
-//                        else if(temp.length >1)
-//                        {
-//                            if (name_data.toLowerCase().contains(temp[0]) && address_data.toLowerCase().contains(temp[1])) {
-//                                FilteredArrList.add(original_name.get(i));
-//                                FilteredArrList1.add(original_code.get(i));
-//                                FilteredArrList2.add(original_amount.get(i));
-//                                FilteredArrList3.add(original_address.get(i));
-//                                FilteredArrList4.add(original_city.get(i));
-//                                FilteredArrList5.add(original_id.get(i));
-//                            }
-//                        }
-//                    }
-//                    // set the Filtered result to return
-//                    results.count = FilteredArrList.size();
-//                    results.values = FilteredArrList;
-
                     constraint = constraint.toString().toLowerCase();
                     String temp[];
                     temp=constraint.toString().split(" ");

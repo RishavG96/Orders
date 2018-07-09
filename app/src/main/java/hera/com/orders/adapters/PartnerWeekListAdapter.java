@@ -90,43 +90,21 @@ public class PartnerWeekListAdapter extends BaseAdapter implements Filterable{
         convertView=inflater.inflate(R.layout.partner_layout,null);
         TextView n=(TextView)convertView.findViewById(R.id.textView2);
         TextView co=(TextView)convertView.findViewById(R.id.textView5);
-        TextView am=(TextView)convertView.findViewById(R.id.textView6);
+        TextView ci=(TextView)convertView.findViewById(R.id.textView6);
         TextView ad=(TextView)convertView.findViewById(R.id.textView3);
-        TextView ci=(TextView)convertView.findViewById(R.id.textView4);
-//        ImageButton imageButton=(ImageButton)convertView.findViewById(R.id.imageButton);
-//        imageButton.setTag(getItem(position));
-//        imageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                switch(v.getId())
-//                {
-//                    case R.id.imageButton:
-//                        final PopupMenu popup = new PopupMenu(context, v);
-//                        popup.getMenuInflater().inflate(R.menu.listoption, popup.getMenu());
-//                        popup.show();
-//                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                            @Override
-//                            public boolean onMenuItemClick(MenuItem item) {
-//                                switch (item.getItemId()) {
-//                                    case R.id.show:
-//                                        pos=getItem(position).id;
-//                                        Intent intent=new Intent(context, PartnerWeekDetailsActivity.class);
-//                                        context.startActivity(intent);
-//                                        break;
-//                                    case R.id.delete:
-//                                        break;
-//                                }
-//                                return true;
-//                            }
-//                        });
-//                }
-//            }
-//        });
+        TextView am=(TextView)convertView.findViewById(R.id.textView4);
+        TextView amount1=(TextView)convertView.findViewById(R.id.amount);
         n.setText(name.get(position).toString());
-        co.setText("Code: "+code.get(position).toString());
-        am.setText("    Amount: "+amount.get(position).toString()+"     ");
-        ad.setText("Address: "+address.get(position).toString());
-        ci.setText("    City: "+city.get(position).toString());
+        co.setText(code.get(position).toString());
+        ci.setText(city.get(position).toString());
+        ad.setText(address.get(position).toString());
+        if(amount.get(position).equals(" ")){
+            amount1.setText("");
+            am.setText("");
+        }
+        else{
+            am.setText(amount.get(position).toString()+"     ");
+        }
         return convertView;
     }
 

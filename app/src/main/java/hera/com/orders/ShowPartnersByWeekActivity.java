@@ -53,6 +53,7 @@ public class ShowPartnersByWeekActivity extends AppCompatActivity {
         partnerList=new ArrayList<>();
         partnerByWeekList=(List<PartnerByWeek>) sqlite_partner_week.showPartner(this);
         partnerList=(List<Partner>) sqlite_partner_week.showPartner(this, WeekDaysActivity.pos);
+        Toast.makeText(this, "h"+partnerList.get(0).city+"e",Toast.LENGTH_SHORT).show();
         adapter=new PartnerWeekListAdapter(this, partnerList);
         lv.setAdapter(adapter);
 

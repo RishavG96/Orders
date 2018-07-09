@@ -94,7 +94,7 @@ public class Assortment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(context,"Assortments not updated, Please try again!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Assortments not updated, Please refresh data!", Toast.LENGTH_SHORT).show();
                     }
                 })
         {

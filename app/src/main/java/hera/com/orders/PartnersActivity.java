@@ -56,6 +56,7 @@ public class PartnersActivity extends AppCompatActivity {
         service_partner.connect(this);
         partnerList=new ArrayList<>();
         partnerList= (List<Partner>) sqlite_partner.showPartner(this);
+        Toast.makeText(this, "h"+partnerList.get(0).amount+"e", Toast.LENGTH_SHORT).show();
         adapter=new PartnerListAdapter(this, partnerList );
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

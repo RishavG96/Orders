@@ -101,7 +101,7 @@ public class Partner {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(context,"Partners not updated, Please try again!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Partners not updated, Please refresh data!", Toast.LENGTH_SHORT).show();
                     }
                 })
                 {
