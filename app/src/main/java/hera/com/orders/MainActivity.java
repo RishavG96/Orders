@@ -76,11 +76,13 @@ public class MainActivity extends AppCompatActivity {
     public static int partnerID;
     public static String partnerName;
     public static int orderID=0;
+    int backPresseed=0;
     List<hera.com.orders.model.Orders> ordersList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        backPresseed=0;
         relativeLayout=findViewById(R.id.main);
         lv=findViewById(R.id.listview2);
         iv=findViewById(R.id.imageView3);
@@ -258,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                             case R.id.orders:
                                 Intent intent2=new Intent(getApplicationContext(), MainActivity.class);
+                                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent2);
                                 finish();
                                 break;
@@ -282,9 +285,9 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.logout:
                                 Intent intent6 = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(intent6);
-                                db.execSQL("delete from login");
-                                db.execSQL("delete from user1");
-                                db.execSQL("delete from url");
+                                MainActivity.db.execSQL("drop table login");
+                                MainActivity.db.execSQL("drop table user1");
+                                MainActivity.db.execSQL("drop table url");
                                 finish();
                                 break;
                         }
@@ -351,13 +354,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
-        super.onBackPressed();
+        if(backPresseed==0)
+        {
+            Toast.makeText(this, "Press Back again to exit!",Toast.LENGTH_SHORT).show();
+            backPresseed++;
+        }
+        else if(backPresseed==1) {
+            super.onBackPressed();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        backPresseed=0;
         orderID=0;
         try {
             db.execSQL("delete from orderitems");
@@ -368,6 +378,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        backPresseed=0;
         orderID=0;
         try {
             db.execSQL("delete from orderitems");

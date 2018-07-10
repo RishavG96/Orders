@@ -117,6 +117,7 @@ public class OrdersAdapter extends BaseSwipeAdapter implements Filterable {
                 MainActivity.orderID= ordersList.get(position).orderId;
                 orders.deleteOrder(MainActivity.orderID);
                 Intent intent1=new Intent(context, MainActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intent1);
                 ((Activity)context).finish();
                 //Toast.makeText(context, "click delete"+position, Toast.LENGTH_SHORT).show();

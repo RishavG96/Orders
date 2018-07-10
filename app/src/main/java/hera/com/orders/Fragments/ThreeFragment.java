@@ -28,7 +28,7 @@ import hera.com.orders.sqlite.OrderItems;
 
 
 public class ThreeFragment extends Fragment {
-    hera.com.orders.sqlite.OrderItems orderItems;
+    public  static hera.com.orders.sqlite.OrderItems orderItems;
     hera.com.orders.sqlite.Orders orders;
     ListView lv;
     TextView total,partnerName, tv, tv1, tv2;
@@ -50,7 +50,6 @@ public class ThreeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_three, container, false);
-        orderItems = new hera.com.orders.sqlite.OrderItems();
         orders = new hera.com.orders.sqlite.Orders();
         lv=view.findViewById(R.id.listview6);
         tv=view.findViewById(R.id.textView40);
@@ -127,6 +126,7 @@ public class ThreeFragment extends Fragment {
                         MainActivity.db.execSQL("delete from orderitems");
                     }catch (Exception e){}
                     Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     getActivity().setResult(3);
                     getActivity().setResult(6);

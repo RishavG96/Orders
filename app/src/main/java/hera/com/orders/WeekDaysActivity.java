@@ -65,6 +65,7 @@ public class WeekDaysActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
                             case R.id.orders:
                                 Intent intent2=new Intent(getApplicationContext(), MainActivity.class);
+                                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent2);
                                 finish();
                                 break;

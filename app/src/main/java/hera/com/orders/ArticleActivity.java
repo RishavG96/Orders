@@ -107,6 +107,7 @@ public class ArticleActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
                             case R.id.orders:
                                 Intent intent2=new Intent(getApplicationContext(), MainActivity.class);
+                                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent2);
                                 finish();
                                 break;
@@ -142,9 +143,9 @@ public class ArticleActivity extends AppCompatActivity {
                             case R.id.logout:
                                 Intent intent6 = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(intent6);
-                                db.execSQL("delete from login");
-                                db.execSQL("delete from user1");
-                                db.execSQL("delete from url");
+                                db.execSQL("drop table login");
+                                db.execSQL("drop table user1");
+                                db.execSQL("drop table url");
                                 finish();
                                 break;
                         }

@@ -67,6 +67,7 @@ public class UpdateURLActivity extends AppCompatActivity {
 //                    Toast.makeText(getApplicationContext(), c.getString(0),Toast.LENGTH_SHORT).show();
 //                }
                 Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
             }
@@ -90,6 +91,7 @@ public class UpdateURLActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
                             case R.id.orders:
                                 Intent intent2=new Intent(getApplicationContext(), MainActivity.class);
+                                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent2);
                                 finish();
                                 break;
@@ -125,9 +127,9 @@ public class UpdateURLActivity extends AppCompatActivity {
                             case R.id.logout:
                                 Intent intent6 = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(intent6);
-                                MainActivity.db.execSQL("delete from login");
-                                MainActivity.db.execSQL("delete from user1");
-                                MainActivity.db.execSQL("delete from url");
+                                MainActivity.db.execSQL("drop table login");
+                                MainActivity.db.execSQL("drop table user1");
+                                MainActivity.db.execSQL("drop table url");
                                 finish();
                                 break;
                         }

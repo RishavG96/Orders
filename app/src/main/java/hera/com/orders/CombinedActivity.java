@@ -43,11 +43,15 @@ public class CombinedActivity extends AppCompatActivity {
     NavigationView navigationView;
     hera.com.orders.sqlite.Orders orders;
     SearchView searchView;
+    int backPresseed=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_combined);
+        setResult(3);
+        backPresseed=0;
         orders = new hera.com.orders.sqlite.Orders();
+        ThreeFragment.orderItems = new hera.com.orders.sqlite.OrderItems();
         if(MainActivity.orderID==0) {
             Orders orders2=new Orders();
             orders2.partnerId=MainActivity.partnerID;
@@ -93,6 +97,7 @@ public class CombinedActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
                             case R.id.orders:
                                 Intent intent2=new Intent(getApplicationContext(), MainActivity.class);
+                                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent2);
                                 finish();
                                 break;
@@ -128,9 +133,9 @@ public class CombinedActivity extends AppCompatActivity {
                             case R.id.logout:
                                 Intent intent6 = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(intent6);
-                                MainActivity.db.execSQL("delete from login");
-                                MainActivity.db.execSQL("delete from user1");
-                                MainActivity.db.execSQL("delete from url");
+                                MainActivity.db.execSQL("drop table login");
+                                MainActivity.db.execSQL("drop table user1");
+                                MainActivity.db.execSQL("drop table url");
                                 finish();
                                 break;
                         }
@@ -205,6 +210,7 @@ public class CombinedActivity extends AppCompatActivity {
     protected void onStop() {
         setResult(1);
         setResult(3);
+        backPresseed=0;
         super.onStop();
     }
 
@@ -212,6 +218,19 @@ public class CombinedActivity extends AppCompatActivity {
     protected void onDestroy() {
         setResult(1);
         setResult(3);
+        backPresseed=0;
         super.onDestroy();
+    }
+    @Override
+    public void onBackPressed() {
+        if(backPresseed==0 && ThreeFragment.orderItems.calculateTotalPrice()!=0.0)
+        {
+            Toast.makeText(this, "Save your order!",Toast.LENGTH_SHORT).show();
+            backPresseed++;
+        }
+        else {
+            Toast.makeText(this, "Order not saved!",Toast.LENGTH_SHORT).show();
+            super.onBackPressed();
+        }
     }
 }

@@ -49,9 +49,6 @@ public class LoginActivity extends AppCompatActivity {
             flag=1;
         }
         if(flag==0) {
-            db.execSQL("delete from user1");
-            db.execSQL("delete from url");
-            db.execSQL("delete from login");
             db.execSQL("insert into url values('" + url + "')");
         }
         Cursor c1=db.rawQuery("select * from login",null);
@@ -73,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             assort=1;
             part_week=1;
             Intent intent=new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }
@@ -113,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             assort=1;
             part_week=1;
             Intent intent=new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }
