@@ -251,12 +251,10 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.partner:
                                 Intent intent = new Intent(getApplicationContext(), PartnersActivity.class);
                                 startActivity(intent);
-                                finish();
                                 break;
                             case R.id.article:
                                 Intent intent1=new Intent(getApplicationContext(), ArticleActivity.class);
                                 startActivity(intent1);
-                                finish();
                                 break;
                             case R.id.orders:
                                 Intent intent2=new Intent(getApplicationContext(), MainActivity.class);
@@ -266,7 +264,6 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.partnerweek:
                                 Intent intent3=new Intent(getApplicationContext(), WeekDaysActivity.class);
                                 startActivity(intent3);
-                                finish();
                                 break;
                             case R.id.refresh:
                                 LoginActivity.assort=0;
@@ -285,8 +282,10 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.logout:
                                 Intent intent6 = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(intent6);
-                                finish();
                                 db.execSQL("delete from login");
+                                db.execSQL("delete from user1");
+                                db.execSQL("delete from url");
+                                finish();
                                 break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER

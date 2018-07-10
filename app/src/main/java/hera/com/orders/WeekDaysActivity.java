@@ -100,8 +100,10 @@ public class WeekDaysActivity extends AppCompatActivity {
                             case R.id.logout:
                                 Intent intent6 = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(intent6);
+                                MainActivity.db.execSQL("drop table login");
+                                MainActivity.db.execSQL("drop table user1");
+                                MainActivity.db.execSQL("drop table url");
                                 finish();
-                                MainActivity.db.execSQL("delete from login");
                                 break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER

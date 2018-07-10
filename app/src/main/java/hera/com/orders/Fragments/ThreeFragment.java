@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hera.com.orders.ArticleAmountActivity;
+import hera.com.orders.CombinedActivity;
 import hera.com.orders.MainActivity;
 import hera.com.orders.R;
 import hera.com.orders.adapters.OrderItemsAdapter;
@@ -30,7 +33,7 @@ public class ThreeFragment extends Fragment {
     ListView lv;
     TextView total,partnerName, tv, tv1, tv2;
     ImageView iv;
-    Button submit;
+    Button submit, redirect;
     OrderItemsAdapter adapter;
     List<hera.com.orders.model.OrderItems> orderItemsList;
     public static int pos;
@@ -57,6 +60,7 @@ public class ThreeFragment extends Fragment {
         total=view.findViewById(R.id.totalprice);
         partnerName=view.findViewById(R.id.partnername);
         submit=view.findViewById(R.id.placeorder);
+        redirect=view.findViewById(R.id.redirect);
         orderItemsList=new ArrayList<>();
         partnerName.setText(""+MainActivity.partnerName);
         try {
@@ -75,7 +79,21 @@ public class ThreeFragment extends Fragment {
             tv2.setVisibility(View.GONE);
             total.setVisibility(View.GONE);
             lv.setVisibility(View.GONE);
+            submit.setVisibility(View.GONE);
+            redirect.setVisibility(View.VISIBLE);
         }
+        else{
+            submit.setVisibility(View.VISIBLE);
+            redirect.setVisibility(View.GONE);
+        }
+        redirect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CombinedActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

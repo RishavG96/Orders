@@ -39,7 +39,6 @@ public class ArticleAmountActivity extends AppCompatActivity {
     TextView tv1, tv2;
     EditText et1,et2;
     Button submit;
-    ImageButton del;
     String page;
     hera.com.orders.sqlite.Article articleItems;
     hera.com.orders.sqlite.OrderItems orderItems;
@@ -54,7 +53,6 @@ public class ArticleAmountActivity extends AppCompatActivity {
         et1=findViewById(R.id.editText5);
         et2=findViewById(R.id.editText6);
         submit=findViewById(R.id.button4);
-        del=findViewById(R.id.button5);
         articleItems = new hera.com.orders.sqlite.Article();
         orderItems=new hera.com.orders.sqlite.OrderItems();
         articles=new ArrayList<>();
@@ -65,12 +63,6 @@ public class ArticleAmountActivity extends AppCompatActivity {
         et1.setHint(articles.get(0).units);
         et2.requestFocus();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         et1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -236,8 +228,10 @@ public class ArticleAmountActivity extends AppCompatActivity {
                             case R.id.logout:
                                 Intent intent6 = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(intent6);
-                                finish();
                                 MainActivity.db.execSQL("delete from login");
+                                MainActivity.db.execSQL("delete from user1");
+                                MainActivity.db.execSQL("delete from url");
+                                finish();
                                 break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER

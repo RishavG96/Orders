@@ -143,8 +143,10 @@ public class PartnerWeekDetailsActivity extends AppCompatActivity {
                             case R.id.logout:
                                 Intent intent6 = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(intent6);
-                                finish();
                                 MainActivity.db.execSQL("delete from login");
+                                MainActivity.db.execSQL("delete from user1");
+                                MainActivity.db.execSQL("delete from url");
+                                finish();
                                 break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER

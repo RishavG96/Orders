@@ -142,8 +142,10 @@ public class ArticleActivity extends AppCompatActivity {
                             case R.id.logout:
                                 Intent intent6 = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(intent6);
-                                finish();
                                 db.execSQL("delete from login");
+                                db.execSQL("delete from user1");
+                                db.execSQL("delete from url");
+                                finish();
                                 break;
                         }
                         drawerLayout.closeDrawers();  // CLOSE DRAWER

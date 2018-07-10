@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CECECE"
+    android:id="@+id/fraThree"
     tools:context=".Fragments.ThreeFragment">
 
     <LinearLayout
@@ -94,27 +95,7 @@
             android:layout_height="match_parent"
             android:gravity="bottom"
             android:orientation="horizontal">
-            <!--<Button-->
-                <!--android:id="@+id/editorder"-->
-                <!--android:layout_width="170dp"-->
-                <!--android:layout_height="48dp"-->
-                <!--android:layout_marginLeft="7dp"-->
-                <!--android:layout_marginRight="5dp"-->
-                <!--android:layout_marginTop="15dp"-->
-                <!--android:fontFamily="sans-serif"-->
-                <!--android:background="@drawable/editbutton"-->
-                <!--android:textColor="#EA4335"-->
-                <!--android:text="Edit Order"/>-->
-            <!--<Button-->
-                <!--android:id="@+id/submitorder"-->
-                <!--android:layout_width="170dp"-->
-                <!--android:layout_height="48dp"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:layout_marginTop="15dp"-->
-                <!--android:fontFamily="sans-serif"-->
-                <!--android:background="@drawable/button"-->
-                <!--android:textColor="#FFFFFF"-->
-                <!--android:text="Submit Order"/>-->
+
             <Button
                 android:id="@+id/placeorder"
                 android:layout_width="match_parent"
@@ -126,6 +107,18 @@
                 android:background="@drawable/button"
                 android:textColor="#FFFFFF"
                 android:text="+Save Order"/>
+            <Button
+                android:id="@+id/redirect"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="sans-serif"
+                android:background="@drawable/button"
+                android:textColor="#FFFFFF"
+                android:visibility="gone"
+                android:text="+Add Order"/>
         </LinearLayout>
 
     </LinearLayout>
