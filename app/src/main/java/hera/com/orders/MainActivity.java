@@ -103,6 +103,13 @@ public class MainActivity extends AppCompatActivity {
         orderID=0;
         //Toast.makeText(getApplicationContext(),"here",Toast.LENGTH_SHORT).show();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
+//        db.execSQL("drop table orders2");
+//        db.execSQL("drop table orderdetails1");
+//        db.execSQL("drop table orderitems");
+//        db.execSQL("drop table articles");
+//        db.execSQL("drop table assortment");
+//        db.execSQL("drop table partners");
+//        db.execSQL("drop table partnerbyweek");
         try {
             db.execSQL("delete from orderitems");
         }

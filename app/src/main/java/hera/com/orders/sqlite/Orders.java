@@ -27,7 +27,10 @@ public class Orders {
     }
     public void addToOrderDetails(Context context)
     {
-        MainActivity.db.execSQL("delete from orderdetails1 where orderId="+MainActivity.orderID+"");
+        try{
+            MainActivity.db.execSQL("delete from orderdetails1 where orderId="+MainActivity.orderID+"");
+        }
+        catch (Exception e){}
         try {
             Cursor cursor = MainActivity.db.rawQuery("select * from orderitems", null);
             while (cursor.moveToNext()) {

@@ -28,7 +28,6 @@ public class Partner {
                 ",'"+partner.address+"','"+partner.city+"','"+partner.amount+"'," + "'"+partner.type+"','"+partner.discount+"'" +
                 ",'"+partner.status+"','"+partner.businessHours+"','"+partner.timeOfReceipt+"','"+partner.responsiblePerson+"'" +
                 ",'"+partner.forMobile+"')");
-
     }
     public Iterable<hera.com.orders.model.Partner> showPartner(Context context)
     {
