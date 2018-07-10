@@ -3,21 +3,16 @@
     package="hera.com.orders">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/appicon"
         android:label="Order"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
         <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
         <activity
@@ -27,8 +22,9 @@
             android:name=".PartnersActivity"
             android:label="Partners"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".PartnerDetailsActivity"
-            android:label="Partners"/>
+        <activity
+            android:name=".PartnerDetailsActivity"
+            android:label="Partners" />
         <activity
             android:name=".ArticleActivity"
             android:label="Products" />
@@ -44,14 +40,24 @@
             android:label="Partners" />
         <activity android:name=".ArticleAmountActivity" />
         <activity android:name=".OrderDetailsActivity" />
-        <activity android:name=".ArticleDetailsActivity"
-            android:label="Products"/>
+        <activity
+            android:name=".ArticleDetailsActivity"
+            android:label="Products" />
         <activity android:name=".AssortmentDetailsActivity" />
-        <activity android:name=".WeekDaysActivity"
-            android:label="Routes"/>
-        <activity android:name=".ShowPartnersByWeekActivity"
-            android:label="Partners"/>
-        <activity android:name=".PartnerWeekDetailsActivity"></activity>
+        <activity
+            android:name=".WeekDaysActivity"
+            android:label="Routes" />
+        <activity
+            android:name=".ShowPartnersByWeekActivity"
+            android:label="Partners" />
+        <activity android:name=".PartnerWeekDetailsActivity" />
+        <activity android:name=".SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

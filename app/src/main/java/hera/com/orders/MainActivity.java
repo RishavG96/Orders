@@ -112,10 +112,9 @@ public class MainActivity extends AppCompatActivity {
         {
             service_partner.connect(getApplicationContext());
             service_article.connect(getApplicationContext());
-            //Toast.makeText(this, "art"+LoginActivity.art,Toast.LENGTH_SHORT).show();
             service_assortment.connect(getApplicationContext());
             service_partner_week.connect(getApplicationContext());
-            //Toast.makeText(this, "ass"+LoginActivity.assort,Toast.LENGTH_SHORT).show();
+
             progressDialog = new ProgressDialog(MainActivity.this);
             progressDialog.setMax(100);
             progressDialog.setMessage("Loading....");
