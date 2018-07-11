@@ -75,8 +75,6 @@ tools:openDrawer="start">
             fab:menu_labels_colorNormal="#ffffff"
             fab:menu_labels_colorPressed="#444"
             fab:menu_labels_colorRipple="#66efecec"
-
-
             fab:menu_labels_ellipsize="none"
             fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
             fab:menu_labels_position="left"

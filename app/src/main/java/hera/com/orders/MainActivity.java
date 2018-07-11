@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
@@ -22,6 +23,7 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -103,13 +105,6 @@ public class MainActivity extends AppCompatActivity {
         orderID=0;
         //Toast.makeText(getApplicationContext(),"here",Toast.LENGTH_SHORT).show();
         db=openOrCreateDatabase("order",MODE_PRIVATE, null);
-//        db.execSQL("drop table orders2");
-//        db.execSQL("drop table orderdetails1");
-//        db.execSQL("drop table orderitems");
-//        db.execSQL("drop table articles");
-//        db.execSQL("drop table assortment");
-//        db.execSQL("drop table partners");
-//        db.execSQL("drop table partnerbyweek");
         try {
             db.execSQL("delete from orderitems");
         }
@@ -136,8 +131,7 @@ public class MainActivity extends AppCompatActivity {
                                 .getMax()) {
                             Thread.sleep(60);
                             handle.sendMessage(handle.obtainMessage());
-                            if (progressDialog.getProgress() == progressDialog
-                                    .getMax()) {
+                            if (progressDialog.getProgress() == progressDialog.getMax()) {
                                 progressDialog.dismiss();
                             }
                         }
@@ -227,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         navigationView=findViewById(R.id.nav_view);
         Toolbar toolbar=findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -304,12 +299,29 @@ public class MainActivity extends AppCompatActivity {
         newOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                materialDesignFAM.close(true);
                 int exit=5;
                 Intent intent=new Intent(getApplicationContext(), OrderPartnersActivity.class);
                 startActivityForResult(intent,exit);
             }
         });
     }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event){
+        if (materialDesignFAM.isOpened()) {
+
+            Rect outRect = new Rect();
+            materialDesignFAM.getGlobalVisibleRect(outRect);
+
+            if(!outRect.contains((int)event.getRawX(), (int)event.getRawY()))
+                materialDesignFAM.close(true);
+            return false;
+        }
+        else {
+            return super.dispatchTouchEvent(event);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
