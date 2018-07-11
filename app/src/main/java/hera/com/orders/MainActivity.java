@@ -321,8 +321,6 @@ public class MainActivity extends AppCompatActivity {
             return super.dispatchTouchEvent(event);
         }
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();

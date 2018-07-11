@@ -112,27 +112,28 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint,FilterResults results) {
-
-                name = (ArrayList)results.values; // has the filtered values
-                code=FilteredArrList1;
-                amount=FilteredArrList2;
-                address=FilteredArrList3;
-                city=FilteredArrList4;
-                id=FilteredArrList5;
-                List<Partner> partnerList=new ArrayList<Partner>();
-                for(int i=0;i<name.size();i++)
-                {
-                    Partner partner=new Partner();
-                    partner.id=Integer.parseInt(id.get(i).toString());
-                    partner.name=name.get(i).toString();
-                    partner.code=code.get(i).toString();
-                    partner.amount=amount.get(i).toString();
-                    partner.address=address.get(i).toString();
-                    partner.city=city.get(i).toString();
-                    partnerList.add(partner);
+                try {
+                    name = (ArrayList) results.values; // has the filtered values
+                    code = FilteredArrList1;
+                    amount = FilteredArrList2;
+                    address = FilteredArrList3;
+                    city = FilteredArrList4;
+                    id = FilteredArrList5;
+                    List<Partner> partnerList = new ArrayList<Partner>();
+                    for (int i = 0; i < name.size(); i++) {
+                        Partner partner = new Partner();
+                        partner.id = Integer.parseInt(id.get(i).toString());
+                        partner.name = name.get(i).toString();
+                        partner.code = code.get(i).toString();
+                        partner.amount = amount.get(i).toString();
+                        partner.address = address.get(i).toString();
+                        partner.city = city.get(i).toString();
+                        partnerList.add(partner);
+                    }
+                    partners = partnerList;
+                    notifyDataSetChanged();  // notifies the data with new filtered values
                 }
-                partners=partnerList;
-                notifyDataSetChanged();  // notifies the data with new filtered values
+                catch(Exception e){}
             }
 
             @Override
@@ -186,7 +187,7 @@ public class PartnerListAdapter extends BaseAdapter implements Filterable{
                         String c=address.get(i).toString();
                         String concat=n+" "+c;
                         t=concat.split(" ");
-                        int flag[]=new int[temp.length+1];
+                        int flag[]=new int[temp.length];
                         for(int j=0;j<temp.length;j++)
                             flag[j]=0;
                         int count=0;

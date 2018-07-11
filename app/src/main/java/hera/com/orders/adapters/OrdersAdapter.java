@@ -154,24 +154,25 @@ public class OrdersAdapter extends BaseSwipeAdapter implements Filterable {
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint,FilterResults results) {
-                orderId = (ArrayList)results.values; // has the filtered values
-                partnerName=FilteredArrList1;
-                dates=FilteredArrList2;
-                sended=FilteredArrList3;
-                List<hera.com.orders.model.Orders> ordersList1=new ArrayList<>();
-                for(int i=0;i<orderId.size();i++)
-                {
-                    hera.com.orders.model.Orders orders=new hera.com.orders.model.Orders();
-                    orders.orderId=Integer.parseInt(orderId.get(i).toString());
-                    orders.dates=dates.get(i).toString();
-                    orders.sended=sended.get(i).toString();
-                    hera.com.orders.model.Partner partner=new hera.com.orders.model.Partner();
-                    partner.name=partnerName.get(i).toString();
-                    orders.partner=partner;
-                    ordersList1.add(orders);
-                }
-                ordersList=ordersList1;
-                notifyDataSetChanged();  // notifies the data with new filtered values
+                try {
+                    orderId = (ArrayList) results.values; // has the filtered values
+                    partnerName = FilteredArrList1;
+                    dates = FilteredArrList2;
+                    sended = FilteredArrList3;
+                    List<hera.com.orders.model.Orders> ordersList1 = new ArrayList<>();
+                    for (int i = 0; i < orderId.size(); i++) {
+                        hera.com.orders.model.Orders orders = new hera.com.orders.model.Orders();
+                        orders.orderId = Integer.parseInt(orderId.get(i).toString());
+                        orders.dates = dates.get(i).toString();
+                        orders.sended = sended.get(i).toString();
+                        hera.com.orders.model.Partner partner = new hera.com.orders.model.Partner();
+                        partner.name = partnerName.get(i).toString();
+                        orders.partner = partner;
+                        ordersList1.add(orders);
+                    }
+                    ordersList = ordersList1;
+                    notifyDataSetChanged();  // notifies the data with new filtered values
+                }catch (Exception e){}
             }
 
             @Override
@@ -203,17 +204,45 @@ public class OrdersAdapter extends BaseSwipeAdapter implements Filterable {
                     FilteredArrList3=original_sended;
                 } else {
                     constraint = constraint.toString().toLowerCase();
-                    for (int i = 0; i < original_orderId.size(); i++) {
-                        String name_data = original_partnerName.get(i).toString().toLowerCase();
-                            if (name_data.contains(constraint.toString())) {
-                                FilteredArrList.add(original_orderId.get(i));
-                                FilteredArrList1.add(original_partnerName.get(i));
-                                FilteredArrList2.add(original_dates.get(i));
-                                FilteredArrList3.add(original_sended.get(i));
+                    String temp[];
+                    temp=constraint.toString().split(" ");
+                    for(int i=0;i<orderId.size();i++)
+                    {
+                        String t[];
+                        String n=partnerName.get(i).toString();
+                        String c=dates.get(i).toString();
+                        String concat=n+" "+c;
+                        t=concat.split(" ");
+                        int flag[]=new int[temp.length+1];
+                        for(int j=0;j<temp.length;j++)
+                            flag[j]=0;
+                        int count=0;
+                        for(String str:temp)
+                        {
+                            for(String s:t)
+                            {
+                                if(s.toLowerCase().contains(str.toLowerCase()))
+                                {
+                                    flag[count]=1;
+                                }
                             }
+                            count++;
+                        }
+                        int f=0;
+                        for(int j=0;j<temp.length;j++) {
+                            if (flag[j] == 0) {
+                                f=1;
+                                break;
+                            }
+                        }
+                        if(f==0)
+                        {
+                            FilteredArrList.add(orderId.get(i));
+                            FilteredArrList1.add(partnerName.get(i));
+                            FilteredArrList2.add(dates.get(i));
+                            FilteredArrList3.add(sended.get(i));
+                        }
                     }
-
-                    // set the Filtered result to return
                     results.count = FilteredArrList.size();
                     results.values = FilteredArrList;
                 }

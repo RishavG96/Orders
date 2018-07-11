@@ -115,26 +115,27 @@ public class PartnerWeekListAdapter extends BaseAdapter implements Filterable{
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint,FilterResults results) {
-                name = (ArrayList)results.values; // has the filtered values
-                code=FilteredArrList1;
-                amount=FilteredArrList2;
-                address=FilteredArrList3;
-                city=FilteredArrList4;
-                id=FilteredArrList5;
-                List<Partner> partnerList=new ArrayList<Partner>();
-                for(int i=0;i<name.size();i++)
-                {
-                    Partner partner=new Partner();
-                    partner.id=Integer.parseInt(id.get(i).toString());
-                    partner.name=name.get(i).toString();
-                    partner.code=code.get(i).toString();
-                    partner.amount=amount.get(i).toString();
-                    partner.address=address.get(i).toString();
-                    partner.city=city.get(i).toString();
-                    partnerList.add(partner);
-                }
-                partners=partnerList;
-                notifyDataSetChanged();  // notifies the data with new filtered values
+                try {
+                    name = (ArrayList) results.values; // has the filtered values
+                    code = FilteredArrList1;
+                    amount = FilteredArrList2;
+                    address = FilteredArrList3;
+                    city = FilteredArrList4;
+                    id = FilteredArrList5;
+                    List<Partner> partnerList = new ArrayList<Partner>();
+                    for (int i = 0; i < name.size(); i++) {
+                        Partner partner = new Partner();
+                        partner.id = Integer.parseInt(id.get(i).toString());
+                        partner.name = name.get(i).toString();
+                        partner.code = code.get(i).toString();
+                        partner.amount = amount.get(i).toString();
+                        partner.address = address.get(i).toString();
+                        partner.city = city.get(i).toString();
+                        partnerList.add(partner);
+                    }
+                    partners = partnerList;
+                    notifyDataSetChanged();  // notifies the data with new filtered values
+                }catch (Exception e){}
             }
 
             @Override
@@ -177,48 +178,6 @@ public class PartnerWeekListAdapter extends BaseAdapter implements Filterable{
                     FilteredArrList4=original_city;
                     FilteredArrList5=original_id;
                 } else {
-//                    constraint = constraint.toString().toLowerCase();
-//                    String[] temp=new String[1000];
-//                    int flag;
-//                    String filterString=constraint.toString();
-//                    if(filterString.contains(" ")) {
-//                        temp = filterString.split(" ");
-//                        flag=1;
-//                    }
-//                    else
-//                    {
-//                        flag=0;
-//                    }
-//                    for (int i = 0; i < original_name.size(); i++) {
-//                        String name_data = (String)original_name.get(i);
-//                        String address_data = (String)original_address.get(i);
-//                        if(flag==0) {
-//                            if (name_data.toLowerCase().contains(constraint.toString())) {
-//                                FilteredArrList.add(original_name.get(i));
-//                                FilteredArrList1.add(original_code.get(i));
-//                                FilteredArrList2.add(original_amount.get(i));
-//                                FilteredArrList3.add(original_address.get(i));
-//                                FilteredArrList4.add(original_city.get(i));
-//                                FilteredArrList5.add(original_id.get(i));
-//                            }
-//                        }
-//                        else if(temp.length >1)
-//                        {
-//                            if (name_data.toLowerCase().contains(temp[0]) && address_data.toLowerCase().contains(temp[1])) {
-//                                FilteredArrList.add(original_name.get(i));
-//                                FilteredArrList1.add(original_code.get(i));
-//                                FilteredArrList2.add(original_amount.get(i));
-//                                FilteredArrList3.add(original_address.get(i));
-//                                FilteredArrList4.add(original_city.get(i));
-//                                FilteredArrList5.add(original_id.get(i));
-//                            }
-//                        }
-//                    }
-//                    // set the Filtered result to return
-//                    results.count = FilteredArrList.size();
-//                    results.values = FilteredArrList;
-
-
                     constraint = constraint.toString().toLowerCase();
                     String temp[];
                     temp=constraint.toString().split(" ");

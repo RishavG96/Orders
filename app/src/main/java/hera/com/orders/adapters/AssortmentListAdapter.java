@@ -110,28 +110,29 @@ public class AssortmentListAdapter extends BaseAdapter implements Filterable {
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint,FilterResults results) {
-                name = (ArrayList)results.values; // has the filtered values
-                code=FilteredArrList1;
-                amount=FilteredArrList2;
-                units=FilteredArrList3;
-                id=FilteredArrList4;
-                packing=FilteredArrList5;
-                weight=FilteredArrList6;
-                List<Article> articleList=new ArrayList<>();
-                for(int i=0;i<name.size();i++)
-                {
-                    Article article=new Article();
-                    article.id=Integer.parseInt(id.get(i).toString());
-                    article.name=name.get(i).toString();
-                    article.code=code.get(i).toString();
-                    article.price=amount.get(i).toString();
-                    article.units=units.get(i).toString();
-                    article.packing=packing.get(i).toString();
-                    article.weight=weight.get(i).toString();
-                    articleList.add(article);
-                }
-                articles=articleList;
-                notifyDataSetChanged();  // notifies the data with new filtered values
+                try {
+                    name = (ArrayList) results.values; // has the filtered values
+                    code = FilteredArrList1;
+                    amount = FilteredArrList2;
+                    units = FilteredArrList3;
+                    id = FilteredArrList4;
+                    packing = FilteredArrList5;
+                    weight = FilteredArrList6;
+                    List<Article> articleList = new ArrayList<>();
+                    for (int i = 0; i < name.size(); i++) {
+                        Article article = new Article();
+                        article.id = Integer.parseInt(id.get(i).toString());
+                        article.name = name.get(i).toString();
+                        article.code = code.get(i).toString();
+                        article.price = amount.get(i).toString();
+                        article.units = units.get(i).toString();
+                        article.packing = packing.get(i).toString();
+                        article.weight = weight.get(i).toString();
+                        articleList.add(article);
+                    }
+                    articles = articleList;
+                    notifyDataSetChanged();  // notifies the data with new filtered values
+                }catch (Exception e){}
             }
 
             @Override
@@ -179,49 +180,6 @@ public class AssortmentListAdapter extends BaseAdapter implements Filterable {
                     FilteredArrList5=original_packing;
                     FilteredArrList6=original_weight;
                 } else {
-//                    constraint = constraint.toString().toLowerCase();
-//                    String[] temp=new String[1000];
-//                    int flag;
-//                    String filterString=constraint.toString();
-//                    if(filterString.contains(" ")) {
-//                        temp = filterString.split(" ");
-//                        flag=1;
-//                    }
-//                    else
-//                    {
-//                        flag=0;
-//                    }
-//                    for (int i = 0; i < original_name.size(); i++) {
-//                        String name_data = (String)original_name.get(i);
-//                        String code_data = (String)original_code.get(i);
-//                        if(flag==0) {
-//                            if (name_data.toLowerCase().contains(constraint.toString())) {
-//                                FilteredArrList.add(original_name.get(i));
-//                                FilteredArrList1.add(original_code.get(i));
-//                                FilteredArrList2.add(original_amount.get(i));
-//                                FilteredArrList3.add(original_units.get(i));
-//                                FilteredArrList4.add(original_id.get(i));
-//                                FilteredArrList5.add(original_packing.get(i));
-//                                FilteredArrList6.add(original_weight.get(i));
-//                            }
-//                        }
-//                        else if(temp.length >1)
-//                        {
-//                            if (name_data.toLowerCase().contains(temp[0]) && code_data.toLowerCase().contains(temp[1])) {
-//                                FilteredArrList.add(original_name.get(i));
-//                                FilteredArrList1.add(original_code.get(i));
-//                                FilteredArrList2.add(original_amount.get(i));
-//                                FilteredArrList3.add(original_units.get(i));
-//                                FilteredArrList4.add(original_id.get(i));
-//                                FilteredArrList5.add(original_packing.get(i));
-//                                FilteredArrList6.add(original_weight.get(i));
-//                            }
-//                        }
-//                    }
-//                    // set the Filtered result to return
-//                    results.count = FilteredArrList.size();
-//                    results.values = FilteredArrList;
-
                     constraint = constraint.toString().toLowerCase();
                     String temp[];
                     temp=constraint.toString().split(" ");

@@ -112,28 +112,29 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint,FilterResults results) {
-                name = (ArrayList)results.values; // has the filtered values
-                code=FilteredArrList1;
-                amount=FilteredArrList2;
-                units=FilteredArrList3;
-                id=FilteredArrList4;
-                packing=FilteredArrList5;
-                weight=FilteredArrList6;
-                List<hera.com.orders.model.Article> articleList=new ArrayList<hera.com.orders.model.Article>();
-                for(int i=0;i<id.size();i++)
-                {
-                    hera.com.orders.model.Article article=new hera.com.orders.model.Article();
-                    article.id=Integer.parseInt(id.get(i).toString());
-                    article.name=name.get(i).toString();
-                    article.code=code.get(i).toString();
-                    article.price=amount.get(i).toString();
-                    article.units=units.get(i).toString();
-                    article.packing=packing.get(i).toString();
-                    article.weight=weight.get(i).toString();
-                    articleList.add(article);
-                }
-                articles=articleList;
-                notifyDataSetChanged();  // notifies the data with new filtered values
+                try {
+                    name = (ArrayList) results.values; // has the filtered values
+                    code = FilteredArrList1;
+                    amount = FilteredArrList2;
+                    units = FilteredArrList3;
+                    id = FilteredArrList4;
+                    packing = FilteredArrList5;
+                    weight = FilteredArrList6;
+                    List<hera.com.orders.model.Article> articleList = new ArrayList<hera.com.orders.model.Article>();
+                    for (int i = 0; i < id.size(); i++) {
+                        hera.com.orders.model.Article article = new hera.com.orders.model.Article();
+                        article.id = Integer.parseInt(id.get(i).toString());
+                        article.name = name.get(i).toString();
+                        article.code = code.get(i).toString();
+                        article.price = amount.get(i).toString();
+                        article.units = units.get(i).toString();
+                        article.packing = packing.get(i).toString();
+                        article.weight = weight.get(i).toString();
+                        articleList.add(article);
+                    }
+                    articles = articleList;
+                    notifyDataSetChanged();  // notifies the data with new filtered values
+                }catch (Exception e){}
             }
 
             @Override
