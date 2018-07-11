@@ -307,23 +307,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event){
+    public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (materialDesignFAM.isOpened()) {
 
                 Rect outRect = new Rect();
                 materialDesignFAM.getGlobalVisibleRect(outRect);
 
-                if(!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
                     materialDesignFAM.close(true);
-                    return false;
                 }
             }
         }
         return super.dispatchTouchEvent(event);
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
