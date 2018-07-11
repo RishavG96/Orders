@@ -186,11 +186,11 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                     constraint = constraint.toString().toLowerCase();
                     String temp[];
                     temp=constraint.toString().split(" ");
-                    for(int i=0;i<name.size();i++)
+                    for(int i=0;i<original_name.size();i++)
                     {
                         String t[];
-                        String n=name.get(i).toString();
-                        String c=code.get(i).toString();
+                        String n=original_name.get(i).toString();
+                        String c=original_code.get(i).toString();
                         String concat=n+" "+c;
                         t=concat.split(" ");
                         int flag[]=new int[temp.length+1];
@@ -217,13 +217,13 @@ public class ArticleListAdapter extends BaseAdapter implements Filterable {
                         }
                         if(f==0)
                         {
-                            FilteredArrList.add(name.get(i));
-                            FilteredArrList1.add(code.get(i));
-                            FilteredArrList2.add(amount.get(i));
-                            FilteredArrList3.add(units.get(i));
-                            FilteredArrList4.add(id.get(i));
-                            FilteredArrList5.add(packing.get(i));
-                            FilteredArrList6.add(weight.get(i));
+                            FilteredArrList.add(original_name.get(i));
+                            FilteredArrList1.add(original_code.get(i));
+                            FilteredArrList2.add(original_amount.get(i));
+                            FilteredArrList3.add(original_units.get(i));
+                            FilteredArrList4.add(original_id.get(i));
+                            FilteredArrList5.add(original_packing.get(i));
+                            FilteredArrList6.add(original_weight.get(i));
                         }
                     }
                     results.count = FilteredArrList.size();

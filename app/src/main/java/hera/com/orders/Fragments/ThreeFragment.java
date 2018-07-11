@@ -25,6 +25,7 @@ import hera.com.orders.MainActivity;
 import hera.com.orders.R;
 import hera.com.orders.adapters.OrderItemsAdapter;
 import hera.com.orders.sqlite.OrderItems;
+import hera.com.orders.sqlite.Orders;
 
 
 public class ThreeFragment extends Fragment {
@@ -65,7 +66,12 @@ public class ThreeFragment extends Fragment {
         try {
             orderItemsList=(List<hera.com.orders.model.OrderItems>) orderItems.showOrders(getContext());
         }catch (Exception e){}
-        total.setText(""+orderItems.calculateTotalPrice()+" KM");
+        double d= orderItems.calculateTotalPrice();
+        String str = String.format("%1.2f", d);
+        if(str.contains(","))
+            str=str.replace(",",".");
+        d = Double.valueOf(str);
+        total.setText(d+" KM");
         if(orderItemsList!=null) {
             adapter = new OrderItemsAdapter(getContext(), orderItemsList);
             lv.setAdapter(adapter);

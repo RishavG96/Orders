@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -148,8 +149,12 @@ public class OrderItemsAdapter extends BaseSwipeAdapter {
         n.setText(getItem(position).articleName);
         co.setText(""+getItem(position).articleCode+"     ");
         q.setText(""+getItem(position).quantity+"  "+getItem(position).articleUnits );
-        double d = Double.parseDouble(getItem(position).price);
+        String s=getItem(position).price;
+        //Log.e("price1:",s);
+        double d = Double.parseDouble(s);
         String str = String.format("%1.2f", d);
+        if(str.contains(","))
+            str=str.replace(",",".");
         d = Double.valueOf(str);
         pr.setText(""+d+" KM");
     }

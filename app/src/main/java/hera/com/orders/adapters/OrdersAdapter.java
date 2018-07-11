@@ -206,11 +206,11 @@ public class OrdersAdapter extends BaseSwipeAdapter implements Filterable {
                     constraint = constraint.toString().toLowerCase();
                     String temp[];
                     temp=constraint.toString().split(" ");
-                    for(int i=0;i<orderId.size();i++)
+                    for(int i=0;i<original_orderId.size();i++)
                     {
                         String t[];
-                        String n=partnerName.get(i).toString();
-                        String c=dates.get(i).toString();
+                        String n=original_partnerName.get(i).toString();
+                        String c=original_dates.get(i).toString();
                         String concat=n+" "+c;
                         t=concat.split(" ");
                         int flag[]=new int[temp.length+1];
@@ -237,10 +237,10 @@ public class OrdersAdapter extends BaseSwipeAdapter implements Filterable {
                         }
                         if(f==0)
                         {
-                            FilteredArrList.add(orderId.get(i));
-                            FilteredArrList1.add(partnerName.get(i));
-                            FilteredArrList2.add(dates.get(i));
-                            FilteredArrList3.add(sended.get(i));
+                            FilteredArrList.add(original_orderId.get(i));
+                            FilteredArrList1.add(original_partnerName.get(i));
+                            FilteredArrList2.add(original_dates.get(i));
+                            FilteredArrList3.add(original_sended.get(i));
                         }
                     }
                     results.count = FilteredArrList.size();

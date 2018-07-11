@@ -74,7 +74,12 @@ public class OrderDetailsActivity extends AppCompatActivity {
         adapter=new OrderItemsAdapter(this, orderItemsList);
         lv.setAdapter(adapter);
         adapter.setMode(Attributes.Mode.Single);
-        total.setText(""+Orders.calculateTotalPrice(MainActivity.orderID)+" KM");
+        double d=Orders.calculateTotalPrice(MainActivity.orderID);
+        String str = String.format("%1.2f", d);
+        if(str.contains(","))
+            str=str.replace(",",".");
+        d = Double.valueOf(str);
+        total.setText(d+" KM");
         partnerName.setText(pn);
         if(Orders.calculateTotalPrice(MainActivity.orderID)==0)
         {

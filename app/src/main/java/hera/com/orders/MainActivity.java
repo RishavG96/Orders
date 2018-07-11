@@ -308,19 +308,22 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public boolean dispatchTouchEvent(MotionEvent event){
-        if (materialDesignFAM.isOpened()) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (materialDesignFAM.isOpened()) {
 
-            Rect outRect = new Rect();
-            materialDesignFAM.getGlobalVisibleRect(outRect);
+                Rect outRect = new Rect();
+                materialDesignFAM.getGlobalVisibleRect(outRect);
 
-            if(!outRect.contains((int)event.getRawX(), (int)event.getRawY()))
-                materialDesignFAM.close(true);
-            return false;
+                if(!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    materialDesignFAM.close(true);
+                    return false;
+                }
+            }
         }
-        else {
-            return super.dispatchTouchEvent(event);
-        }
+        return super.dispatchTouchEvent(event);
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
