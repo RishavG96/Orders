@@ -60,7 +60,7 @@ public class UpdateURLActivity extends AppCompatActivity {
                 ContentValues cv=new ContentValues();
                 cv.put("url",editText.getText().toString());
                 db.update("url", cv, "", null);
-                Toast.makeText(getApplicationContext(),"URL Updated",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"URL Ažuriran",Toast.LENGTH_SHORT).show();
 //                Cursor c=db.rawQuery("select * from url",null);
 //                while(c.moveToNext())
 //                {

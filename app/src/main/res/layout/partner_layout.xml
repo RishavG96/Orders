@@ -32,7 +32,7 @@
             android:textStyle="bold"
             android:fontFamily="sans-serif"
             android:textColor="#323643"
-            android:text="Code: "
+            android:text="@string/code"
             android:textSize="12dp" />
         <TextView
             android:id="@+id/textView3"
@@ -51,7 +51,7 @@
             android:textStyle="bold"
             android:fontFamily="sans-serif"
             android:textColor="#323643"
-            android:text="Amount: "
+            android:text="@string/amount"
             android:textSize="12dp" />
         <TextView
             android:id="@+id/textView4"
@@ -76,7 +76,7 @@
             android:textStyle="bold"
             android:fontFamily="sans-serif"
             android:textColor="#323643"
-            android:text="Address: "
+            android:text="@string/address"
             android:textSize="12dp" />
 
         <TextView
@@ -92,11 +92,11 @@
             android:id="@+id/city"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="-5dp"
             android:textStyle="bold"
             android:fontFamily="sans-serif"
             android:textColor="#323643"
-            android:text="City: "
+            android:text="@string/city"
             android:textSize="12dp" />
         <TextView
             android:id="@+id/textView6"

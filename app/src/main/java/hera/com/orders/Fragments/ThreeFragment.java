@@ -118,7 +118,7 @@ public class ThreeFragment extends Fragment {
                 }
                 else if(sended.equals("Y"))
                 {
-                    Toast.makeText(getContext(),"Cannot edit, order already Sended!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Nije moguće urediti poslanu narudžbu",Toast.LENGTH_SHORT).show();
                 }
             }
         });

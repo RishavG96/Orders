@@ -170,7 +170,7 @@ public class ArticleAmountActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Enter some value please", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Unesite neku vrijednost", Toast.LENGTH_SHORT).show();
                 }
             }
         });

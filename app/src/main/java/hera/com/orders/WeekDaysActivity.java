@@ -35,7 +35,7 @@ public class WeekDaysActivity extends AppCompatActivity {
         setContentView(R.layout.activity_week_days);
 
         listView=findViewById(R.id.listview11);
-        String days[]={"Monday", "Tuesday", "Wednesday","Thursday", "Friday","Saturday"};
+        String days[]={"Ponedjeljak", "Utorak", "Srijeda","Četvrtak", "Petak","Subota"};
         ArrayAdapter adapter=new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1,days);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

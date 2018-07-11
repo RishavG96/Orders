@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="18dp"
         android:textSize="14dp"
+        android:text="@string/emptyassortment"
         android:fontFamily="sans-serif"
         android:textColor="#323643"
         android:gravity="center"

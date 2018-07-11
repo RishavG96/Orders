@@ -146,9 +146,9 @@ public class CombinedActivity extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "Products");
-        adapter.addFragment(new TwoFragment(), "Assortment");
-        adapter.addFragment(new ThreeFragment(), "Cart");
+        adapter.addFragment(new OneFragment(), "Artikli");
+        adapter.addFragment(new TwoFragment(), "Asortiman");
+        adapter.addFragment(new ThreeFragment(), "Stavke");
         viewPager.setAdapter(adapter);
     }
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -225,11 +225,11 @@ public class CombinedActivity extends AppCompatActivity {
     public void onBackPressed() {
         if(backPresseed==0 && ThreeFragment.orderItems.calculateTotalPrice()!=0.0)
         {
-            Toast.makeText(this, "Save your order!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Spremite narudžbu!",Toast.LENGTH_SHORT).show();
             backPresseed++;
         }
         else {
-            Toast.makeText(this, "Order not saved!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Narudžba nije spremljena!",Toast.LENGTH_SHORT).show();
             super.onBackPressed();
         }
     }

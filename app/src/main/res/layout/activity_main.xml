@@ -31,7 +31,7 @@ tools:openDrawer="start">
             android:layout_width="match_parent"
             android:layout_height="18dp"
             android:textSize="14dp"
-            android:text="List of orders is empty"
+            android:text="@string/orderempty"
             android:fontFamily="sans-serif"
             android:textColor="#323643"
             android:layout_below="@+id/imageView3"
@@ -55,7 +55,7 @@ tools:openDrawer="start">
                 android:layout_marginTop="235dp"
                 android:background="#EA4335"
                 android:fontFamily="sans-serif"
-                android:text="+Create New Order"
+                android:text="@string/neworder"
                 android:textColor="#FFFFFF"
                 android:textSize="14dp" />
 
@@ -88,7 +88,7 @@ tools:openDrawer="start">
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:src="@drawable/send"
-                fab:fab_label="Send all orders"
+                fab:fab_label="@string/sendallorders"
                 fab:fab_size="mini" />
 
             <com.github.clans.fab.FloatingActionButton
@@ -96,7 +96,7 @@ tools:openDrawer="start">
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/delete"
-                fab:fab_label="Delete all orders"
+                fab:fab_label="@string/deleteallorders"
                 fab:fab_size="mini" />
 
             <com.github.clans.fab.FloatingActionButton
@@ -104,7 +104,7 @@ tools:openDrawer="start">
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/delete"
-                fab:fab_label="Delete sent orders"
+                fab:fab_label="@string/deletesendorders"
                 fab:fab_size="mini" />
 
             <com.github.clans.fab.FloatingActionButton
@@ -112,7 +112,7 @@ tools:openDrawer="start">
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/delete"
-                fab:fab_label="Delete unsent orders"
+                fab:fab_label="@string/deleteunsendorders"
                 fab:fab_size="mini" />
         </com.github.clans.fab.FloatingActionMenu>
     </RelativeLayout>

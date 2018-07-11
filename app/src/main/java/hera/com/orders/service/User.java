@@ -79,7 +79,7 @@ public class User {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(context, "Please enter correct credentials", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Molimo unesite točne podatke za prijavu", Toast.LENGTH_SHORT).show();
                     }
                 });
         queue.add(strRequest);

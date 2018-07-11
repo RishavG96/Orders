@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
             progressDialog = new ProgressDialog(MainActivity.this);
             progressDialog.setMax(100);
-            progressDialog.setMessage("Loading....");
-            progressDialog.setTitle("Refreshing database");
+            progressDialog.setMessage("Učitavanje....");
+            progressDialog.setTitle("Osvježavanje baze podataka");
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.show();
             new Thread(new Runnable() {
@@ -177,21 +177,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean flag=orders.sendAllToServer();
                 if(flag==true) {
-                    Toast.makeText(getApplicationContext(), "Order Sent!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Narudžba poslana!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
                 }
                 else
-                    Toast.makeText(getApplicationContext(),"Enter Items First!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Prvo unesite željene artikle!",Toast.LENGTH_SHORT).show();
 
             }
         });
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 orders.deleteAll();
-                Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Narudžbe obrisane!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 orders.deleteSend();
-                Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Poslane narudžbe obrisane!", Toast.LENGTH_SHORT).show();
                 Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent1);
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 orders.deleteUnsend();
-                Toast.makeText(getApplicationContext(), "Orders Deleted!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Neposlane narudžbe obrisane!", Toast.LENGTH_SHORT).show();
                 Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
                 intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent2);
@@ -372,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if(backPresseed==0)
         {
-            Toast.makeText(this, "Press Back again to exit!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ponovno pritisnite Natrag za izlazak iz aplikacije!",Toast.LENGTH_SHORT).show();
             backPresseed++;
         }
         else if(backPresseed==1) {

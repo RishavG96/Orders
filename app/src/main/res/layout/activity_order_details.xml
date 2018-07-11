@@ -41,7 +41,7 @@ tools:openDrawer="start">
             android:fontFamily="sans-serif"
             android:textSize="14dp"
             android:textColor="#323643"
-            android:text="Items"/>
+            android:text="@string/articles"/>
 
         <ImageView
             android:id="@+id/imageView1"
@@ -59,6 +59,7 @@ tools:openDrawer="start">
             android:fontFamily="sans-serif"
             android:textColor="#323643"
             android:visibility="gone"
+            android:text="@string/singleorderempty"
             android:gravity="center"/>
 
 
@@ -78,7 +79,7 @@ tools:openDrawer="start">
                 android:layout_height="18dp"
                 android:gravity="end"
                 android:textSize="14dp"
-                android:text="Total price: "
+                android:text="@string/totalprice"
                 android:fontFamily="sans-serif"
                 android:textColor="#323643"/>
             <TextView
@@ -109,7 +110,7 @@ tools:openDrawer="start">
                 android:fontFamily="sans-serif"
                 android:background="@drawable/editbutton"
                 android:textColor="#EA4335"
-                android:text="Edit Order"/>
+                android:text="@string/editorder"/>
             <Button
                 android:id="@+id/submitorder"
                 android:layout_width="170dp"
@@ -119,7 +120,7 @@ tools:openDrawer="start">
                 android:fontFamily="sans-serif"
                 android:background="@drawable/button"
                 android:textColor="#FFFFFF"
-                android:text="Submit Order"/>
+                android:text="@string/submitorder"/>
             <Button
                 android:id="@+id/additem"
                 android:layout_width="match_parent"
@@ -131,7 +132,7 @@ tools:openDrawer="start">
                 android:background="@drawable/button"
                 android:visibility="gone"
                 android:textColor="#FFFFFF"
-                android:text="+Add Item"/>
+                android:text="@string/additems"/>
         </LinearLayout>
 
 

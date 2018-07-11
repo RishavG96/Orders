@@ -39,7 +39,7 @@ public class OrderItems {
             cv.put("price",orderItems.price);
             MainActivity.db.update("orderitems", cv, "articleId="+orderItems.articleId, null);
         }
-        Toast.makeText(context,"Item added",Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"Artikal dodan",Toast.LENGTH_SHORT).show();
     }
     public Iterable<hera.com.orders.model.OrderItems> showOrders(Context context)
     {

@@ -41,7 +41,7 @@ public class User {
             cv.put("url", user.Url);
             db.update("url", cv, "", null);
         }
-        Toast.makeText(context, "User Added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Korisnik dodan", Toast.LENGTH_SHORT).show();
     }
     public void showUser(Context context)
     {

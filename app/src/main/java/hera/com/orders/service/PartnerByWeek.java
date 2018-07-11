@@ -93,7 +93,7 @@ public class PartnerByWeek {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(context,"PartnerByWeek not updated, Please refresh data!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Rute nisu ažurirane, molimo osvježite podatke!", Toast.LENGTH_SHORT).show();
                     }
                 })
         {

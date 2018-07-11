@@ -3,26 +3,26 @@
     <group
         android:id="@+id/groupone">
         <item android:id="@+id/orders"
-            android:title="Orders" />
+            android:title="@string/appname" />
         <item android:id="@+id/partner"
-            android:title="Partner" />
+            android:title="@string/partners" />
         <item android:id="@+id/article"
-            android:title="Products" />
+            android:title="@string/articles" />
         <item android:id="@+id/partnerweek"
-            android:title="Route" />
+            android:title="@string/route" />
     </group>
 
 
     <group
         android:id="@+id/grouptwo">
         <item android:id="@+id/setup"
-            android:title="Setup" />
+            android:title="@string/setup" />
         <item android:id="@+id/refresh"
-            android:title="Refresh data" />
+            android:title="@string/refreshdata" />
     </group>
     <group
         android:id="@+id/groupthree">
         <item android:id="@+id/logout"
-            android:title="Log out" />
+            android:title="@string/logout" />
     </group>
 </menu>

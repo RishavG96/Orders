@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     hera.com.orders.model.User classes_user;
     hera.com.orders.service.User service_user;
     SQLiteDatabase db;
-    public static String url="http://192.168.111.15:8081/Euro99NarudzbeBack/resources/"; // This will hold the full URL which will include the username entered in the id.
+    public static String url="http://212.39.121.35:8080/Euro99NarudzbeBack/resources/"; // This will hold the full URL which will include the username entered in the id.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                     ContentValues cv=new ContentValues();
                     cv.put("url",url);
                     db.update("url",cv,null,null);
-                    Toast.makeText(getApplicationContext(),"URL Changed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"URL Promijenjen",Toast.LENGTH_SHORT).show();
                 }
                 classes_user.Url=url;
             }

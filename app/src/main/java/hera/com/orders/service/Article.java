@@ -98,7 +98,7 @@ public class Article {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(context,"Products not updated, Please refresh data!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Artikli nisu ažurirani, molimo osvježite podatke!", Toast.LENGTH_SHORT).show();
                     }
                 })
         {

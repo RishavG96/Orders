@@ -124,7 +124,7 @@ public class OrderItemsAdapter extends BaseSwipeAdapter {
                         ((OrderDetailsActivity) context).finish();
                         Toast.makeText(context, "" + context, Toast.LENGTH_SHORT).show();
                     } else if (sended1.equals("Y")) {
-                        Toast.makeText(context, "Cannot edit, order already Sended!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Nije moguće urediti poslanu narudžbu", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else if(context.toString().contains("CombinedActivity")){

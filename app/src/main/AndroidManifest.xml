@@ -8,7 +8,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/appicon"
-        android:label="Order"
+        android:label="@string/appname"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
@@ -17,39 +17,39 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".UpdateURLActivity"
-            android:label="Update URL" />
+            android:label="@string/setup" />
         <activity
             android:name=".PartnersActivity"
-            android:label="Partners"
+            android:label="@string/partners"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".PartnerDetailsActivity"
-            android:label="Partners" />
+            android:label="@string/partners" />
         <activity
             android:name=".ArticleActivity"
-            android:label="Products" />
+            android:label="@string/articles" />
         <activity
             android:name=".AssortmentActivity"
-            android:label="Assortment" />
+            android:label="@string/assortment" />
         <activity
             android:name=".OrderEntryActivity"
-            android:label="New Order" />
+            android:label="@string/neworder" />
         <activity android:name=".CombinedActivity" />
         <activity
             android:name=".OrderPartnersActivity"
-            android:label="Partners" />
+            android:label="@string/partners" />
         <activity android:name=".ArticleAmountActivity" />
         <activity android:name=".OrderDetailsActivity" />
         <activity
             android:name=".ArticleDetailsActivity"
-            android:label="Products" />
+            android:label="@string/articles" />
         <activity android:name=".AssortmentDetailsActivity" />
         <activity
             android:name=".WeekDaysActivity"
-            android:label="Routes" />
+            android:label="@string/route" />
         <activity
             android:name=".ShowPartnersByWeekActivity"
-            android:label="Partners" />
+            android:label="@string/partners" />
         <activity android:name=".PartnerWeekDetailsActivity" />
         <activity android:name=".SplashScreen">
             <intent-filter>

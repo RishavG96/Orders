@@ -56,7 +56,6 @@ public class TwoFragment extends Fragment {
         articleList=(List<Article>) sqlite_assort.showAssortment(getContext(), MainActivity.partnerID);
         adapter=new AssortmentListAdapter(getContext(), articleList);
         if(articleList.isEmpty()) {
-            empty.setText("No Assortments for the Partner");
             imageView.setVisibility(View.VISIBLE);
             empty.setVisibility(View.VISIBLE);
             lv.setVisibility(View.GONE);

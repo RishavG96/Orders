@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:text="Delete Item?"
+            android:text="@string/deleteitem"
             android:textColor="#fff"
             android:textSize="17sp" />
 
@@ -37,7 +37,7 @@
             android:layout_height="40dp"
             android:layout_weight="4"
             android:background="#FFFFFF"
-            android:text="Yes,Delete"
+            android:text="@string/yes"
             android:textColor="#FF5534" />
     </LinearLayout>
     <LinearLayout
@@ -72,7 +72,7 @@
         android:fontFamily="sans-serif"
         android:textStyle="bold"
         android:textColor="#323643"
-        android:text="Code: " />
+        android:text="@string/code" />
     <TextView
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
         android:textStyle="bold"
         android:textColor="#323643"
         android:gravity="end"
-        android:text="Quantity: " />
+        android:text="@string/quantity" />
     <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
         android:textStyle="bold"
         android:textColor="#323643"
         android:gravity="end"
-        android:text="Price: " />
+        android:text="@string/amount" />
     <TextView
         android:id="@+id/textView24"
         android:layout_width="wrap_content"

@@ -143,7 +143,6 @@ public class OrdersAdapter extends BaseSwipeAdapter implements Filterable {
 //        q.setText("Quantity: "+quantity.get(position).toString()+"  "+unit.get(position).toString() );
         String d=getItem(position).dates.substring(0,10);
         q.setText(""+d);
-        co.setText("Date: ");
     }
 
 

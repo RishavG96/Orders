@@ -60,7 +60,7 @@ public class OrderEntryActivity extends AppCompatActivity {
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date c = Calendar.getInstance().getTime();
         todaysDate=sdf.format(c);
-        et.setText("Date: "+todaysDate.substring(0,10));
+        et.setText("Datum: "+todaysDate.substring(0,10));
         MainActivity.dates=todaysDate;
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -91,7 +91,7 @@ public class OrderEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 MainActivity.notes=note.getText().toString();
                 if(et.getText().toString().isEmpty())
-                    Toast.makeText(getApplicationContext(),"Please enter date",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Molimo unesite datum",Toast.LENGTH_SHORT).show();
                 else {
                         int exit = 4;
                         Intent intent = new Intent(getApplicationContext(), CombinedActivity.class);

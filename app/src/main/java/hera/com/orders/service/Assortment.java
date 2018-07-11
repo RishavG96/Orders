@@ -81,7 +81,7 @@ public class Assortment {
                                 db.endTransaction();
                                 db.close();
                                 LoginActivity.assort=1;
-                                Toast.makeText(context,"Table populated",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,"Tablica popunjena",Toast.LENGTH_SHORT).show();
                             }
                             //sqlite_article.showArticle(context);
                         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class Assortment {
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        Toast.makeText(context,"Assortments not updated, Please refresh data!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Asortimani nisu ažurirani, molimo osvježite podatke!", Toast.LENGTH_SHORT).show();
                     }
                 })
         {

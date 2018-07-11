@@ -92,7 +92,6 @@ public class OrderDetailsActivity extends AppCompatActivity {
             total.setVisibility(View.GONE);
             tv1.setVisibility(View.GONE);
             tv2.setVisibility(View.GONE);
-            tv.setText("No Order Items added.");
         }
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,7 +114,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 }
                 else if(sended.equals("Y"))
                 {
-                    Toast.makeText(getApplicationContext(),"Cannot edit, order already Sended!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Nije moguće urediti poslanu narudžbu!",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -138,7 +137,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 }
                 else if(sended.equals("Y"))
                 {
-                    Toast.makeText(getApplicationContext(),"Cannot edit, order already Sended!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Nije moguće urediti poslanu narudžbu!",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -160,7 +159,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 }
                 else if(sended.equals("Y"))
                 {
-                    Toast.makeText(getApplicationContext(),"Cannot edit, order already Sended!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Nije moguće urediti poslanu narudžbu!",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -177,13 +176,13 @@ public class OrderDetailsActivity extends AppCompatActivity {
                     if (sended.equals("N")) {
                         sendOrdertask = new SendOrdertask();
                         sendOrdertask.execute((Void) null);
-                        Toast.makeText(getApplicationContext(), "Order Send!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Narudžba poslana!", Toast.LENGTH_SHORT).show();
                     } else if (sended.equals("Y")) {
-                        Toast.makeText(getApplicationContext(), "Order already Sended!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Narudžba je već poslana!", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"Enter Articles first!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Prvo unesite artikle!",Toast.LENGTH_SHORT).show();
                 }
             }
         });

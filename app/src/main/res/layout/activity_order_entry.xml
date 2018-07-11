@@ -40,7 +40,7 @@
             android:textColor="#323643"
             android:textStyle="normal"
             android:fontFamily="sans-serif"
-            android:text="New order" />
+            android:text="@string/neworder" />
 
         <EditText
             android:id="@+id/editText3"
@@ -50,7 +50,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:paddingLeft="13dp"
-            android:hint="Select date"
             android:ems="10"
             android:inputType="date"
             android:background="@drawable/edittext" />
@@ -65,7 +64,7 @@
             android:background="@drawable/edittext"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="Enter a note" />
+            android:hint="@string/enternote" />
 
         <Button
             android:id="@+id/button2"
@@ -76,7 +75,7 @@
             android:layout_marginRight="5dp"
             android:fontFamily="sans-serif"
             android:background="@drawable/button"
-            android:text="Save and continue"
+            android:text="@string/saveandcontinue"
             android:textColor="#FFFFFF"/>
 
 
